@@ -29,3 +29,18 @@ flutter pub
 ```
 
 To find out more check [online documentation](https://docs.flutter.dev/).
+
+### File structure
+
+```
+├── android
+├── assets
+│    └── images
+├── build
+├── ios
+├── lib
+│    ├── pages
+│    ├── services
+│    └── main.dart
+└── test
+```
