@@ -32,15 +32,28 @@ To find out more check [online documentation](https://docs.flutter.dev/).
 
 ### File structure
 
-```
-├── android
-├── assets
-│    └── images
-├── build
-├── ios
+```bash
+├── android         # Android files
+├── assets          # Directory containing assets such as images, audio
+│    ├── audio      # Audio assets
+│    └── images     # Images assets
+├── build           # App build
+├── ios             # iOS files
 ├── lib
-│    ├── pages
-│    ├── services
-│    └── main.dart
-└── test
+│    ├── widgets    # Custom widgets
+│    ├── pages      # App pages
+│    ├── services   # Contains files responsible for working to external APIs, database, etc. 
+│    └── main.dart  # Main file of the app containing routes for pages - ADD ONLY ROUTES !!!
+├── test            # Unit tests for the project
+│    ├── widgets    # Contains files responsible for testing custom widgets  
+│    ├── pages      # Contains files responsible for testing app pages 
+│    └── services   # Contains files responsible for testing services 
 ```
+
+## Tests
+
+File naming convention:
+- begin with name of file to test
+- end with _test
+
+For instance, testing `home.dart` in file `home_test.dart`
