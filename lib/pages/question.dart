@@ -3,9 +3,14 @@ import 'package:quizly_app/widgets/header.dart';
 
 
 
-class Questionpage extends StatelessWidget {
+class Questionpage extends StatefulWidget {
   const Questionpage({super.key});
 
+  @override
+  State<Questionpage> createState() => _QuestionpageState();
+}
+
+class _QuestionpageState extends State<Questionpage> {
  Widget ansButton(String answer) {
    return ElevatedButton(
        onPressed: () {},
@@ -26,6 +31,7 @@ class Questionpage extends StatelessWidget {
          ),
        );
  }
+
   @override
   Widget build(BuildContext context) {
     // Material is a conceptual piece

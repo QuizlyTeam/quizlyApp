@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:quizly_app/widgets/header.dart';
 
-class Header extends StatelessWidget {
+class Header extends StatefulWidget {
   const Header({super.key});
 
+  @override
+  State<Header> createState() => _HeaderState();
+}
 
+class _HeaderState extends State<Header> {
   Widget header() {
     return AppBar(
       backgroundColor: Colors.cyan,
@@ -40,6 +43,7 @@ class Header extends StatelessWidget {
       ),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return header();
