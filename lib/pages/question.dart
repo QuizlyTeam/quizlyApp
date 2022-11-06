@@ -11,6 +11,7 @@ class Questionpage extends StatefulWidget {
 }
 
 class _QuestionpageState extends State<Questionpage> {
+
  Widget ansButton(String answer) {
    return ElevatedButton(
        onPressed: () {},
@@ -31,6 +32,56 @@ class _QuestionpageState extends State<Questionpage> {
          ),
        );
  }
+ Widget BodyOfQuestion(int questionNumber,String question, String ans1, String ans2, String ans3, String ans4) {
+   return Column(
+     children: [
+       Column(
+
+         children:  [
+            SizedBox(height: 20),
+             Text(
+             "Pytanie $questionNumber:",
+             style: const TextStyle(fontSize: 50, height: 1,fontWeight: FontWeight.bold,fontStyle: FontStyle.italic),
+           ),
+           const SizedBox(height: 20),
+            SizedBox(
+             child: Text(
+               question,
+               textAlign: TextAlign.center,
+               style: const TextStyle(height: 1.2,fontSize: 40),
+             ),
+           ),
+           const SizedBox(height: 30),
+           const Image(
+             image: AssetImage('assets/images/flag.png' ),
+             height: 200,
+           ),
+           const SizedBox(height: 20,),
+           const Image(
+             image: AssetImage('assets/images/time.png'),
+             width: 350,
+           ),
+           const SizedBox(height: 20,),
+           Row(
+             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+             children: [
+               ansButton(ans1),
+               ansButton(ans2)
+             ],
+           ),
+           const SizedBox(height: 10,),
+           Row(
+             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+             children: [
+               ansButton(ans3),
+               ansButton(ans3)
+             ],
+           )
+         ],
+       ),
+     ],
+   );
+ }
 
   @override
   Widget build(BuildContext context) {
@@ -42,45 +93,46 @@ class _QuestionpageState extends State<Questionpage> {
 
         children:  [
         const  Header(),
-          const SizedBox(height: 20),
-          const Text(
-           "Pytanie 3:",
-           style: TextStyle(fontSize: 50, height: 1,fontWeight: FontWeight.bold,fontStyle: FontStyle.italic),
-         ),
-          const SizedBox(height: 20),
-          const SizedBox(
-            child: Text(
-                "Jakiego kraju \n to flaga?",
-                  textAlign: TextAlign.center,
-                style: TextStyle(height: 1.2,fontSize: 40),
-          ),
-          ),
-          const SizedBox(height: 30),
-          const Image(
-              image: AssetImage('assets/images/flag.png'),
-            height: 200,
-          ),
-        const SizedBox(height: 20,),
-          const Image(
-            image: AssetImage('assets/images/time.png'),
-            width: 350,
-          ),
-          const SizedBox(height: 20,),
-       Row(
-         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-         children: [
-           ansButton("Kiribati"),
-           ansButton("Liberia")
-         ],
-       ),
-      const SizedBox(height: 10,),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          ansButton("Tuvalu"),
-          ansButton("Macedonia")
-        ],
-      )
+        BodyOfQuestion(4,"Jakiego kraju \n to flaga?","Kiribati","Liberia","Tuvalu","Macedonia"),
+      //     const SizedBox(height: 20),
+      //     const Text(
+      //      "Pytanie 3:",
+      //      style: TextStyle(fontSize: 50, height: 1,fontWeight: FontWeight.bold,fontStyle: FontStyle.italic),
+      //    ),
+      //     const SizedBox(height: 20),
+      //     const SizedBox(
+      //       child: Text(
+      //           "Jakiego kraju \n to flaga?",
+      //             textAlign: TextAlign.center,
+      //           style: TextStyle(height: 1.2,fontSize: 40),
+      //     ),
+      //     ),
+      //     const SizedBox(height: 30),
+      //     const Image(
+      //         image: AssetImage('assets/images/flag.png' ),
+      //       height: 200,
+      //     ),
+      //   const SizedBox(height: 20,),
+      //     const Image(
+      //       image: AssetImage('assets/images/time.png'),
+      //       width: 350,
+      //     ),
+      //     const SizedBox(height: 20,),
+      //  Row(
+      //    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      //    children: [
+      //      ansButton("Kiribati"),
+      //      ansButton("Liberia")
+      //    ],
+      //  ),
+      // const SizedBox(height: 10,),
+      // Row(
+      //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      //   children: [
+      //     ansButton("Tuvalu"),
+      //     ansButton("Macedonia")
+      //   ],
+      // )
         ],
       ),
     );
