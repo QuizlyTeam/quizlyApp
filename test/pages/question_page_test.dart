@@ -5,7 +5,7 @@ import 'package:quizly_app/pages/question.dart';
 void main() {
   testWidgets('Widget Home display Image', (WidgetTester tester) async {
     await tester.pumpWidget(
-       Questionpage()
+        const  Questionpage()
     );
     expect(find.image(const AssetImage('assets/images/back.png')), findsOneWidget);
     expect(find.image(const AssetImage('assets/images/back.png')), findsOneWidget);

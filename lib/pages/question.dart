@@ -80,16 +80,21 @@ class Questionpage extends StatelessWidget {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+       color: Colors.grey[500],
        home: Scaffold(
+         backgroundColor: Colors.grey[300],
        appBar: const PreferredSize(
            preferredSize: Size.fromHeight(70),
            child:Header(leftIcon:'assets/images/back.png',rightIcon: 'assets/images/settings.png'),
                ),
-        body: bodyOfQuestion(4,"Jakiego kraju \n to flaga?","Kiribati","Liberia","Tuvalu","Macedonia"),
 
-    ),
-
+        body:
+            SingleChildScrollView(
+              child: bodyOfQuestion(4,"Jakiego kraju \n to flaga?","Kiribati","Liberia","Tuvalu","Macedonia"),
+            ),
+        )
     );
+
 
   }
 }

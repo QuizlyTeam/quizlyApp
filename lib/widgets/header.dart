@@ -15,6 +15,7 @@ class Header extends StatelessWidget {
   Widget header() {
     return Material(
       color: Colors.cyan,
+
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(35),
@@ -22,7 +23,6 @@ class Header extends StatelessWidget {
         ),
       ),
       child: Row(
-
         children: [
           IconButton(
             icon:  Image(image: AssetImage(leftIcon),height: 90,),
