@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 
+//leftIcon - path ( String ) do lewej ikonki, pamietac zeby byla
+//tez zadeklarowana w pubspec.yaml
+//rightIcon to samo tylko po prawej
 class Header extends StatelessWidget {
    final String leftIcon;
    final String rightIcon;
@@ -10,16 +13,16 @@ class Header extends StatelessWidget {
 });
 
   Widget header() {
-    return AppBar(
-      backgroundColor: Colors.cyan,
-      toolbarHeight: 75,
+    return Material(
+      color: Colors.cyan,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(35),
           bottomRight: Radius.circular(35),
         ),
       ),
-      title: Row(
+      child: Row(
+
         children: [
           IconButton(
             icon:  Image(image: AssetImage(leftIcon),height: 90,),

@@ -28,8 +28,9 @@ class Questionpage extends StatelessWidget {
          ),
        );
  }
- Widget BodyOfQuestion(int questionNumber,String question, String ans1, String ans2, String ans3, String ans4) {
+ Widget bodyOfQuestion(int questionNumber,String question, String ans1, String ans2, String ans3, String ans4) {
    return Column(
+
          children:  [
             const SizedBox(height: 20),
              Text(
@@ -76,13 +77,19 @@ class Questionpage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Column(
-        children:  [
-          const Header(leftIcon:'assets/images/back.png',rightIcon: 'assets/images/settings.png'),
-          BodyOfQuestion(4,"Jakiego kraju \n to flaga?","Kiribati","Liberia","Tuvalu","Macedonia"),
-        ],
-      ),
+
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+       home: Scaffold(
+       appBar: const PreferredSize(
+           preferredSize: Size.fromHeight(70),
+           child:Header(leftIcon:'assets/images/back.png',rightIcon: 'assets/images/settings.png'),
+               ),
+        body: bodyOfQuestion(4,"Jakiego kraju \n to flaga?","Kiribati","Liberia","Tuvalu","Macedonia"),
+
+    ),
+
     );
+
   }
 }

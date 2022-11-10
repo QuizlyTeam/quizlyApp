@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'pages/question.dart';
-import 'pages/home.dart';
 
 void main() {
   runApp(
