@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'pages/question.dart';
-import 'pages/categoryPage.dart';
 
-void main() => runApp(MaterialApp(initialRoute: '/categoryPage', routes: {
+void main() => runApp(MaterialApp(initialRoute: '/questionPage', routes: {
       '/questionPage': (context) => const Questionpage(),
-      '/categoryPage': (context) => const CategoryPage(),
 }));
