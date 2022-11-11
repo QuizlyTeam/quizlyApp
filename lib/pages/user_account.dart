@@ -156,7 +156,9 @@ class UserAccount extends StatelessWidget {
         title: const Text('Example title')
       ),
       // body is the majority of the screen.
-      body: appBody,
+      body: SingleChildScrollView(
+        child: appBody,
+      ),
      backgroundColor: _backgroundColor,
     );
   }
