@@ -1,7 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class UserAccount extends StatelessWidget {
   UserAccount({Key? key}) : super(key: key);
+
+  final Color? _backgroundColor = Colors.grey[300];
+  final Color _appColor = Colors.cyan;
 
   late int _wins = 3;
   late int _loses = 1;
@@ -16,6 +20,27 @@ class UserAccount extends StatelessWidget {
     fontSize: 25
   );
 
+  late final TextStyle regular = const TextStyle(
+      fontWeight: FontWeight.bold,
+      color: Colors.black,
+      fontSize: 20
+  );
+
+  late final TextStyle title = const TextStyle(
+      fontWeight: FontWeight.bold,
+      color: Colors.white,
+      fontSize: 20
+  );
+
+  late Text ratio = Text('Ratio: ', style: title);
+  late Text ratioStat = Text('$_wins:$_loses', style: title);
+  late Text favQuiz = Text('Ratio: ', style: title);
+  late Text favQuizStat = Text('Ratio: ', style: title);
+  late Text friends = Text('Ratio: ', style: title);
+  late Text friendsStat = Text('Ratio: ', style: title);
+  late Text mostPoints = Text('Ratio: ', style: title);
+  late Text mostPointsStat = Text('Ratio: ', style: title);
+
   late ClipRRect nickname = ClipRRect(
     borderRadius: BorderRadius.circular(30.0),
     child: Container(
@@ -29,10 +54,59 @@ class UserAccount extends StatelessWidget {
     ),
   );
 
-  late Row appBody = Row(
+  late CircleAvatar avatar = const CircleAvatar(
+    minRadius: 100,
+    backgroundImage: AssetImage('assets/images/profile_picture.jpg')
+  );
+
+  Container titleField(Text t) {
+    return Container(
+      alignment: Alignment.center,
+      constraints: const BoxConstraints(
+        maxWidth: 300,
+        maxHeight: 40,
+      ),
+      color: _appColor,
+      child: t,
+    );
+  }
+
+  Container valueField(Text t) {
+    return Container(
+      alignment: Alignment.center,
+      constraints: const BoxConstraints(
+        maxWidth: 300,
+        maxHeight: 40,
+      ),
+      color: Colors.white,
+      child: t,
+    );
+  }
+
+  late Column table = Column(
+    children: [
+      titleField(ratio),
+      valueField(ratioStat),
+      titleField(ratio),
+      valueField(ratioStat),
+      titleField(ratio),
+      valueField(ratioStat),
+      titleField(ratio),
+      valueField(ratioStat),
+    ],
+  );
+
+  late ClipRRect roundedTable = ClipRRect(
+    borderRadius: BorderRadius.circular(30.0),
+    child: table
+  );
+
+  late Column appBody = Column(
     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
     children: [
-      nickname
+      nickname,
+      avatar,
+      roundedTable
     ],
   );
 
@@ -44,7 +118,7 @@ class UserAccount extends StatelessWidget {
       ),
       // body is the majority of the screen.
       body: appBody,
-     backgroundColor: Colors.grey[300],
+     backgroundColor: _backgroundColor,
     );
   }
 }
