@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:quizly_app/pages/home.dart';
+import 'pages/question.dart';
 
-void main() => runApp(MaterialApp(initialRoute: '/home', routes: {
-  '/home': (context) => const Home()
+void main() => runApp(MaterialApp(initialRoute: '/questionPage', routes: {
+      '/questionPage': (context) => const Questionpage(),
 }));
