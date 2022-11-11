@@ -80,8 +80,8 @@ class Questionpage extends StatelessWidget {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-       color: Colors.grey[500],
-       home: Scaffold(
+       home: SafeArea(
+         child: Scaffold(
          backgroundColor: Colors.grey[300],
        appBar: const PreferredSize(
            preferredSize: Size.fromHeight(70),
@@ -92,6 +92,7 @@ class Questionpage extends StatelessWidget {
             SingleChildScrollView(
               child: bodyOfQuestion(4,"Jakiego kraju \n to flaga?","Kiribati","Liberia","Tuvalu","Macedonia"),
             ),
+       ),
         )
     );
 
