@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
 import 'pages/question.dart';
+import 'pages/mainPage.dart';
 
-void main() {
-  runApp(
-    const MaterialApp(
-      title: 'My app', // used by the OS task switcher
-      home: SafeArea(
-        child: Questionpage()
-      ),
-    ),
-  );
-}
+void main() => runApp(MaterialApp(initialRoute: '/questionPage', routes: {
+'/questionPage': (context) => const Questionpage()
+  }));
 
