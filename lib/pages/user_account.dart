@@ -33,13 +33,13 @@ class UserAccount extends StatelessWidget {
   );
 
   late Text ratio = Text('Ratio: ', style: title);
-  late Text ratioStat = Text('$_wins:$_loses', style: title);
-  late Text favQuiz = Text('Ratio: ', style: title);
-  late Text favQuizStat = Text('Ratio: ', style: title);
-  late Text friends = Text('Ratio: ', style: title);
-  late Text friendsStat = Text('Ratio: ', style: title);
-  late Text mostPoints = Text('Ratio: ', style: title);
-  late Text mostPointsStat = Text('Ratio: ', style: title);
+  late Text ratioStat = Text('$_wins:$_loses', style: regular);
+  late Text favQuiz = Text('Favourite quiz: ', style: title);
+  late Text favQuizStat = Text(_category, style: regular);
+  late Text friends = Text('Friends: ', style: title);
+  late Text friendsStat = Text('$_friends', style: regular);
+  late Text mostPoints = Text('Most points: ', style: title);
+  late Text mostPointsStat = Text('$_mostPoints', style: regular);
 
   late ClipRRect nickname = ClipRRect(
     borderRadius: BorderRadius.circular(30.0),
@@ -50,13 +50,51 @@ class UserAccount extends StatelessWidget {
         maxHeight: 45,
       ),
       color: Colors.white,
-      child: Text('ClipRRect', style: nick),
+      child: Text(_name, style: nick),
     ),
   );
 
   late CircleAvatar avatar = const CircleAvatar(
-    minRadius: 100,
+    minRadius: 125,
     backgroundImage: AssetImage('assets/images/profile_picture.jpg')
+  );
+
+  late LinearProgressIndicator winsToLoses = LinearProgressIndicator(
+    backgroundColor: Colors.red,
+    color: Colors.green,
+    value: _wins/(_wins+_loses),
+    minHeight: 15,
+  );
+
+  late Row winsRatio = Row(
+    children: [
+      const Text(
+        'W',
+        style: TextStyle(
+          color: Colors.green,
+          fontWeight: FontWeight.bold,
+          fontSize: 20
+        ),
+      ),
+      Expanded(child: winsToLoses),
+      const Text(
+        'L',
+        style: TextStyle(
+            color: Colors.red,
+            fontWeight: FontWeight.bold,
+            fontSize: 20
+        ),
+      ),
+    ],
+  );
+
+  late Container ratioWrapper = Container(
+    alignment: Alignment.center,
+    constraints: const BoxConstraints(
+      maxWidth: 300,
+      maxHeight: 45,
+    ),
+    child: winsRatio,
   );
 
   Container titleField(Text t) {
@@ -64,7 +102,7 @@ class UserAccount extends StatelessWidget {
       alignment: Alignment.center,
       constraints: const BoxConstraints(
         maxWidth: 300,
-        maxHeight: 40,
+        maxHeight: 30,
       ),
       color: _appColor,
       child: t,
@@ -76,7 +114,7 @@ class UserAccount extends StatelessWidget {
       alignment: Alignment.center,
       constraints: const BoxConstraints(
         maxWidth: 300,
-        maxHeight: 40,
+        maxHeight: 30,
       ),
       color: Colors.white,
       child: t,
@@ -87,12 +125,12 @@ class UserAccount extends StatelessWidget {
     children: [
       titleField(ratio),
       valueField(ratioStat),
-      titleField(ratio),
-      valueField(ratioStat),
-      titleField(ratio),
-      valueField(ratioStat),
-      titleField(ratio),
-      valueField(ratioStat),
+      titleField(favQuiz),
+      valueField(favQuizStat),
+      titleField(friends),
+      valueField(friendsStat),
+      titleField(mostPoints),
+      valueField(mostPointsStat),
     ],
   );
 
@@ -106,6 +144,7 @@ class UserAccount extends StatelessWidget {
     children: [
       nickname,
       avatar,
+      ratioWrapper,
       roundedTable
     ],
   );
