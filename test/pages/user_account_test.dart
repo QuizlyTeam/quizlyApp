@@ -7,7 +7,7 @@ void main() {
   testWidgets('Widget UserAccount displays user\'s nickname', (WidgetTester tester) async {
     mockNetworkImagesFor(() async {
       Widget testWidget = MediaQuery(
-          data: MediaQueryData(),
+          data: const MediaQueryData(),
           child: MaterialApp(home: UserAccount(url: '', name: 'IronMan73',))
       );
       await tester.pumpWidget(testWidget);
@@ -18,7 +18,7 @@ void main() {
   testWidgets('Widget UserAccount displays user\'s stats', (WidgetTester tester) async {
     mockNetworkImagesFor(() async {
       Widget testWidget = MediaQuery(
-          data: MediaQueryData(),
+          data: const MediaQueryData(),
           child: MaterialApp(home: UserAccount(
             w: 5,
             l: 2,

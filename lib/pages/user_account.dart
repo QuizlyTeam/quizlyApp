@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quizly_app/widgets/header.dart';
 
+// ignore: must_be_immutable
 class UserAccount extends StatelessWidget {
   UserAccount({Key? key,
     int w=3,
