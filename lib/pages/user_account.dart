@@ -3,14 +3,16 @@ import 'package:quizly_app/widgets/header.dart';
 
 // ignore: must_be_immutable
 class UserAccount extends StatelessWidget {
-  UserAccount({Key? key,
-    int w=3,
-    int l=1,
-    String cat='Dogs',
-    friend = 31,
-    points = 1043,
-    name = 'Guest314159',
-    url = 'https://img.redro.pl/obrazy/czarny-pies-700-138366861.jpg'}) : super(key: key){
+  UserAccount(
+      {Key? key,
+      int w = 3,
+      int l = 1,
+      String cat = 'Dogs',
+      friend = 31,
+      points = 1043,
+      name = 'Guest314159',
+      url = 'https://img.redro.pl/obrazy/czarny-pies-700-138366861.jpg'})
+      : super(key: key) {
     _wins = w;
     _loses = l;
     _category = cat;
@@ -19,28 +21,27 @@ class UserAccount extends StatelessWidget {
     _name = name;
     pictureUrl = url;
     if (w != 0 || l != 0) {
-      _progress = w/(w+l);
+      _progress = w / (w + l);
     } else {
       _progress = 0.5;
     }
 
     if (url == '') {
-      defaultPicture = Image.asset('assets/images/profile.png',
+      defaultPicture = Image.asset(
+        'assets/images/profile.png',
         width: 150,
         height: 150,
       );
       avatar = CircleAvatar(
           minRadius: 125,
           backgroundColor: Colors.white,
-          backgroundImage: defaultPicture.image
-      );
+          backgroundImage: defaultPicture.image);
     } else {
       avatarPicture = NetworkImage(pictureUrl);
       avatar = CircleAvatar(
           minRadius: 125,
           backgroundColor: Colors.white,
-          backgroundImage: avatarPicture
-      );
+          backgroundImage: avatarPicture);
     }
   }
 
@@ -59,22 +60,13 @@ class UserAccount extends StatelessWidget {
   late Image defaultPicture;
 
   late final TextStyle nick = const TextStyle(
-    fontWeight: FontWeight.bold,
-    color: Colors.black,
-    fontSize: 25
-  );
+      fontWeight: FontWeight.bold, color: Colors.black, fontSize: 25);
 
   late final TextStyle regular = const TextStyle(
-      fontWeight: FontWeight.bold,
-      color: Colors.black,
-      fontSize: 20
-  );
+      fontWeight: FontWeight.bold, color: Colors.black, fontSize: 20);
 
   late final TextStyle title = const TextStyle(
-      fontWeight: FontWeight.bold,
-      color: Colors.white,
-      fontSize: 20
-  );
+      fontWeight: FontWeight.bold, color: Colors.white, fontSize: 20);
 
   late Text ratio = Text('Ratio: ', style: title);
   late Text ratioStat = Text('$_wins:$_loses', style: regular);
@@ -112,19 +104,13 @@ class UserAccount extends StatelessWidget {
       const Text(
         'W',
         style: TextStyle(
-          color: Colors.green,
-          fontWeight: FontWeight.bold,
-          fontSize: 20
-        ),
+            color: Colors.green, fontWeight: FontWeight.bold, fontSize: 20),
       ),
       Expanded(child: winsToLoses),
       const Text(
         'L',
         style: TextStyle(
-            color: Colors.red,
-            fontWeight: FontWeight.bold,
-            fontSize: 20
-        ),
+            color: Colors.red, fontWeight: FontWeight.bold, fontSize: 20),
       ),
     ],
   );
@@ -175,15 +161,10 @@ class UserAccount extends StatelessWidget {
     ],
   );
 
-  late ClipRRect roundedTable = ClipRRect(
-    borderRadius: BorderRadius.circular(30.0),
-    child: table
-  );
+  late ClipRRect roundedTable =
+      ClipRRect(borderRadius: BorderRadius.circular(30.0), child: table);
 
-  late SizedBox someSpace = const SizedBox(
-    width: 300,
-    height: 20
-  );
+  late SizedBox someSpace = const SizedBox(width: 300, height: 20);
 
   late Column appBody = Column(
     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -205,14 +186,14 @@ class UserAccount extends StatelessWidget {
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(70),
         child: Header(
-          leftIcon: 'assets/images/back.png',
-          rightIcon: 'assets/images/settings.png'),
-    ),
+            leftIcon: 'assets/images/back.png',
+            rightIcon: 'assets/images/settings.png'),
+      ),
       // body is the majority of the screen.
       body: SingleChildScrollView(
         child: appBody,
       ),
-     backgroundColor: _backgroundColor,
+      backgroundColor: _backgroundColor,
     );
   }
 }
