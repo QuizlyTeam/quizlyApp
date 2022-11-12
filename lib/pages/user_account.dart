@@ -1,19 +1,35 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quizly_app/widgets/header.dart';
 
 class UserAccount extends StatelessWidget {
-  UserAccount({Key? key}) : super(key: key);
+  UserAccount({Key? key,
+    int w=3,
+    int l=1,
+    String cat='Dogs',
+    friend = 31,
+    points = 1043,
+    name = 'Guest314159',
+    url = 'https://img.redro.pl/obrazy/czarny-pies-700-138366861.jpg'}) : super(key: key){
+    _wins = w;
+    _loses = l;
+    _category = cat;
+    _friends = friend;
+    _mostPoints = points;
+    _name = name;
+    pictureUrl = url;
+  }
 
   final Color? _backgroundColor = Colors.grey[300];
   final Color _appColor = Colors.cyan;
 
-  late int _wins = 3;
-  late int _loses = 1;
-  late String _category = 'Dogs';
-  late int _friends = 31;
-  late int _mostPoints = 1043;
-  late String _name = 'IronMan73';
+  late int _wins;
+  late int _loses;
+  late String _category;
+  late int _friends;
+  late int _mostPoints;
+  late String _name;
+  late String pictureUrl;
+  late NetworkImage avatarPicture = NetworkImage(pictureUrl);
 
   late final TextStyle nick = const TextStyle(
     fontWeight: FontWeight.bold,
@@ -55,9 +71,9 @@ class UserAccount extends StatelessWidget {
     ),
   );
 
-  late CircleAvatar avatar = const CircleAvatar(
+  late CircleAvatar avatar = CircleAvatar(
     minRadius: 125,
-    backgroundImage: AssetImage('assets/images/settings.png')
+    backgroundImage: avatarPicture
   );
 
   late LinearProgressIndicator winsToLoses = LinearProgressIndicator(
