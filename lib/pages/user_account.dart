@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:quizly_app/widgets/header.dart';
 
 class UserAccount extends StatelessWidget {
   UserAccount({Key? key}) : super(key: key);
@@ -56,7 +57,7 @@ class UserAccount extends StatelessWidget {
 
   late CircleAvatar avatar = const CircleAvatar(
     minRadius: 125,
-    backgroundImage: AssetImage('assets/images/profile_picture.jpg')
+    backgroundImage: AssetImage('assets/images/settings.png')
   );
 
   late LinearProgressIndicator winsToLoses = LinearProgressIndicator(
@@ -139,12 +140,21 @@ class UserAccount extends StatelessWidget {
     child: table
   );
 
+  late SizedBox someSpace = const SizedBox(
+    width: 300,
+    height: 20
+  );
+
   late Column appBody = Column(
     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
     children: [
+      someSpace,
       nickname,
+      someSpace,
       avatar,
+      someSpace,
       ratioWrapper,
+      someSpace,
       roundedTable
     ],
   );
@@ -152,9 +162,12 @@ class UserAccount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Example title')
-      ),
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(70),
+        child: Header(
+          leftIcon: 'assets/images/back.png',
+          rightIcon: 'assets/images/settings.png'),
+    ),
       // body is the majority of the screen.
       body: SingleChildScrollView(
         child: appBody,
