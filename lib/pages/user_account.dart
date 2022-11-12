@@ -17,6 +17,30 @@ class UserAccount extends StatelessWidget {
     _mostPoints = points;
     _name = name;
     pictureUrl = url;
+    if (w != 0 || l != 0) {
+      _progress = w/(w+l);
+    } else {
+      _progress = 0.5;
+    }
+
+    if (url == '') {
+      defaultPicture = Image.asset('assets/images/profile.png',
+        width: 150,
+        height: 150,
+      );
+      avatar = CircleAvatar(
+          minRadius: 125,
+          backgroundColor: Colors.white,
+          backgroundImage: defaultPicture.image
+      );
+    } else {
+      avatarPicture = NetworkImage(pictureUrl);
+      avatar = CircleAvatar(
+          minRadius: 125,
+          backgroundColor: Colors.white,
+          backgroundImage: avatarPicture
+      );
+    }
   }
 
   final Color? _backgroundColor = Colors.grey[300];
@@ -24,12 +48,14 @@ class UserAccount extends StatelessWidget {
 
   late int _wins;
   late int _loses;
+  late double _progress;
   late String _category;
   late int _friends;
   late int _mostPoints;
   late String _name;
   late String pictureUrl;
-  late NetworkImage avatarPicture = NetworkImage(pictureUrl);
+  late NetworkImage avatarPicture;
+  late Image defaultPicture;
 
   late final TextStyle nick = const TextStyle(
     fontWeight: FontWeight.bold,
@@ -71,15 +97,12 @@ class UserAccount extends StatelessWidget {
     ),
   );
 
-  late CircleAvatar avatar = CircleAvatar(
-    minRadius: 125,
-    backgroundImage: avatarPicture
-  );
+  late CircleAvatar avatar;
 
   late LinearProgressIndicator winsToLoses = LinearProgressIndicator(
     backgroundColor: Colors.red,
     color: Colors.green,
-    value: _wins/(_wins+_loses),
+    value: _progress,
     minHeight: 15,
   );
 
