@@ -82,28 +82,24 @@ class CategoryPage extends StatelessWidget {
     );
   }
 
-  Widget searchBar(){
-    return
-      Padding(
-        padding: const EdgeInsets.all(15),
-        child: TextField(
-
-      style: const TextStyle(
-        color: Colors.black,
-      ),
-      decoration: InputDecoration(
-        filled: true,
-        fillColor:  Colors.white,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(36.84),
-          borderSide: BorderSide.none
+  Widget searchBar() {
+    return Padding(
+      padding: const EdgeInsets.all(15),
+      child: TextField(
+        style: const TextStyle(
+          color: Colors.black,
         ),
-        hintText: "Search for quiz...",
-        prefixIcon: IconButton(
+        decoration: InputDecoration(
+          filled: true,
+          fillColor: Colors.white,
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(36.84),
+              borderSide: BorderSide.none),
+          hintText: "Search for quiz...",
+          prefixIcon: IconButton(
               icon: Image.asset('assets/images/searchnormal1.png'),
-              onPressed: (){}
+              onPressed: () {}),
         ),
-      ),
       ),
     );
   }
@@ -123,63 +119,63 @@ class CategoryPage extends StatelessWidget {
                 leftIcon: 'assets/images/profile.png',
                 rightIcon: 'assets/images/settings.png'),
           ),
-          body:SingleChildScrollView(child:
-              Column(
-                children: [
-
-               SizedBox(
-                child: searchBar(),
-              ),
-
-              for (var i = 0; i < categories.categories.length - 3; i += 3)
-                Column(
-                  children:[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    categoryButton(keys.elementAt(i), values.elementAt(i)),
-                    categoryButton(
-                        keys.elementAt(i + 1), values.elementAt(i + 1)),
-                    categoryButton(
-                        keys.elementAt(i + 2), values.elementAt(i + 2))
-                  ],
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(
+                  child: searchBar(),
                 ),
-                const SizedBox(height: 20,)
+                for (var i = 0; i < categories.categories.length - 3; i += 3)
+                  Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          categoryButton(
+                              keys.elementAt(i), values.elementAt(i)),
+                          categoryButton(
+                              keys.elementAt(i + 1), values.elementAt(i + 1)),
+                          categoryButton(
+                              keys.elementAt(i + 2), values.elementAt(i + 2))
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      )
+                    ],
+                  ),
+                if (keys.length % 3 == 1)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      categoryButton(keys.elementAt(keys.length - 1),
+                          values.elementAt(keys.length - 1)),
+                      const SizedBox(
+                        width: 110,
+                      ),
+                      const SizedBox(
+                        width: 110,
+                      )
+                    ],
+                  ),
+                if (keys.length % 3 == 2)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      categoryButton(keys.elementAt(keys.length - 2),
+                          values.elementAt(keys.length - 2)),
+                      categoryButton(keys.elementAt(keys.length - 1),
+                          values.elementAt(keys.length - 1)),
+                      const SizedBox(
+                        width: 110,
+                      )
+                    ],
+                  ),
               ],
-                ),
-              if (keys.length % 3 == 1)
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    categoryButton(keys.elementAt(keys.length - 1),
-                        values.elementAt(keys.length - 1)),
-                    const SizedBox(
-                      width: 110,
-                    ),
-                    const SizedBox(
-                      width: 110,
-                    )
-                  ],
-                ),
-              if (keys.length % 3 == 2)
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    categoryButton(keys.elementAt(keys.length - 2),
-                        values.elementAt(keys.length - 2)),
-                    categoryButton(keys.elementAt(keys.length - 1),
-                        values.elementAt(keys.length - 1)),
-                    const SizedBox(
-                      width: 110,
-                    )
-                  ],
-                ),
-            ],
-
-        ),
+            ),
           ),
+        ),
       ),
-    ),
     );
   }
 }
