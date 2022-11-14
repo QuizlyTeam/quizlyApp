@@ -63,10 +63,10 @@ class UserAccount extends StatelessWidget {
       fontWeight: FontWeight.bold, color: Colors.black, fontSize: 25);
 
   late final TextStyle regular = const TextStyle(
-      fontWeight: FontWeight.bold, color: Colors.black, fontSize: 20);
+      fontWeight: FontWeight.bold, color: Colors.black, fontSize: 25);
 
   late final TextStyle title = const TextStyle(
-      fontWeight: FontWeight.bold, color: Colors.white, fontSize: 20);
+      fontWeight: FontWeight.bold, color: Colors.white, fontSize: 25);
 
   late Text ratio = Text('Ratio: ', style: title);
   late Text ratioStat = Text('$_wins:$_loses', style: regular);
@@ -129,7 +129,7 @@ class UserAccount extends StatelessWidget {
       alignment: Alignment.center,
       constraints: const BoxConstraints(
         maxWidth: 300,
-        maxHeight: 30,
+        maxHeight: 40,
       ),
       color: _appColor,
       child: t,
@@ -141,7 +141,7 @@ class UserAccount extends StatelessWidget {
       alignment: Alignment.center,
       constraints: const BoxConstraints(
         maxWidth: 300,
-        maxHeight: 30,
+        maxHeight: 40,
       ),
       color: Colors.white,
       child: t,
@@ -154,8 +154,6 @@ class UserAccount extends StatelessWidget {
       valueField(ratioStat),
       titleField(favQuiz),
       valueField(favQuizStat),
-      titleField(friends),
-      valueField(friendsStat),
       titleField(mostPoints),
       valueField(mostPointsStat),
     ],

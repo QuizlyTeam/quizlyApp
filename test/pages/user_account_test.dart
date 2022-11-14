@@ -37,8 +37,6 @@ void main() {
       expect(find.text('5:2'), findsOneWidget);
       expect(find.text('Favourite quiz: '), findsOneWidget);
       expect(find.text('Cats'), findsOneWidget);
-      expect(find.text('Friends: '), findsOneWidget);
-      expect(find.text('52'), findsOneWidget);
       expect(find.text('Most points: '), findsOneWidget);
       expect(find.text('420'), findsOneWidget);
     });
