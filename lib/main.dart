@@ -9,8 +9,8 @@ void main() => runApp(MaterialApp(initialRoute: '/user_account', routes: {
       '/categoryPage': (context) => CategoryPage(),
       '/loginPage': (context) => const LoginPage(),
       '/user_account': (context) => UserAccount(
-            w: 0,
-            l: 0,
+            w: 3,
+            l: 2,
             url: '',
           )
     }));

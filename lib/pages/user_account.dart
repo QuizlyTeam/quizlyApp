@@ -8,7 +8,6 @@ class UserAccount extends StatelessWidget {
       int w = 3,
       int l = 1,
       String cat = 'Dogs',
-      friend = 31,
       points = 1043,
       name = 'Guest314159',
       url = 'https://img.redro.pl/obrazy/czarny-pies-700-138366861.jpg'})
@@ -16,7 +15,6 @@ class UserAccount extends StatelessWidget {
     _wins = w;
     _loses = l;
     _category = cat;
-    _friends = friend;
     _mostPoints = points;
     _name = name;
     pictureUrl = url;
@@ -52,7 +50,6 @@ class UserAccount extends StatelessWidget {
   late int _loses;
   late double _progress;
   late String _category;
-  late int _friends;
   late int _mostPoints;
   late String _name;
   late String pictureUrl;
@@ -72,8 +69,6 @@ class UserAccount extends StatelessWidget {
   late Text ratioStat = Text('$_wins:$_loses', style: regular);
   late Text favQuiz = Text('Favourite quiz: ', style: title);
   late Text favQuizStat = Text(_category, style: regular);
-  late Text friends = Text('Friends: ', style: title);
-  late Text friendsStat = Text('$_friends', style: regular);
   late Text mostPoints = Text('Most points: ', style: title);
   late Text mostPointsStat = Text('$_mostPoints', style: regular);
 

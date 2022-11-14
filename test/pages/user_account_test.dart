@@ -29,7 +29,6 @@ void main() {
             w: 5,
             l: 2,
             cat: 'Cats',
-            friend: 52,
             points: 420,
           )));
       await tester.pumpWidget(testWidget);
