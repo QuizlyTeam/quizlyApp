@@ -29,7 +29,6 @@ void main() {
             w: 5,
             l: 2,
             cat: 'Cats',
-            friend: 52,
             points: 420,
           )));
       await tester.pumpWidget(testWidget);
@@ -37,8 +36,6 @@ void main() {
       expect(find.text('5:2'), findsOneWidget);
       expect(find.text('Favourite quiz: '), findsOneWidget);
       expect(find.text('Cats'), findsOneWidget);
-      expect(find.text('Friends: '), findsOneWidget);
-      expect(find.text('52'), findsOneWidget);
       expect(find.text('Most points: '), findsOneWidget);
       expect(find.text('420'), findsOneWidget);
     });
