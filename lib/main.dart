@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'pages/question.dart';
+import 'pages/settings.dart';
 
-void main() => runApp(MaterialApp(initialRoute: '/questionPage', routes: {
-      '/questionPage': (context) => const Questionpage(),
-}));
+void main() => runApp(MaterialApp(initialRoute: '/settings', routes: {
+      '/settings': (context) => const SettingsPage(),
+    }));
