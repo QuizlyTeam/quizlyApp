@@ -40,6 +40,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  network_image_mock: ^2.0.1
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -71,6 +72,13 @@ flutter:
     - assets/images/time.png
     - assets/images/quizly.png
     - assets/images/profile.png
+    - assets/images/game.png
+    - assets/images/searchnormal1.png
+    - assets/images/Group 5.png
+    - assets/images/Arrow 1.png
+    - assets/images/Facebook (icon — Colour).png
+    - assets/images/Google (icon — Colour).png
+    - assets/images/Mask group.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

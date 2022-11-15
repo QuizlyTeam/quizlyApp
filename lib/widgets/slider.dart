@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:quizly_app/widgets/header.dart';
-import 'package:quizly_app/widgets/slider.dart';
 
 class QuizlySlider extends StatefulWidget {
   const QuizlySlider({super.key});
