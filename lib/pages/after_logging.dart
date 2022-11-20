@@ -8,7 +8,7 @@ class AfterLogging extends StatelessWidget {
   final ButtonStyle style =
   ElevatedButton.styleFrom(
     backgroundColor: Colors.cyan,
-    textStyle: const TextStyle(fontSize: 50),
+    textStyle: const TextStyle(fontSize: 50, ),
   );
 
   late ClipRRect playButton = ClipRRect(
