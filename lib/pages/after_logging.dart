@@ -4,9 +4,12 @@ import 'package:quizly_app/widgets/header.dart';
 class AfterLogging extends StatelessWidget {
   AfterLogging({super.key});
 
-  final Color _backgroundColor = const Color(0xFF90A4AE);
+  final Color? _backgroundColor = Colors.grey[300];
   final ButtonStyle style =
-  ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20));
+  ElevatedButton.styleFrom(
+    backgroundColor: Colors.cyan,
+    textStyle: const TextStyle(fontSize: 50),
+  );
 
   late ClipRRect playButton = ClipRRect(
     borderRadius: BorderRadius.circular(30.0),
@@ -29,17 +32,23 @@ class AfterLogging extends StatelessWidget {
       child: ElevatedButton(
         style: style,
         onPressed: () {},
-        child: const Text(''),
+        child: const Text('My quizzes'),
       ),
     ),
   );
+
+  late SizedBox someSpace = const SizedBox(width: 300, height: 75);
+  late SizedBox moreSpace = const SizedBox(width: 300, height: 200);
 
   late Column appBody = Column(
     crossAxisAlignment: CrossAxisAlignment.center,
     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
     children: [
+      moreSpace,
       playButton,
-      quizButton
+      someSpace,
+      quizButton,
+      moreSpace
     ],
   );
 
@@ -54,7 +63,7 @@ class AfterLogging extends StatelessWidget {
       ),
       // body is the majority of the screen.
       body: SingleChildScrollView(
-        child: appBody,
+        child: Center(child: appBody),
       ),
       backgroundColor: _backgroundColor,
     );
