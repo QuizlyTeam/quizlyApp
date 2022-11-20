@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:quizly_app/widgets/header.dart';
 
-class AfterLogging extends StatelessWidget {
-  AfterLogging({super.key});
+class AfterLogging extends StatefulWidget {
+  const AfterLogging({super.key});
+
+  @override
+  State<AfterLogging> createState() => _AfterLoggingState();
+}
+
+class _AfterLoggingState extends State<AfterLogging> {
 
   final Color? _backgroundColor = Colors.grey[300];
   final ButtonStyle style =
