@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:quizly_app/pages/menu.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -123,7 +125,11 @@ class LoginPage extends StatelessWidget {
                   height: 5,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.to(const MenuPage(),
+                        transition: Transition.rightToLeftWithFade,
+                        duration: const Duration(milliseconds: 500));
+                  },
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25),

@@ -1,7 +1,8 @@
 import 'dart:collection';
-
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:quizly_app/widgets/header.dart';
+import 'question.dart';
 
 class Category {
   final images = [];
@@ -39,7 +40,15 @@ class CategoryPage extends StatelessWidget {
 
   Widget categoryButton(String categoryName, String categoryImage) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: () {
+        Get.to(const Question(
+            question: "Jakiego kraju \n to flaga?",
+            ans1: "Kiribati",
+            ans2: "Liberia",
+            ans3: "Tuvalu",
+            ans4: "Macedonia",
+            correctAnswer: "Kiribati"));
+      },
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.cyan,
         fixedSize: const Size(110, 145),
