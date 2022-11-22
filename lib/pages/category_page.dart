@@ -1,41 +1,60 @@
-import 'dart:collection';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:quizly_app/widgets/header.dart';
 import 'question.dart';
 
-class Category {
-  final images = [];
-  final Map<String, String> categories = HashMap();
-  Category();
-  void addImage(String pathToImage) {
-    images.add(pathToImage);
-  }
+class CategoryPage extends StatefulWidget {
+  const CategoryPage({Key? key}) : super(key: key);
 
-  void addCategory(String categoryName, String pathToImage) {
-    categories[categoryName] = pathToImage;
-  }
+  @override
+  State<CategoryPage> createState() => _CategoryPageState();
 }
 
-class CategoryPage extends StatelessWidget {
-  CategoryPage({Key? key}) : super(key: key);
-  final Category categories = Category();
+class _CategoryPageState extends State<CategoryPage> {
+  late List<String> categories = [];
+  late List<String> search = [];
+  late List<String> pathToImages = ['assets/images/game.png'];
 
   void addQuiz(String categoryName, String pathToImage) {
-    categories.addCategory(categoryName, pathToImage);
+    categories.add(categoryName);
+    pathToImages.add(pathToImage);
   }
 
-  void defaultCategories() {
-    categories.addCategory("Film & TV", 'assets/images/game.png');
-    categories.addCategory("Arts & Literature", 'assets/images/game.png');
-    categories.addCategory("Food & Drink", 'assets/images/game.png');
-    categories.addCategory("General Knowledge", 'assets/images/game.png');
-    categories.addCategory("Geography", 'assets/images/game.png');
-    categories.addCategory("History", 'assets/images/game.png');
-    categories.addCategory("Music", 'assets/images/game.png');
-    categories.addCategory("Science", 'assets/images/game.png');
-    categories.addCategory("Society & Culture", 'assets/images/game.png');
-    categories.addCategory("Sport & Leisure", 'assets/images/game.png');
+  @override
+  void initState() {
+    categories.add("Film & TV");
+    categories.add("Food & Drink");
+    categories.add("General Knowledge");
+    categories.add("Geography");
+    categories.add("History");
+    categories.add("Music");
+    categories.add("Science");
+    categories.add("Society & culture");
+    categories.add("Arts & Literature");
+    categories.add("Sport & Leisure");
+    search.addAll(categories);
+    super.initState();
+  }
+
+  void filterSearchResults(String query) {
+    if (query.isNotEmpty) {
+      List<String> help = [];
+      for (var i in categories) {
+        if (i.toLowerCase().contains(query.toLowerCase())) {
+          help.add(i);
+        }
+      }
+      setState(() {
+        search.clear();
+        search.addAll(help);
+      });
+      return;
+    } else {
+      setState(() {
+        search.clear();
+        search.addAll(categories);
+      });
+    }
   }
 
   Widget categoryButton(String categoryName, String categoryImage) {
@@ -95,6 +114,9 @@ class CategoryPage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(15),
       child: TextField(
+        onChanged: (value) {
+          filterSearchResults(value);
+        },
         style: const TextStyle(
           color: Colors.black,
         ),
@@ -115,9 +137,6 @@ class CategoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    defaultCategories();
-    var keys = categories.categories.keys;
-    var values = categories.categories.values;
     return MaterialApp(
       home: SafeArea(
         child: Scaffold(
@@ -134,18 +153,18 @@ class CategoryPage extends StatelessWidget {
                 SizedBox(
                   child: searchBar(),
                 ),
-                for (var i = 0; i < categories.categories.length - 3; i += 3)
+                for (var i = 0; i <= search.length - 3; i += 3)
                   Column(
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           categoryButton(
-                              keys.elementAt(i), values.elementAt(i)),
-                          categoryButton(
-                              keys.elementAt(i + 1), values.elementAt(i + 1)),
-                          categoryButton(
-                              keys.elementAt(i + 2), values.elementAt(i + 2))
+                              search.elementAt(i), pathToImages.elementAt(0)),
+                          categoryButton(search.elementAt(i + 1),
+                              pathToImages.elementAt(0)),
+                          categoryButton(search.elementAt(i + 2),
+                              pathToImages.elementAt(0)),
                         ],
                       ),
                       const SizedBox(
@@ -153,12 +172,12 @@ class CategoryPage extends StatelessWidget {
                       )
                     ],
                   ),
-                if (keys.length % 3 == 1)
+                if (search.length % 3 == 1)
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      categoryButton(keys.elementAt(keys.length - 1),
-                          values.elementAt(keys.length - 1)),
+                      categoryButton(search.elementAt(search.length - 1),
+                          pathToImages.elementAt(0)),
                       const SizedBox(
                         width: 110,
                       ),
@@ -167,14 +186,14 @@ class CategoryPage extends StatelessWidget {
                       )
                     ],
                   ),
-                if (keys.length % 3 == 2)
+                if (search.length % 3 == 2)
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      categoryButton(keys.elementAt(keys.length - 2),
-                          values.elementAt(keys.length - 2)),
-                      categoryButton(keys.elementAt(keys.length - 1),
-                          values.elementAt(keys.length - 1)),
+                      categoryButton(search.elementAt(search.length - 2),
+                          pathToImages.elementAt(0)),
+                      categoryButton(search.elementAt(search.length - 1),
+                          pathToImages.elementAt(0)),
                       const SizedBox(
                         width: 110,
                       )

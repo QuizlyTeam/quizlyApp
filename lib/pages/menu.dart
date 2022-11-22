@@ -9,7 +9,7 @@ class MenuPage extends StatelessWidget {
   Widget answerButton(String text) {
     return ElevatedButton(
       onPressed: () {
-        if (text == 'Play!') Get.to(CategoryPage());
+        if (text == 'Play!') Get.to(const CategoryPage());
       },
       style: ElevatedButton.styleFrom(
           backgroundColor: Colors.cyan,
