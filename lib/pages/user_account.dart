@@ -175,18 +175,20 @@ class UserAccount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const PreferredSize(
-        preferredSize: Size.fromHeight(70),
-        child: Header(
-            leftIcon: 'assets/images/back.png',
-            rightIcon: 'assets/images/settings.png'),
+    return SafeArea(
+      child: Scaffold(
+        appBar: const PreferredSize(
+          preferredSize: Size.fromHeight(70),
+          child: Header(
+              leftIcon: 'assets/images/back.png',
+              rightIcon: 'assets/images/settings.png'),
+        ),
+        // body is the majority of the screen.
+        body: SingleChildScrollView(
+          child: appBody,
+        ),
+        backgroundColor: _backgroundColor,
       ),
-      // body is the majority of the screen.
-      body: SingleChildScrollView(
-        child: appBody,
-      ),
-      backgroundColor: _backgroundColor,
     );
   }
 }

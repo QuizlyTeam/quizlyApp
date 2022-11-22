@@ -3,7 +3,7 @@ import 'package:quizly_app/pages/category_page.dart';
 
 void main() {
   testWidgets('Widget Home display Image', (WidgetTester tester) async {
-    await tester.pumpWidget(CategoryPage());
+    await tester.pumpWidget(const CategoryPage());
 
     expect(find.text("Film & TV"), findsOneWidget);
     expect(find.text("Arts & Literature"), findsOneWidget);

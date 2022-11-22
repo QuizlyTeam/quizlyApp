@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:quizly_app/pages/settings.dart';
+import 'package:quizly_app/pages/user_account.dart';
 
 //leftIcon - path ( String ) do lewej ikonki, pamietac zeby byla
 //tez zadeklarowana w pubspec.yaml
@@ -28,7 +31,13 @@ class Header extends StatelessWidget {
               image: AssetImage(leftIcon),
               height: 90,
             ),
-            onPressed: () {}, // null disables the button
+            onPressed: () {
+              if (leftIcon == 'assets/images/profile.png') {
+                Get.to(UserAccount());
+              } else if (leftIcon == 'assets/images/back.png') {
+                Get.back();
+              }
+            }, // null disables the button
             iconSize: 58,
           ),
           const Expanded(
@@ -42,7 +51,11 @@ class Header extends StatelessWidget {
               image: AssetImage(rightIcon),
             ),
             iconSize: 58,
-            onPressed: () {},
+            onPressed: () {
+              if (rightIcon == 'assets/images/settings.png') {
+                Get.to(const SettingsPage());
+              }
+            },
           ),
         ],
       ),

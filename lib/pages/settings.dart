@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../widgets/slider.dart';
+import 'package:get/get.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -85,7 +86,9 @@ class SettingsPage extends StatelessWidget {
                           const SizedBox(height: 25),
                           Center(
                             child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Get.back();
+                              },
                               style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.cyan,
                                   fixedSize: const Size(190, 68),

@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:quizly_app/pages/category_page.dart';
 import 'package:quizly_app/widgets/header.dart';
+import 'package:get/get.dart';
 
 class MenuPage extends StatelessWidget {
   const MenuPage({super.key});
 
   Widget answerButton(String text) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: () {
+        if (text == 'Play!') Get.to(const CategoryPage());
+      },
       style: ElevatedButton.styleFrom(
           backgroundColor: Colors.cyan,
           fixedSize: const Size(280, 120),
