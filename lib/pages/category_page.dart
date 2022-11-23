@@ -60,13 +60,7 @@ class _CategoryPageState extends State<CategoryPage> {
   Widget categoryButton(String categoryName, String categoryImage) {
     return ElevatedButton(
       onPressed: () {
-        Get.to(const Question(
-            question: "Jakiego kraju \n to flaga?",
-            ans1: "Kiribati",
-            ans2: "Liberia",
-            ans3: "Tuvalu",
-            ans4: "Macedonia",
-            correctAnswer: "Kiribati"));
+        Get.to(const Question());
       },
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.cyan,

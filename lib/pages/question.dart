@@ -1,44 +1,73 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+//import 'package:get/get.dart';
 import 'package:quizly_app/widgets/header.dart';
 
 class Question extends StatefulWidget {
-  final String question;
-  final String ans1;
-  final String ans2;
-  final String ans3;
-  final String ans4;
-  final String correctAnswer;
-  const Question({
-    super.key,
-    required this.question,
-    required this.ans1,
-    required this.ans2,
-    required this.ans3,
-    required this.ans4,
-    required this.correctAnswer,
-  });
+  const Question({super.key});
 
   @override
   State<Question> createState() => _QuestionState();
 }
 
 class _QuestionState extends State<Question> {
+  late String question;
+  late String ans1;
+  late String ans2;
+  late String ans3;
+  late String ans4;
+  late String correctAnswer;
+
   double value = 1;
+  bool clickedAnything = false;
+  var normalColor = Colors.cyan;
+  List<bool> wasClicked = [false, false, false, false];
   @override
   void initState() {
     super.initState();
     value = 1;
+    question = "Jakiego kraju \n to flaga?";
+    ans1 = "Kiribati";
+    ans2 = "Liberia";
+    ans3 = "Tuvalu";
+    ans4 = "Macedonia";
+    correctAnswer = "Kiribati";
     determinateIndicator();
+
     setState(() {});
   }
 
-  Widget answerButton(String answer) {
+  Widget answerButton(String answer, int index) {
+    if (answer == correctAnswer && clickedAnything) {
+      normalColor = Colors.green;
+    } else if (answer != correctAnswer && wasClicked.elementAt(index)) {
+      normalColor = Colors.red;
+    } else {
+      normalColor = Colors.cyan;
+    }
+
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: clickedAnything
+          ? () {}
+          : () {
+              if (answer == correctAnswer) {
+                setState(() {
+                  clickedAnything = true;
+                  //  wasClicked[index]= true;
+                  // normalColor = Colors.green;
+                });
+              } else {
+                setState(() {
+                  clickedAnything = true;
+                  wasClicked[index] = true;
+
+                  //   normalColor = Colors.red;
+                });
+              }
+            },
       style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.cyan,
+          backgroundColor: normalColor,
           fixedSize: const Size(190, 120),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(32.0),
@@ -51,12 +80,12 @@ class _QuestionState extends State<Question> {
   }
 
   void determinateIndicator() {
-    Timer.periodic(const Duration(milliseconds: 2), (Timer timer) {
+    Timer.periodic(const Duration(milliseconds: 1), (Timer timer) {
       setState(() {
         if (value == 0) {
           timer.cancel();
         } else {
-          value = value - 0.0001;
+          value = value - 0.00015;
         }
       });
     });
@@ -77,7 +106,7 @@ class _QuestionState extends State<Question> {
         const SizedBox(height: 20),
         SizedBox(
           child: Text(
-            widget.question,
+            question,
             textAlign: TextAlign.center,
             style: const TextStyle(height: 1.2, fontSize: 40),
           ),
@@ -108,14 +137,14 @@ class _QuestionState extends State<Question> {
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [answerButton(widget.ans1), answerButton(widget.ans2)],
+          children: [answerButton(ans1, 0), answerButton(ans2, 1)],
         ),
         const SizedBox(
           height: 10,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [answerButton(widget.ans3), answerButton(widget.ans3)],
+          children: [answerButton(ans3, 2), answerButton(ans4, 3)],
         )
       ],
     );
