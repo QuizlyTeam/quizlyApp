@@ -5,20 +5,26 @@ import 'package:flutter/material.dart';
 import 'package:quizly_app/widgets/header.dart';
 
 class Question extends StatefulWidget {
-  const Question({super.key});
+  final String question;
+  final String ans1;
+  final String ans2;
+  final String ans3;
+  final String ans4;
+  final String correctAnswer;
+  const Question(
+      {super.key,
+      required this.question,
+      required this.ans1,
+      required this.ans2,
+      required this.ans3,
+      required this.ans4,
+      required this.correctAnswer});
 
   @override
   State<Question> createState() => _QuestionState();
 }
 
 class _QuestionState extends State<Question> {
-  late String question;
-  late String ans1;
-  late String ans2;
-  late String ans3;
-  late String ans4;
-  late String correctAnswer;
-
   double value = 1;
   bool clickedAnything = false;
   var normalColor = Colors.cyan;
@@ -27,21 +33,16 @@ class _QuestionState extends State<Question> {
   void initState() {
     super.initState();
     value = 1;
-    question = "Jakiego kraju \n to flaga?";
-    ans1 = "Kiribati";
-    ans2 = "Liberia";
-    ans3 = "Tuvalu";
-    ans4 = "Macedonia";
-    correctAnswer = "Kiribati";
+
     determinateIndicator();
 
-    setState(() {});
+    //setState(() {});
   }
 
   Widget answerButton(String answer, int index) {
-    if (answer == correctAnswer && clickedAnything) {
+    if (answer == widget.correctAnswer && clickedAnything) {
       normalColor = Colors.green;
-    } else if (answer != correctAnswer && wasClicked.elementAt(index)) {
+    } else if (answer != widget.correctAnswer && wasClicked.elementAt(index)) {
       normalColor = Colors.red;
     } else {
       normalColor = Colors.cyan;
@@ -51,7 +52,7 @@ class _QuestionState extends State<Question> {
       onPressed: clickedAnything
           ? () {}
           : () {
-              if (answer == correctAnswer) {
+              if (answer == widget.correctAnswer) {
                 setState(() {
                   clickedAnything = true;
                   //  wasClicked[index]= true;
@@ -82,7 +83,7 @@ class _QuestionState extends State<Question> {
   void determinateIndicator() {
     Timer.periodic(const Duration(milliseconds: 1), (Timer timer) {
       setState(() {
-        if (value == 0) {
+        if (value <= 0) {
           timer.cancel();
         } else {
           value = value - 0.00015;
@@ -106,7 +107,7 @@ class _QuestionState extends State<Question> {
         const SizedBox(height: 20),
         SizedBox(
           child: Text(
-            question,
+            widget.question,
             textAlign: TextAlign.center,
             style: const TextStyle(height: 1.2, fontSize: 40),
           ),
@@ -137,14 +138,20 @@ class _QuestionState extends State<Question> {
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [answerButton(ans1, 0), answerButton(ans2, 1)],
+          children: [
+            answerButton(widget.ans1, 0),
+            answerButton(widget.ans2, 1)
+          ],
         ),
         const SizedBox(
           height: 10,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [answerButton(ans3, 2), answerButton(ans4, 3)],
+          children: [
+            answerButton(widget.ans3, 2),
+            answerButton(widget.ans4, 3)
+          ],
         )
       ],
     );
