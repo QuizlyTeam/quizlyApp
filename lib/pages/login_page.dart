@@ -29,7 +29,6 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: SafeArea(
-        bottom: false,
         child: Scaffold(
           backgroundColor: Colors.cyan,
           body: SingleChildScrollView(
