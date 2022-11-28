@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quizly_app/widgets/header.dart';
-import 'package:quizly_app/pages/menu.dart';
+import 'package:quizly_app/pages/category_page.dart';
 
 class GameForm extends StatelessWidget {
   const GameForm({super.key});
@@ -76,10 +76,10 @@ class GameForm extends StatelessWidget {
                       height: 64,
                       decoration: const BoxDecoration(
                         borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(35),
-                          topRight: Radius.circular(35),
-                          bottomLeft: Radius.circular(35),
-                          bottomRight: Radius.circular(35),
+                          topLeft: Radius.circular(15),
+                          topRight: Radius.circular(15),
+                          bottomLeft: Radius.circular(15),
+                          bottomRight: Radius.circular(15),
                         ),
                         color: Colors.white,
                       )
@@ -124,14 +124,71 @@ class GameForm extends StatelessWidget {
                 width: 324,
                 height: 64,
                 child: ClipRRect(
-                    borderRadius: BorderRadius.circular(35),
+                    borderRadius: BorderRadius.circular(15),
                     child: const MyStatefulWidget()
                 ),
               ),
-
-            ]
-            )
+            ])
         ),
+        SizedBox(
+          width: 390,
+          height: 64,
+          child: Stack(children: <Widget>[
+              Positioned(
+                  left: 32,
+                  child: Container(
+                    width: 324,
+                    height: 64,
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(15),
+                          topRight: Radius.circular(15),
+                          bottomLeft: Radius.circular(15),
+                          bottomRight: Radius.circular(15),
+                        ),
+                        color: Colors.white
+                    ),
+                  )
+              ),
+              Positioned(
+                  left: 258,
+                  child: ElevatedButton(
+                    onPressed: () { Get.to(const CategoryPage()); },
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.cyan,
+                        fixedSize: const Size(100, 64),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        )),
+                    child: const Text(
+                      'Pick',
+                      style: TextStyle(fontSize: 30, color: Colors.black),
+                    ),
+                  )
+              ),
+              const Positioned(
+                  left: 64,
+                  top: 16,
+                  child: Text(
+                    'Category',
+                    style: TextStyle(fontSize: 30, color: Colors.black),
+                  )
+              ),
+            ])
+        ),
+        ElevatedButton(
+            onPressed: () {},
+            style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.cyan,
+                fixedSize: const Size(280, 120),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(32.0),
+                )),
+            child: const Text(
+              'Play!',
+              style:  TextStyle(fontSize: 30, color: Colors.white),
+            )
+        )
       ],
     );
   }
