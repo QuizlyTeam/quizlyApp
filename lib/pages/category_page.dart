@@ -1,8 +1,6 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:quizly_app/widgets/header.dart';
-import 'package:quizly_app/pages/game_form.dart';
-import 'question.dart';
 
 class CategoryPage extends StatefulWidget {
   const CategoryPage({Key? key}) : super(key: key);
