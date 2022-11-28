@@ -176,7 +176,29 @@ class GameForm extends StatelessWidget {
               ),
             ])
         ),
-        const MySlider(),
+        SizedBox(
+          width: 390,
+          height: 96,
+          child: Stack(children: <Widget>[
+            Positioned(
+                left: 32,
+                child: Container(
+                  width: 324,
+                  height: 96,
+                  decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(15),
+                        topRight: Radius.circular(15),
+                        bottomLeft: Radius.circular(15),
+                        bottomRight: Radius.circular(15),
+                      ),
+                      color: Colors.white
+                  ),
+                  child: const MySlider(),
+                )
+            ),
+          ],),
+        ),
         ElevatedButton(
             onPressed: () {},
             style: ElevatedButton.styleFrom(
@@ -281,27 +303,41 @@ class MySlider extends StatefulWidget {
 }
 
 class _MySliderState extends State<MySlider> {
-  double _currentSliderValue = 1;
+  double _currentSliderValue = 5;
 
   @override
   Widget build(BuildContext context) {
-    return SliderTheme(
-        data: const SliderThemeData(
-          trackHeight: 32,
-          activeTrackColor: Colors.cyan,
-          thumbShape: RoundSliderThumbShape(enabledThumbRadius: 0)
-        ),
-        child: Slider(
-          value: _currentSliderValue,
-          max: 10,
-          divisions: 10,
-          label: _currentSliderValue.round().toString(),
-          onChanged: (double value) {
-            setState(() {
-              _currentSliderValue = value;
-            });
-          },
-        )
+    return Column(
+        children:
+        [
+          Container(height: 16,),
+          Text(
+              'Max players: ${_currentSliderValue.toInt()}',
+              style: const TextStyle(
+                  fontSize: 20,
+                  color: Colors.black
+              )
+          ),
+          SliderTheme(
+            data: const SliderThemeData(
+              trackHeight: 32,
+              activeTrackColor: Colors.cyan,
+              thumbShape: RoundSliderThumbShape(enabledThumbRadius: 16),
+              thumbColor: Colors.cyan
+            ),
+            child: Slider(
+              value: _currentSliderValue,
+              min: 1,
+              max: 10,
+              divisions: 10,
+              onChanged: (double value) {
+                setState(() {
+                  _currentSliderValue = value;
+                });
+                },
+              )
+          ),
+        ]
     );
   }
 
