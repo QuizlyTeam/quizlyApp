@@ -130,52 +130,7 @@ class GameForm extends StatelessWidget {
               ),
             ])
         ),
-        SizedBox(
-          width: 390,
-          height: 64,
-          child: Stack(children: <Widget>[
-              Positioned(
-                  left: 32,
-                  child: Container(
-                    width: 324,
-                    height: 64,
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(15),
-                          topRight: Radius.circular(15),
-                          bottomLeft: Radius.circular(15),
-                          bottomRight: Radius.circular(15),
-                        ),
-                        color: Colors.white
-                    ),
-                  )
-              ),
-              Positioned(
-                  left: 258,
-                  child: ElevatedButton(
-                    onPressed: () { Get.to(const CategoryPage()); },
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.cyan,
-                        fixedSize: const Size(100, 64),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                        )),
-                    child: const Text(
-                      'Pick',
-                      style: TextStyle(fontSize: 30, color: Colors.black),
-                    ),
-                  )
-              ),
-              const Positioned(
-                  left: 64,
-                  top: 16,
-                  child: Text(
-                    'Category',
-                    style: TextStyle(fontSize: 30, color: Colors.black),
-                  )
-              ),
-            ])
-        ),
+        const PickingCategory(),
         SizedBox(
           width: 390,
           height: 96,
@@ -338,6 +293,75 @@ class _MySliderState extends State<MySlider> {
               )
           ),
         ]
+    );
+  }
+
+}
+
+class PickingCategory extends StatefulWidget {
+  const PickingCategory({super.key});
+
+  @override
+  State<StatefulWidget> createState() => _PickingCategoryState();
+}
+
+class _PickingCategoryState extends State<PickingCategory> {
+  String _category = "Category";
+
+  void _newCategory() async {
+    _category = await Get.to(const CategoryPage());
+    setState(() {
+      _category = _category;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+        width: 390,
+        height: 64,
+        child: Stack(children: <Widget>[
+          Positioned(
+              left: 32,
+              child: Container(
+                width: 324,
+                height: 64,
+                decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                      topRight: Radius.circular(15),
+                      bottomLeft: Radius.circular(15),
+                      bottomRight: Radius.circular(15),
+                    ),
+                    color: Colors.white
+                ),
+              )
+          ),
+          Positioned(
+              left: 258,
+              child: ElevatedButton(
+                onPressed: _newCategory,
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.cyan,
+                    fixedSize: const Size(100, 64),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    )),
+                child: const Text(
+                  'Pick',
+                  style: TextStyle(fontSize: 30, color: Colors.black),
+                ),
+              )
+          ),
+          Positioned(
+              left: 48,
+              top: 16,
+              child: Text(
+                _category,
+                style: const TextStyle(fontSize: 25, color: Colors.black),
+              )
+          ),
+        ])
     );
   }
 
