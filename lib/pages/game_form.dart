@@ -125,7 +125,7 @@ class GameForm extends StatelessWidget {
                 height: 64,
                 child: ClipRRect(
                     borderRadius: BorderRadius.circular(15),
-                    child: const MyStatefulWidget()
+                    child: const MySwitch()
                 ),
               ),
             ])
@@ -176,6 +176,7 @@ class GameForm extends StatelessWidget {
               ),
             ])
         ),
+        const MySlider(),
         ElevatedButton(
             onPressed: () {},
             style: ElevatedButton.styleFrom(
@@ -188,7 +189,7 @@ class GameForm extends StatelessWidget {
               'Play!',
               style:  TextStyle(fontSize: 30, color: Colors.white),
             )
-        )
+        ),
       ],
     );
   }
@@ -213,14 +214,14 @@ class GameForm extends StatelessWidget {
 
 }
 
-class MyStatefulWidget extends StatefulWidget {
-  const MyStatefulWidget({super.key});
+class MySwitch extends StatefulWidget {
+  const MySwitch({super.key});
 
   @override
-  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
+  State<MySwitch> createState() => _MySwitchState();
 }
 
-class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+class _MySwitchState extends State<MySwitch> {
   bool selected = false;
   String name = 'Private';
 
@@ -270,4 +271,38 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       ),
     );
   }
+}
+
+class MySlider extends StatefulWidget {
+  const MySlider({super.key});
+
+  @override
+  State<MySlider> createState() => _MySliderState();
+}
+
+class _MySliderState extends State<MySlider> {
+  double _currentSliderValue = 1;
+
+  @override
+  Widget build(BuildContext context) {
+    return SliderTheme(
+        data: const SliderThemeData(
+          trackHeight: 32,
+          activeTrackColor: Colors.cyan,
+          thumbShape: RoundSliderThumbShape(enabledThumbRadius: 0)
+        ),
+        child: Slider(
+          value: _currentSliderValue,
+          max: 10,
+          divisions: 10,
+          label: _currentSliderValue.round().toString(),
+          onChanged: (double value) {
+            setState(() {
+              _currentSliderValue = value;
+            });
+          },
+        )
+    );
+  }
+
 }
