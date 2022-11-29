@@ -21,9 +21,13 @@ class _QuestionState extends State<Question> {
   String ans3 = "";
   String ans4 = "";
   String correctAnswer = "";
+
   double value = 1;
+  int questionNumber = 1;
   bool clickedAnything = false;
+
   var normalColor = Colors.cyan;
+
   List<bool> wasClicked = [false, false, false, false];
   @override
   void initState() {
@@ -61,10 +65,10 @@ class _QuestionState extends State<Question> {
     return ElevatedButton(
       onPressed: clickedAnything
           ? () {}
-          : () {
+          : () async {
               var answers = ["A","B","C","D"];
               widget.socket.emit("answer", {"answer": answers[index], "time": 0});
-              widget.socket.on("answer", (data) {correctAnswer = data; print(correctAnswer);});
+              widget.socket.on("answer", (data) {correctAnswer = data;});
               if (answer == correctAnswer) {
                 setState(() {
                   clickedAnything = true;
@@ -79,6 +83,22 @@ class _QuestionState extends State<Question> {
                   // normalColor = Colors.red;
                 });
               }
+
+              await Future.delayed(Duration(seconds: (value*18).toInt()));
+              clickedAnything = false;
+              wasClicked[index] = false;
+              setState(() {
+                widget.socket.emit('question');
+                widget.socket.on('question', (data) {
+                  question = data['question'];
+                  ans1 = data['answers'][0];
+                  ans2 = data['answers'][1];
+                  ans3 = data['answers'][2];
+                  ans4 = data['answers'][3];
+                  questionNumber++;
+                  value = 1;
+                });
+              });
             },
       style: ElevatedButton.styleFrom(
           backgroundColor: normalColor,
@@ -88,7 +108,7 @@ class _QuestionState extends State<Question> {
           )),
       child: Text(
         answer,
-        style: const TextStyle(fontSize: 30, color: Colors.black),
+        style: const TextStyle(fontSize: 20, color: Colors.black),
       ),
     );
   }
@@ -99,7 +119,7 @@ class _QuestionState extends State<Question> {
         if (value <= 0) {
           timer.cancel();
         } else {
-          value = value - 0.00015;
+          value = value - 0.0000555;
         }
       });
     });
@@ -109,9 +129,9 @@ class _QuestionState extends State<Question> {
     return Column(
       children: [
         const SizedBox(height: 20),
-        const Text(
-          "Pytanie 1:",
-          style: TextStyle(
+        Text(
+          "Question $questionNumber:",
+          style: const TextStyle(
               fontSize: 50,
               height: 1,
               fontWeight: FontWeight.bold,
