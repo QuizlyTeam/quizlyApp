@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quizly_app/widgets/header.dart';
 import 'package:quizly_app/pages/category_page.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class GameForm extends StatelessWidget {
   const GameForm({super.key});
@@ -154,19 +155,7 @@ class GameForm extends StatelessWidget {
             ),
           ],),
         ),
-        ElevatedButton(
-            onPressed: () {},
-            style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.cyan,
-                fixedSize: const Size(280, 120),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(32.0),
-                )),
-            child: const Text(
-              'Play!',
-              style:  TextStyle(fontSize: 30, color: Colors.white),
-            )
-        ),
+        const PlayButton()
       ],
     );
   }
@@ -362,6 +351,43 @@ class _PickingCategoryState extends State<PickingCategory> {
               )
           ),
         ])
+    );
+  }
+
+}
+
+class PlayButton extends StatefulWidget {
+  const PlayButton({super.key});
+
+  @override
+  State<StatefulWidget> createState() => _PlayButtonState();
+}
+
+class _PlayButtonState extends State<PlayButton> {
+  final IO.Socket socket = IO.io('http://10.0.2.2:8000/',
+      IO.OptionBuilder().setTransports(['websocket']).build());
+
+  void connect() {
+    socket.emit('give me quiz');
+    socket.onDisconnect((_) => print('Connection Disconnection'));
+    socket.onConnectError((err) => print(err));
+    socket.onError((err) => print(err));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+        onPressed: connect,
+        style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.cyan,
+            fixedSize: const Size(280, 120),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(32.0),
+            )),
+        child: const Text(
+          'Play!',
+          style:  TextStyle(fontSize: 30, color: Colors.white),
+        )
     );
   }
 
