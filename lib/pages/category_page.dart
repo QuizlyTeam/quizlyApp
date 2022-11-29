@@ -5,10 +5,9 @@ import 'question.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-Future<List<String>> fetchCategories() async {
+Future<List<String>> fetchCategories(http.Client client) async {
   final response =
-      await http.get(Uri.parse('http://10.0.2.2:8000/v1/quizzes/categories'));
-
+      await client.get(Uri.parse('http://10.0.2.2:8000/v1/quizzes/categories'));
   if (response.statusCode == 200) {
     var json = jsonDecode(response.body);
     List<String> categoriesFromAPI = [];
@@ -42,7 +41,7 @@ class _CategoryPageState extends State<CategoryPage> {
 
   @override
   void initState() {
-    futureCategories = fetchCategories();
+    futureCategories = fetchCategories(http.Client());
     super.initState();
   }
 

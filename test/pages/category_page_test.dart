@@ -1,34 +1,35 @@
-import 'dart:io';
-import 'dart:convert';
-
 import 'package:flutter_test/flutter_test.dart';
+import 'package:http/http.dart' as http;
 import 'package:quizly_app/pages/category_page.dart';
-import 'package:flutter/material.dart';
-import 'package:nock/nock.dart';
+import 'package:mockito/mockito.dart';
+import 'package:mockito/annotations.dart';
 
+import 'category_page_test.mocks.dart';
+
+@GenerateMocks([http.Client])
 void main() {
-  testWidgets('Widget Home display Image', (WidgetTester tester) async {
-    setUpAll(nock.init);
+  group('fetchAlbum', () {
+    test('returns an List<String> if the http call completes successfully',
+        () async {
+      final client = MockClient();
 
-    setUp(() {
-      nock.cleanAll();
+      // Use Mockito to return a successful response when it calls the
+      // provided http.Client.
+      when(client.get(Uri.parse('http://10.0.2.2:8000/v1/quizzes/categories')))
+          .thenAnswer((_) async => http.Response(
+              '{"categories": ["Arts & Literature","Film & TV","Food & Drink","General Knowledge","Geography","History","Music","Science","Society & Culture","Sport & Leisure"]}',
+              200));
+
+      expect(await fetchCategories(client), isA<List<String>>());
     });
 
-    testWidgets('Should test widget with http call', (WidgetTester tester) async {
-      nock('http://127.0.0.1')
-          .get('/v1/quizzes/categories')
-          .reply(200, json.encode('{"categories": ["Arts & Literature","Film & TV","Food & Drink","General Knowledge","Geography","History","Music","Science","Society & Culture","Sport & Leisure"]}'));
+    test('throws an exception if the http call completes with an error', () {
+      final client = MockClient();
 
+      when(client.get(Uri.parse('http://10.0.2.2:8000/v1/quizzes/categories')))
+          .thenAnswer((_) async => http.Response('Something went wrong', 500));
 
-
-    await tester.pumpWidget(const CategoryPage());
-    /*expect(find.text("Film & TV"), findsOneWidget);
-    expect(find.text("Arts & Literature"), findsOneWidget);
-    expect(find.text("Food & Drink"), findsOneWidget);
-    expect(find.text("General Knowledge"), findsOneWidget);
-    expect(find.text("Science"), findsOneWidget);
-    expect(find.text("History"), findsOneWidget);
-    expect(find.text("Sport & Leisure"), findsOneWidget);*/
+      expect(fetchCategories(client), throwsException);
+    });
   });
-});
 }
