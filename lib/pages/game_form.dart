@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quizly_app/widgets/header.dart';
 import 'package:quizly_app/pages/category_page.dart';
+import 'package:quizly_app/pages/question.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class GameForm extends StatelessWidget {
@@ -368,10 +369,22 @@ class _PlayButtonState extends State<PlayButton> {
       IO.OptionBuilder().setTransports(['websocket']).build());
 
   void connect() {
-    socket.emit('give me quiz');
-    socket.onDisconnect((_) => print('Connection Disconnection'));
-    socket.onConnectError((err) => print(err));
-    socket.onError((err) => print(err));
+    var quiz_options = {
+      "name": "guest",
+      "categories": "arts_and_literature",
+      "max_players": 1
+    };
+    socket.emit("join", quiz_options);
+    socket.emit('question');
+    socket.on('question', (data) {print('${data['question']}\n'
+        'A. ${data['answers'][0]}\n'
+        'B. ${data['answers'][1]}\n'
+        'C. ${data['answers'][2]}\n'
+        'D. ${data['answers'][3]}\n');});
+  }
+
+  void handleMessage(Map<String, dynamic> data) {
+    print(data);
   }
 
   @override
