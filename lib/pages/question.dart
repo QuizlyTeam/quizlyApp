@@ -3,6 +3,7 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quizly_app/widgets/header.dart';
+import 'package:quizly_app/pages/score.dart';
 
 class Question extends StatefulWidget {
   final IO.Socket socket = IO.io('http://10.0.2.2:8000/',
@@ -88,9 +89,10 @@ class _QuestionState extends State<Question> {
               }
 
               await Future.delayed(Duration(seconds: (value*17).toInt()));
-              setState(() {
+              setState(() async {
                 if (questionNumber == 10) {
-                  widget.socket.on('results', (data) {print(data);});
+                  widget.socket.on('results', (data) {Get.to(Score(score: data['guest']));});
+                  await Future.delayed(const Duration(seconds: 1));
                 }
                 widget.socket.emit('question');
                 widget.socket.on('question', (data) {
