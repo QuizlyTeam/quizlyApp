@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:flutter/material.dart';
-//import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:quizly_app/widgets/header.dart';
 
 class Question extends StatefulWidget {
@@ -45,6 +45,7 @@ class _QuestionState extends State<Question> {
     widget.socket.emit('question');
     widget.socket.on('question', (data) {
           question = data['question'];
+          data['answers'].shuffle();
           ans1 = data['answers'][0];
           ans2 = data['answers'][1];
           ans3 = data['answers'][2];
@@ -69,8 +70,7 @@ class _QuestionState extends State<Question> {
       onPressed: clickedAnything && questionNumber<=10
           ? () {}
           : () async {
-              var answers = ["A","B","C","D"];
-              widget.socket.emit("answer", {"answer": answers[index], "time": 0});
+              widget.socket.emit("answer", {"answer": answer, "time": 0});
               widget.socket.on("answer", (data) {correctAnswer = data;});
               if (answer == correctAnswer) {
                 setState(() {
@@ -89,9 +89,13 @@ class _QuestionState extends State<Question> {
 
               await Future.delayed(Duration(seconds: (value*17).toInt()));
               setState(() {
+                if (questionNumber == 10) {
+                  widget.socket.on('results', (data) {print(data);});
+                }
                 widget.socket.emit('question');
                 widget.socket.on('question', (data) {
                   question = data['question'];
+                  data['answers'].shuffle();
                   ans1 = data['answers'][0];
                   ans2 = data['answers'][1];
                   ans3 = data['answers'][2];
