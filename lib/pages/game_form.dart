@@ -372,7 +372,7 @@ class _PlayButtonState extends State<PlayButton> {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-        onPressed: () {Get.to(Question());},
+        onPressed: () {Get.to(Question(category: "Film & TV",));},
         style: ElevatedButton.styleFrom(
             backgroundColor: Colors.cyan,
             fixedSize: const Size(280, 120),

@@ -7,8 +7,8 @@ import 'package:quizly_app/widgets/header.dart';
 class Question extends StatefulWidget {
   final IO.Socket socket = IO.io('http://10.0.2.2:8000/',
       IO.OptionBuilder().setTransports(['websocket']).build());
-
-  Question({super.key});
+  final String category;
+  Question({super.key, required this.category});
 
   @override
   State<Question> createState() => _QuestionState();
@@ -33,9 +33,12 @@ class _QuestionState extends State<Question> {
   void initState() {
     super.initState();
     value = 1;
+
+    String cat = widget.category.replaceFirst(r' & ', '_and_').toLowerCase();
+
     var quizOptions = {
       "name": "guest",
-      "categories": "arts_and_literature",
+      "categories": cat,
       "max_players": 1
     };
     widget.socket.emit("join", quizOptions);
@@ -68,7 +71,7 @@ class _QuestionState extends State<Question> {
           : () async {
               var answers = ["A","B","C","D"];
               widget.socket.emit("answer", {"answer": answers[index], "time": 0});
-              widget.socket.on("answer", (data) {correctAnswer = data; print(correctAnswer);});
+              widget.socket.on("answer", (data) {correctAnswer = data;});
               if (answer == correctAnswer) {
                 setState(() {
                   clickedAnything = true;
@@ -93,7 +96,6 @@ class _QuestionState extends State<Question> {
                   ans2 = data['answers'][1];
                   ans3 = data['answers'][2];
                   ans4 = data['answers'][3];
-                  print(question);
                 });
               });
               setState(() {
