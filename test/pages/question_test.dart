@@ -19,8 +19,6 @@ void main() {
           findsOneWidget);
       expect(find.image(const AssetImage('assets/images/settings.png')),
           findsOneWidget);
-      expect(find.image(const AssetImage('assets/images/flag.png')),
-          findsOneWidget);
     });
   });
 }

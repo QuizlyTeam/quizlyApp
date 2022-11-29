@@ -1,30 +1,26 @@
 import 'dart:async';
-
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:flutter/material.dart';
 //import 'package:get/get.dart';
 import 'package:quizly_app/widgets/header.dart';
 
 class Question extends StatefulWidget {
-  final String question;
-  final String ans1;
-  final String ans2;
-  final String ans3;
-  final String ans4;
-  final String correctAnswer;
-  const Question(
-      {super.key,
-      required this.question,
-      required this.ans1,
-      required this.ans2,
-      required this.ans3,
-      required this.ans4,
-      required this.correctAnswer});
+  final IO.Socket socket = IO.io('http://10.0.2.2:8000/',
+      IO.OptionBuilder().setTransports(['websocket']).build());
+
+  Question({super.key});
 
   @override
   State<Question> createState() => _QuestionState();
 }
 
 class _QuestionState extends State<Question> {
+  String question = "";
+  String ans1 = "";
+  String ans2 = "";
+  String ans3 = "";
+  String ans4 = "";
+  String correctAnswer = "";
   double value = 1;
   bool clickedAnything = false;
   var normalColor = Colors.cyan;
@@ -33,16 +29,30 @@ class _QuestionState extends State<Question> {
   void initState() {
     super.initState();
     value = 1;
-
+    var quizOptions = {
+      "name": "guest",
+      "categories": "arts_and_literature",
+      "max_players": 1
+    };
+    widget.socket.emit("join", quizOptions);
+    widget.socket.emit('question');
+    widget.socket.on('question', (data) {
+          question = data['question'];
+          ans1 = data['answers'][0];
+          ans2 = data['answers'][1];
+          ans3 = data['answers'][2];
+          ans4 = data['answers'][3];
+          correctAnswer = data['answers'][0];
+    });
     determinateIndicator();
 
     //setState(() {});
   }
 
   Widget answerButton(String answer, int index) {
-    if (answer == widget.correctAnswer && clickedAnything) {
+    if (answer == correctAnswer && clickedAnything) {
       normalColor = Colors.green;
-    } else if (answer != widget.correctAnswer && wasClicked.elementAt(index)) {
+    } else if (answer != correctAnswer && wasClicked.elementAt(index)) {
       normalColor = Colors.red;
     } else {
       normalColor = Colors.cyan;
@@ -52,7 +62,10 @@ class _QuestionState extends State<Question> {
       onPressed: clickedAnything
           ? () {}
           : () {
-              if (answer == widget.correctAnswer) {
+              var answers = ["A","B","C","D"];
+              widget.socket.emit("answer", {"answer": answers[index], "time": 0});
+              widget.socket.on("answer", (data) {correctAnswer = data; print(correctAnswer);});
+              if (answer == correctAnswer) {
                 setState(() {
                   clickedAnything = true;
                   //  wasClicked[index]= true;
@@ -63,7 +76,7 @@ class _QuestionState extends State<Question> {
                   clickedAnything = true;
                   wasClicked[index] = true;
 
-                  //   normalColor = Colors.red;
+                  // normalColor = Colors.red;
                 });
               }
             },
@@ -107,16 +120,12 @@ class _QuestionState extends State<Question> {
         const SizedBox(height: 20),
         SizedBox(
           child: Text(
-            widget.question,
+            question,
             textAlign: TextAlign.center,
-            style: const TextStyle(height: 1.2, fontSize: 40),
+            style: const TextStyle(height: 1.2, fontSize: 30),
           ),
         ),
         const SizedBox(height: 30),
-        const Image(
-          image: AssetImage('assets/images/flag.png'),
-          height: 200,
-        ),
         const SizedBox(
           height: 20,
         ),
@@ -139,8 +148,8 @@ class _QuestionState extends State<Question> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            answerButton(widget.ans1, 0),
-            answerButton(widget.ans2, 1)
+            answerButton(ans1, 0),
+            answerButton(ans2, 1)
           ],
         ),
         const SizedBox(
@@ -149,8 +158,8 @@ class _QuestionState extends State<Question> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            answerButton(widget.ans3, 2),
-            answerButton(widget.ans4, 3)
+            answerButton(ans3, 2),
+            answerButton(ans4, 3)
           ],
         )
       ],

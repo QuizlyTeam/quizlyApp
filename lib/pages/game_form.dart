@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:quizly_app/widgets/header.dart';
 import 'package:quizly_app/pages/category_page.dart';
 import 'package:quizly_app/pages/question.dart';
-import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class GameForm extends StatelessWidget {
   const GameForm({super.key});
@@ -365,23 +364,6 @@ class PlayButton extends StatefulWidget {
 }
 
 class _PlayButtonState extends State<PlayButton> {
-  final IO.Socket socket = IO.io('http://10.0.2.2:8000/',
-      IO.OptionBuilder().setTransports(['websocket']).build());
-
-  void connect() {
-    var quiz_options = {
-      "name": "guest",
-      "categories": "arts_and_literature",
-      "max_players": 1
-    };
-    socket.emit("join", quiz_options);
-    socket.emit('question');
-    socket.on('question', (data) {print('${data['question']}\n'
-        'A. ${data['answers'][0]}\n'
-        'B. ${data['answers'][1]}\n'
-        'C. ${data['answers'][2]}\n'
-        'D. ${data['answers'][3]}\n');});
-  }
 
   void handleMessage(Map<String, dynamic> data) {
     print(data);
@@ -390,7 +372,7 @@ class _PlayButtonState extends State<PlayButton> {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-        onPressed: connect,
+        onPressed: () {Get.to(Question());},
         style: ElevatedButton.styleFrom(
             backgroundColor: Colors.cyan,
             fixedSize: const Size(280, 120),
