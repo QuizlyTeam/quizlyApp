@@ -40,7 +40,8 @@ class _QuestionState extends State<Question> {
     var quizOptions = {
       "name": "guest",
       "categories": cat,
-      "max_players": 1
+      "max_players": 1,
+      "limit": 3
     };
     widget.socket.emit("join", quizOptions);
     widget.socket.emit('question');
@@ -88,12 +89,10 @@ class _QuestionState extends State<Question> {
                 });
               }
 
-              await Future.delayed(Duration(seconds: (value*17).toInt()));
-              setState(() async {
-                if (questionNumber == 10) {
-                  widget.socket.on('results', (data) {Get.to(Score(score: data['guest']));});
-                  await Future.delayed(const Duration(seconds: 1));
-                }
+              widget.socket.on('results', (data) {Get.to(Score(score: data['guest']));});
+
+              await Future.delayed(Duration(milliseconds: (value*17700).toInt()));
+              setState(() {
                 widget.socket.emit('question');
                 widget.socket.on('question', (data) {
                   question = data['question'];
@@ -130,7 +129,7 @@ class _QuestionState extends State<Question> {
         if (value <= 0) {
           timer.cancel();
         } else {
-          value = value - 0.00006;
+          value = value - 0.0000774;
         }
       });
     });
