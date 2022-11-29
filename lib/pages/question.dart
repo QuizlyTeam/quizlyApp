@@ -63,12 +63,12 @@ class _QuestionState extends State<Question> {
     }
 
     return ElevatedButton(
-      onPressed: clickedAnything
+      onPressed: clickedAnything && questionNumber<=10
           ? () {}
           : () async {
               var answers = ["A","B","C","D"];
               widget.socket.emit("answer", {"answer": answers[index], "time": 0});
-              widget.socket.on("answer", (data) {correctAnswer = data;});
+              widget.socket.on("answer", (data) {correctAnswer = data; print(correctAnswer);});
               if (answer == correctAnswer) {
                 setState(() {
                   clickedAnything = true;
@@ -84,9 +84,7 @@ class _QuestionState extends State<Question> {
                 });
               }
 
-              await Future.delayed(Duration(seconds: (value*18).toInt()));
-              clickedAnything = false;
-              wasClicked[index] = false;
+              await Future.delayed(Duration(seconds: (value*17).toInt()));
               setState(() {
                 widget.socket.emit('question');
                 widget.socket.on('question', (data) {
@@ -95,9 +93,14 @@ class _QuestionState extends State<Question> {
                   ans2 = data['answers'][1];
                   ans3 = data['answers'][2];
                   ans4 = data['answers'][3];
-                  questionNumber++;
-                  value = 1;
+                  print(question);
                 });
+              });
+              setState(() {
+                clickedAnything = false;
+                wasClicked[index] = false;
+                value = 1;
+                questionNumber++;
               });
             },
       style: ElevatedButton.styleFrom(
@@ -119,7 +122,7 @@ class _QuestionState extends State<Question> {
         if (value <= 0) {
           timer.cancel();
         } else {
-          value = value - 0.0000555;
+          value = value - 0.00006;
         }
       });
     });
