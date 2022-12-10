@@ -4,6 +4,23 @@ import 'package:quizly_app/widgets/header.dart';
 import 'package:quizly_app/pages/category_page.dart';
 import 'package:quizly_app/pages/question.dart';
 
+class GameForm extends StatefulWidget {
+  GameForm({super.key});
+
+  @override
+  State<GameForm> createState() => _GameFormState()
+}
+
+class _GameFormState extends State<GameForm> {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
+  }
+
+}
+
+/*
 class GameForm extends StatelessWidget {
   const GameForm({super.key});
 
@@ -386,4 +403,4 @@ class _PlayButtonState extends State<PlayButton> {
     );
   }
 
-}
+}*/

@@ -91,7 +91,7 @@ class _QuestionState extends State<Question> {
 
               widget.socket.on('results', (data) {Get.to(Score(score: data['guest']));});
 
-              await Future.delayed(Duration(milliseconds: (value*17700).toInt()));
+              await Future.delayed(Duration(milliseconds: (value*17100).toInt()));
               setState(() {
                 widget.socket.emit('question');
                 widget.socket.on('question', (data) {
