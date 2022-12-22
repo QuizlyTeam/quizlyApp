@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quizly_app/pages/category_page.dart';
+import 'package:quizly_app/pages/game_form.dart';
 import 'package:quizly_app/widgets/header.dart';
 import 'package:get/get.dart';
 
@@ -9,7 +9,7 @@ class MenuPage extends StatelessWidget {
   Widget answerButton(String text) {
     return ElevatedButton(
       onPressed: () {
-        if (text == 'Play!') Get.to(const CategoryPage());
+        if (text == 'Play!') Get.to(const GameForm());
       },
       style: ElevatedButton.styleFrom(
           backgroundColor: Colors.cyan,
@@ -117,7 +117,7 @@ class MenuPage extends StatelessWidget {
               leftIcon: 'assets/images/profile.png',
               rightIcon: 'assets/images/settings.png'),
         ),
-        body: bodyOfQuestion('IronMan73'),
+        body: bodyOfQuestion('Guest314159'),
       )),
     );
   }
