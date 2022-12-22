@@ -5,20 +5,21 @@ import 'question.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-Future<List<String>> fetchCategories(http.Client client) async {
-  final response =
-      await client.get(Uri.parse('http://10.0.2.2:8000/v1/quizzes/categories'));
-  if (response.statusCode == 200) {
-    var json = jsonDecode(response.body);
-    List<String> categoriesFromAPI = [];
-    for (var x in json['categories']) {
-      categoriesFromAPI.add(x);
+  Future<List<String>> fetchCategories(/*http.Client client*/) async {
+    final response =
+    await http.get(Uri.parse('http://10.0.2.2:8000/v1/quizzes/categories'));
+    if (response.statusCode == 200) {
+      var json = jsonDecode(response.body);
+      List<String> categoriesFromAPI = [];
+      for (var x in json['categories']) {
+        categoriesFromAPI.add(x);
+      }
+      return categoriesFromAPI;
+    } else {
+      throw Exception('Failed to load categories');
     }
-    return categoriesFromAPI;
-  } else {
-    throw Exception('Failed to load categories');
   }
-}
+
 
 class CategoryPage extends StatefulWidget {
   const CategoryPage({Key? key}) : super(key: key);
@@ -41,7 +42,7 @@ class _CategoryPageState extends State<CategoryPage> {
 
   @override
   void initState() {
-    futureCategories = fetchCategories(http.Client());
+    futureCategories = fetchCategories(/*http.Client()*/);
     super.initState();
   }
 
@@ -166,6 +167,7 @@ class _CategoryPageState extends State<CategoryPage> {
 
                 return SingleChildScrollView(
                     child: Column(
+                      key: const Key("categoryButton"),
                   children: [
                     SizedBox(
                       child: searchBar(),
@@ -219,7 +221,7 @@ class _CategoryPageState extends State<CategoryPage> {
                   ],
                 ));
               } else {
-                return const Center(child: CircularProgressIndicator());
+                return const Center(key: Key("CPR"), child: CircularProgressIndicator());
               }
             }),
       ),

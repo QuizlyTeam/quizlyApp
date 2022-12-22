@@ -1,35 +1,70 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:quizly_app/pages/category_page.dart';
-import 'package:mockito/mockito.dart';
-import 'package:mockito/annotations.dart';
+import 'package:nock/nock.dart';
 
-import 'category_page_test.mocks.dart';
+addDelay(int millis) async {
+  await Future.delayed(Duration(milliseconds: millis));
+}
 
-@GenerateMocks([http.Client])
 void main() {
-  group('fetchAlbum', () {
-    test('returns an List<String> if the http call completes successfully',
-        () async {
-      final client = MockClient();
+  setUpAll(() {
+    nock.init();
+  });
 
-      // Use Mockito to return a successful response when it calls the
-      // provided http.Client.
-      when(client.get(Uri.parse('http://10.0.2.2:8000/v1/quizzes/categories')))
-          .thenAnswer((_) async => http.Response(
-              '{"categories": ["Arts & Literature","Film & TV","Food & Drink","General Knowledge","Geography","History","Music","Science","Society & Culture","Sport & Leisure"]}',
-              200));
+  setUp(() {
+    nock.cleanAll();
+  });
 
-      expect(await fetchCategories(client), isA<List<String>>());
-    });
+  test("http.get test", () async {
+    final interceptor = nock("http://10.0.2.2:8000/v1/quizzes").get("/categories")
+      ..reply(
+        200,
+        '{"categories": ["Arts & Literature","Film & TV","Food & Drink","General Knowledge","Geography","History","Music","Science","Society & Culture","Sport & Leisure"]}',
+      );
 
-    test('throws an exception if the http call completes with an error', () {
-      final client = MockClient();
+    final response = await http.get(Uri.parse("http://10.0.2.2:8000/v1/quizzes/categories"));
 
-      when(client.get(Uri.parse('http://10.0.2.2:8000/v1/quizzes/categories')))
-          .thenAnswer((_) async => http.Response('Something went wrong', 500));
+    expect(interceptor.isDone, true);
+    expect(response.statusCode, 200);
+    expect(response.body, '{"categories": ["Arts & Literature","Film & TV","Food & Drink","General Knowledge","Geography","History","Music","Science","Society & Culture","Sport & Leisure"]}');
+  });
 
-      expect(fetchCategories(client), throwsException);
+  testWidgets('Widget display category test', (WidgetTester tester) async {
+    await tester.runAsync(() async {
+      final interceptor = nock("http://10.0.2.2:8000").get("/v1/quizzes/categories")
+        ..reply(
+          200,
+          '{"categories": ["Arts & Literature","Film & TV","Food & Drink","General Knowledge","Geography","History","Music","Science","Society & Culture","Sport & Leisure"]}',
+        );
+
+      final response = await http.get(Uri.parse("http://10.0.2.2:8000/v1/quizzes/categories"));
+      final returnedList = fetchCategories();
+      List<String> list = ["Arts & Literature", "Film & TV", "Food & Drink", "General Knowledge", "Geography", "History", "Music", "Science", "Society & Culture", "Sport & Leisure"];
+      FutureBuilder<List<String>>(
+          future: returnedList,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              expect(interceptor.isDone, true);
+              expect(response.statusCode, 200);
+              expect(response.body, '{"categories": ["Arts & Literature","Film & TV","Food & Drink","General Knowledge","Geography","History","Music","Science","Society & Culture","Sport & Leisure"]}');
+              expect(snapshot.data!,list);
+
+              tester.pumpWidget(const CategoryPage());
+              expect(find.byKey(const Key("CPR")), findsOneWidget);
+
+              addDelay(2000);
+              tester.pump();
+              addDelay(2000);
+
+              final catName = find.text("Geography");
+              expect(find.byKey(const Key("categoryButton")), findsOneWidget);
+              expect(catName, findsOneWidget);
+            }
+            return Column();
+      });
     });
   });
 }
