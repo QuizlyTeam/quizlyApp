@@ -27,9 +27,7 @@ class GameForm extends StatelessWidget {
                           bottomRight: Radius.circular(35),
                         ),
                         color: Colors.white,
-                      )
-                  )
-              ),
+                      ))),
               Positioned(
                 top: 24,
                 left: 32,
@@ -62,9 +60,7 @@ class GameForm extends StatelessWidget {
                       ]),
                 ),
               )
-            ]
-            )
-        ),
+            ])),
         SizedBox(
             width: 390,
             height: 64,
@@ -82,9 +78,7 @@ class GameForm extends StatelessWidget {
                           bottomRight: Radius.circular(15),
                         ),
                         color: Colors.white,
-                      )
-                  )
-              ),
+                      ))),
               const Positioned(
                   left: 32,
                   width: 162,
@@ -98,10 +92,8 @@ class GameForm extends StatelessWidget {
                         fontFamily: 'Poppins',
                         fontSize: 30,
                         fontWeight: FontWeight.normal,
-                        height: 1
-                    ),
-                  )
-              ),
+                        height: 1),
+                  )),
               const Positioned(
                   left: 194,
                   width: 162,
@@ -115,44 +107,40 @@ class GameForm extends StatelessWidget {
                         fontFamily: 'Poppins',
                         fontSize: 30,
                         fontWeight: FontWeight.normal,
-                        height: 1
-                    ),
-                  )
-              ),
+                        height: 1),
+                  )),
               Positioned(
                 left: 32,
                 width: 324,
                 height: 64,
                 child: ClipRRect(
                     borderRadius: BorderRadius.circular(15),
-                    child: const MySwitch()
-                ),
+                    child: const MySwitch()),
               ),
-            ])
-        ),
+            ])),
         const PickingCategory(),
         SizedBox(
           width: 390,
           height: 96,
-          child: Stack(children: <Widget>[
-            Positioned(
-                left: 32,
-                child: Container(
-                  width: 324,
-                  height: 96,
-                  decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(15),
-                        topRight: Radius.circular(15),
-                        bottomLeft: Radius.circular(15),
-                        bottomRight: Radius.circular(15),
-                      ),
-                      color: Colors.white
-                  ),
-                  child: const MySlider(),
-                )
-            ),
-          ],),
+          child: Stack(
+            children: <Widget>[
+              Positioned(
+                  left: 32,
+                  child: Container(
+                    width: 324,
+                    height: 96,
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(15),
+                          topRight: Radius.circular(15),
+                          bottomLeft: Radius.circular(15),
+                          bottomRight: Radius.circular(15),
+                        ),
+                        color: Colors.white),
+                    child: const MySlider(),
+                  )),
+            ],
+          ),
         ),
         ElevatedButton(
             onPressed: () {},
@@ -164,9 +152,8 @@ class GameForm extends StatelessWidget {
                 )),
             child: const Text(
               'Play!',
-              style:  TextStyle(fontSize: 30, color: Colors.white),
-            )
-        ),
+              style: TextStyle(fontSize: 30, color: Colors.white),
+            )),
       ],
     );
   }
@@ -177,18 +164,17 @@ class GameForm extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: SafeArea(
           child: Scaffold(
-            backgroundColor: Colors.grey[300],
-            appBar: const PreferredSize(
-              preferredSize: Size.fromHeight(70),
-              child: Header(
-                  leftIcon: 'assets/images/profile.png',
-                  rightIcon: 'assets/images/settings.png'),
-            ),
-            body: form(),
-          )),
+        backgroundColor: Colors.grey[300],
+        appBar: const PreferredSize(
+          preferredSize: Size.fromHeight(70),
+          child: Header(
+              leftIcon: 'assets/images/profile.png',
+              rightIcon: 'assets/images/settings.png'),
+        ),
+        body: form(),
+      )),
     );
   }
-
 }
 
 class MySwitch extends StatefulWidget {
@@ -219,7 +205,7 @@ class _MySwitchState extends State<MySwitch> {
               onTap: () {
                 setState(() {
                   selected = !selected;
-                  if(selected) {
+                  if (selected) {
                     name = 'Public';
                   } else {
                     name = "Private";
@@ -229,18 +215,14 @@ class _MySwitchState extends State<MySwitch> {
               child: Container(
                 color: Colors.cyan,
                 child: Center(
-                    child: Text(
-                      name,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                          color: Colors.black,
-                          fontFamily: 'Poppins',
-                          fontSize: 30,
-                          fontWeight: FontWeight.normal,
-                          height: 1
-                      )
-                    )
-                ),
+                    child: Text(name,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                            color: Colors.black,
+                            fontFamily: 'Poppins',
+                            fontSize: 30,
+                            fontWeight: FontWeight.normal,
+                            height: 1))),
               ),
             ),
           ),
@@ -262,40 +244,31 @@ class _MySliderState extends State<MySlider> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-        children:
-        [
-          Container(height: 16,),
-          Text(
-              'Max players: ${_currentSliderValue.toInt()}',
-              style: const TextStyle(
-                  fontSize: 20,
-                  color: Colors.black
-              )
-          ),
-          SliderTheme(
-            data: const SliderThemeData(
+    return Column(children: [
+      Container(
+        height: 16,
+      ),
+      Text('Max players: ${_currentSliderValue.toInt()}',
+          style: const TextStyle(fontSize: 20, color: Colors.black)),
+      SliderTheme(
+          data: const SliderThemeData(
               trackHeight: 32,
               activeTrackColor: Colors.cyan,
               thumbShape: RoundSliderThumbShape(enabledThumbRadius: 16),
-              thumbColor: Colors.cyan
-            ),
-            child: Slider(
-              value: _currentSliderValue,
-              min: 1,
-              max: 10,
-              divisions: 10,
-              onChanged: (double value) {
-                setState(() {
-                  _currentSliderValue = value;
-                });
-                },
-              )
-          ),
-        ]
-    );
+              thumbColor: Colors.cyan),
+          child: Slider(
+            value: _currentSliderValue,
+            min: 1,
+            max: 10,
+            divisions: 10,
+            onChanged: (double value) {
+              setState(() {
+                _currentSliderValue = value;
+              });
+            },
+          )),
+    ]);
   }
-
 }
 
 class PickingCategory extends StatefulWidget {
@@ -333,10 +306,8 @@ class _PickingCategoryState extends State<PickingCategory> {
                       bottomLeft: Radius.circular(15),
                       bottomRight: Radius.circular(15),
                     ),
-                    color: Colors.white
-                ),
-              )
-          ),
+                    color: Colors.white),
+              )),
           Positioned(
               left: 258,
               child: ElevatedButton(
@@ -351,18 +322,14 @@ class _PickingCategoryState extends State<PickingCategory> {
                   'Pick',
                   style: TextStyle(fontSize: 30, color: Colors.black),
                 ),
-              )
-          ),
+              )),
           Positioned(
               left: 48,
               top: 16,
               child: Text(
                 _category,
                 style: const TextStyle(fontSize: 25, color: Colors.black),
-              )
-          ),
-        ])
-    );
+              )),
+        ]));
   }
-
 }
