@@ -12,6 +12,7 @@ class _QuizlySlider extends State<QuizlySlider> {
 
   @override
   Widget build(BuildContext context) {
+    double y = MediaQuery.of(context).size.height / 866.2857142857143;
     return MediaQuery(
         data: const MediaQueryData(),
         child: Directionality(
@@ -19,17 +20,17 @@ class _QuizlySlider extends State<QuizlySlider> {
             child: Material(
                 color: const Color(0xFFE2E2E2),
                 child: SliderTheme(
-                    data: const SliderThemeData(
-                      trackHeight: 20,
+                    data: SliderThemeData(
+                      trackHeight: 20 * y,
 
                       ///Thumb
-                      thumbShape: RoundSliderThumbShape(
+                      thumbShape: const RoundSliderThumbShape(
                         enabledThumbRadius: 12,
                       ),
 
                       ///Track
                       activeTrackColor: Colors.cyan,
-                      inactiveTrackColor: Color(0xFFA4A4A4),
+                      inactiveTrackColor: const Color(0xFFA4A4A4),
                     ),
                     child: Slider(
                         key: const Key('suwak'),

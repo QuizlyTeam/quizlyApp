@@ -9,10 +9,12 @@ import 'package:quizly_app/pages/user_account.dart';
 class Header extends StatelessWidget {
   final String leftIcon;
   final String rightIcon;
+  final double y;
   const Header({
     super.key,
     required this.leftIcon,
     required this.rightIcon,
+    required this.y,
   });
 
   Widget header() {
@@ -29,7 +31,7 @@ class Header extends StatelessWidget {
           IconButton(
             icon: Image(
               image: AssetImage(leftIcon),
-              height: 90,
+              height: 90 * y,
             ),
             onPressed: () {
               if (leftIcon == 'assets/images/profile.png') {
@@ -38,19 +40,19 @@ class Header extends StatelessWidget {
                 Get.back();
               }
             }, // null disables the button
-            iconSize: 58,
+            iconSize: 58 * y,
           ),
-          const Expanded(
+          Expanded(
             child: Image(
-              image: AssetImage('assets/images/logo.png'),
-              height: 60,
+              image: const AssetImage('assets/images/logo.png'),
+              height: 60 * y,
             ),
           ),
           IconButton(
             icon: Image(
               image: AssetImage(rightIcon),
             ),
-            iconSize: 58,
+            iconSize: 58 * y,
             onPressed: () {
               if (rightIcon == 'assets/images/settings.png') {
                 Get.to(const SettingsPage());

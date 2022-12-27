@@ -7,14 +7,16 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double x = MediaQuery.of(context).size.width / 411.42857142857144;
+    double y = MediaQuery.of(context).size.height / 866.2857142857143;
     return Directionality(
         textDirection: TextDirection.ltr,
         child: Container(
           color: Colors.black,
           child: Center(
               child: Container(
-                  width: 317,
-                  height: 408,
+                  width: 317 * x,
+                  height: 420 * y,
                   decoration: const BoxDecoration(
                     color: Color(0xFFE2E2E2),
                     borderRadius: BorderRadius.only(
@@ -27,8 +29,8 @@ class SettingsPage extends StatelessWidget {
                   child: Column(
                     children: [
                       Container(
-                        height: 77,
-                        width: 317,
+                        height: 77 * y,
+                        width: 317 * x,
                         decoration: const BoxDecoration(
                           color: Colors.cyan,
                           borderRadius: BorderRadius.only(
@@ -38,15 +40,15 @@ class SettingsPage extends StatelessWidget {
                             bottomRight: Radius.circular(45),
                           ),
                         ),
-                        child: const Center(
+                        child: Center(
                             child: DefaultTextStyle(
                           style: TextStyle(
-                              fontSize: 36,
+                              fontSize: 36 * y,
                               color: Colors.white,
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.normal),
                           textAlign: TextAlign.center,
-                          child: Text(
+                          child: const Text(
                             'Settings',
                             textDirection: TextDirection.ltr,
                           ),
@@ -54,36 +56,36 @@ class SettingsPage extends StatelessWidget {
                       ),
                       Column(
                         children: [
-                          const SizedBox(
-                            height: 15,
+                          SizedBox(
+                            height: 15 * y,
                           ),
-                          const DefaultTextStyle(
+                          DefaultTextStyle(
                             style: TextStyle(
-                                fontSize: 36,
+                                fontSize: 36 * y,
                                 color: Colors.black,
                                 fontFamily: 'Poppins',
                                 fontWeight: FontWeight.normal),
                             textAlign: TextAlign.center,
-                            child: Text(
+                            child: const Text(
                               'Music',
                               textDirection: TextDirection.ltr,
                             ),
                           ),
                           const QuizlySlider(),
-                          const DefaultTextStyle(
+                          DefaultTextStyle(
                             style: TextStyle(
-                                fontSize: 36,
+                                fontSize: 36 * y,
                                 color: Colors.black,
                                 fontFamily: 'Poppins',
                                 fontWeight: FontWeight.normal),
                             textAlign: TextAlign.center,
-                            child: Text(
+                            child: const Text(
                               'Sound',
                               textDirection: TextDirection.ltr,
                             ),
                           ),
                           const QuizlySlider(),
-                          const SizedBox(height: 25),
+                          SizedBox(height: 25 * y),
                           Center(
                             child: ElevatedButton(
                               onPressed: () {
@@ -91,14 +93,14 @@ class SettingsPage extends StatelessWidget {
                               },
                               style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.cyan,
-                                  fixedSize: const Size(190, 68),
+                                  fixedSize: Size(190 * x, 68 * y),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(30.0),
                                   )),
-                              child: const Text(
+                              child: Text(
                                 'Back',
                                 style: TextStyle(
-                                    fontSize: 36, color: Colors.white),
+                                    fontSize: 36 * y, color: Colors.white),
                               ),
                             ),
                           )

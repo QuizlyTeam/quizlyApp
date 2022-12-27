@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
@@ -69,7 +68,7 @@ void main() {
                   '{"categories": ["Arts & Literature","Film & TV","Food & Drink","General Knowledge","Geography","History","Music","Science","Society & Culture","Sport & Leisure"]}');
               expect(snapshot.data!, list);
 
-              tester.pumpWidget(const CategoryPage());
+              tester.pumpWidget(const MaterialApp(home: CategoryPage()));
               expect(find.byKey(const Key("CPR")), findsOneWidget);
 
               addDelay(2000);
