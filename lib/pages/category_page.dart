@@ -1,6 +1,24 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:quizly_app/widgets/header.dart';
+import 'question.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+Future<List<String>> fetchCategories(/*http.Client client*/) async {
+  final response =
+      await http.get(Uri.parse('http://10.0.2.2:8000/v1/quizzes/categories'));
+  if (response.statusCode == 200) {
+    var json = jsonDecode(response.body);
+    List<String> categoriesFromAPI = [];
+    for (var x in json['categories']) {
+      categoriesFromAPI.add(x);
+    }
+    return categoriesFromAPI;
+  } else {
+    throw Exception('Failed to load categories');
+  }
+}
 
 class CategoryPage extends StatefulWidget {
   const CategoryPage({Key? key}) : super(key: key);
@@ -13,6 +31,8 @@ class _CategoryPageState extends State<CategoryPage> {
   late List<String> categories = [];
   late List<String> search = [];
   late List<String> pathToImages = ['assets/images/game.png'];
+  late Future<List<String>> futureCategories;
+  var helper = 0;
 
   void addQuiz(String categoryName, String pathToImage) {
     categories.add(categoryName);
@@ -21,17 +41,7 @@ class _CategoryPageState extends State<CategoryPage> {
 
   @override
   void initState() {
-    categories.add("Film & TV");
-    categories.add("Food & Drink");
-    categories.add("General Knowledge");
-    categories.add("Geography");
-    categories.add("History");
-    categories.add("Music");
-    categories.add("Science");
-    categories.add("Society & culture");
-    categories.add("Arts & Literature");
-    categories.add("Sport & Leisure");
-    search.addAll(categories);
+    futureCategories = fetchCategories(/*http.Client()*/);
     super.initState();
   }
 
@@ -59,7 +69,14 @@ class _CategoryPageState extends State<CategoryPage> {
   Widget categoryButton(String categoryName, String categoryImage) {
     return ElevatedButton(
       onPressed: () {
-        Get.back(result: categoryName);
+        Get.to(const Question(
+          question: "Jakiego kraju \n to flaga?",
+          ans1: "Kiribati",
+          ans2: "Liberia",
+          ans3: "Tuvalu",
+          ans4: "Macedonia",
+          correctAnswer: "Kiribati",
+        ));
       },
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.cyan,
@@ -131,72 +148,83 @@ class _CategoryPageState extends State<CategoryPage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: SafeArea(
-        child: Scaffold(
-          backgroundColor: Colors.grey[300],
-          appBar: const PreferredSize(
-            preferredSize: Size.fromHeight(70),
-            child: Header(
-                leftIcon: 'assets/images/profile.png',
-                rightIcon: 'assets/images/settings.png'),
-          ),
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                SizedBox(
-                  child: searchBar(),
-                ),
-                for (var i = 0; i <= search.length - 3; i += 3)
-                  Column(
-                    children: [
+        home: SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.grey[300],
+        appBar: const PreferredSize(
+          preferredSize: Size.fromHeight(70),
+          child: Header(
+              leftIcon: 'assets/images/profile.png',
+              rightIcon: 'assets/images/settings.png'),
+        ),
+        body: FutureBuilder<List<String>>(
+            future: futureCategories,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                categories = snapshot.data!;
+                search.addAll(categories);
+
+                return SingleChildScrollView(
+                    child: Column(
+                  key: const Key("categoryButton"),
+                  children: [
+                    SizedBox(
+                      child: searchBar(),
+                    ),
+                    for (var i = 0; i <= search.length - 3; i += 3)
+                      Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              categoryButton(search.elementAt(i),
+                                  pathToImages.elementAt(0)),
+                              categoryButton(search.elementAt(i + 1),
+                                  pathToImages.elementAt(0)),
+                              categoryButton(search.elementAt(i + 2),
+                                  pathToImages.elementAt(0)),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          )
+                        ],
+                      ),
+                    if (search.length % 3 == 1)
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          categoryButton(
-                              search.elementAt(i), pathToImages.elementAt(0)),
-                          categoryButton(search.elementAt(i + 1),
+                          categoryButton(search.elementAt(search.length - 1),
                               pathToImages.elementAt(0)),
-                          categoryButton(search.elementAt(i + 2),
-                              pathToImages.elementAt(0)),
+                          const SizedBox(
+                            width: 110,
+                          ),
+                          const SizedBox(
+                            width: 110,
+                          )
                         ],
                       ),
-                      const SizedBox(
-                        height: 20,
-                      )
-                    ],
-                  ),
-                if (search.length % 3 == 1)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      categoryButton(search.elementAt(search.length - 1),
-                          pathToImages.elementAt(0)),
-                      const SizedBox(
-                        width: 110,
+                    if (search.length % 3 == 2)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          categoryButton(search.elementAt(search.length - 2),
+                              pathToImages.elementAt(0)),
+                          categoryButton(search.elementAt(search.length - 1),
+                              pathToImages.elementAt(0)),
+                          const SizedBox(
+                            width: 110,
+                          )
+                        ],
                       ),
-                      const SizedBox(
-                        width: 110,
-                      )
-                    ],
-                  ),
-                if (search.length % 3 == 2)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      categoryButton(search.elementAt(search.length - 2),
-                          pathToImages.elementAt(0)),
-                      categoryButton(search.elementAt(search.length - 1),
-                          pathToImages.elementAt(0)),
-                      const SizedBox(
-                        width: 110,
-                      )
-                    ],
-                  ),
-              ],
-            ),
-          ),
-        ),
+                  ],
+                ));
+              } else {
+                return const Center(
+                    key: Key("CPR"), child: CircularProgressIndicator());
+              }
+            }),
       ),
-    );
+    ));
   }
 }

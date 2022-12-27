@@ -46,9 +46,7 @@ class _GameFormState extends State<GameForm> {
                           bottomRight: Radius.circular(35),
                         ),
                         color: Colors.white,
-                      )
-                  )
-              ),
+                      ))),
               Positioned(
                 top: 24,
                 left: 32,
@@ -81,9 +79,7 @@ class _GameFormState extends State<GameForm> {
                       ]),
                 ),
               )
-            ]
-            )
-        ),
+            ])),
         SizedBox(
             width: 390,
             height: 64,
@@ -101,9 +97,7 @@ class _GameFormState extends State<GameForm> {
                           bottomRight: Radius.circular(15),
                         ),
                         color: Colors.white,
-                      )
-                  )
-              ),
+                      ))),
               const Positioned(
                   left: 32,
                   width: 162,
@@ -117,10 +111,8 @@ class _GameFormState extends State<GameForm> {
                         fontFamily: 'Poppins',
                         fontSize: 30,
                         fontWeight: FontWeight.normal,
-                        height: 1
-                    ),
-                  )
-              ),
+                        height: 1),
+                  )),
               const Positioned(
                   left: 194,
                   width: 162,
@@ -134,10 +126,8 @@ class _GameFormState extends State<GameForm> {
                         fontFamily: 'Poppins',
                         fontSize: 30,
                         fontWeight: FontWeight.normal,
-                        height: 1
-                    ),
-                  )
-              ),
+                        height: 1),
+                  )),
               Positioned(
                 left: 32,
                 width: 324,
@@ -314,16 +304,15 @@ class _GameFormState extends State<GameForm> {
       debugShowCheckedModeBanner: false,
       home: SafeArea(
           child: Scaffold(
-            backgroundColor: Colors.grey[300],
-            appBar: const PreferredSize(
-              preferredSize: Size.fromHeight(70),
-              child: Header(
-                  leftIcon: 'assets/images/profile.png',
-                  rightIcon: 'assets/images/settings.png'),
-            ),
-            body: form(),
-          )),
+        backgroundColor: Colors.grey[300],
+        appBar: const PreferredSize(
+          preferredSize: Size.fromHeight(70),
+          child: Header(
+              leftIcon: 'assets/images/profile.png',
+              rightIcon: 'assets/images/settings.png'),
+        ),
+        body: form(),
+      )),
     );
   }
-
 }
