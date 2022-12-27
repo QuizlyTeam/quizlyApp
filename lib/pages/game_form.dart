@@ -25,19 +25,19 @@ class _GameFormState extends State<GameForm> {
     });
   }
 
-  Widget form() {
+  Widget form(double x, double y) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         SizedBox(
-            width: 390,
-            height: 120,
+            width: 390 * x,
+            height: 120 * y,
             child: Stack(children: <Widget>[
               Positioned(
-                  left: 32,
+                  left: 32 * x,
                   child: Container(
-                      width: 324,
-                      height: 120,
+                      width: 324 * x,
+                      height: 120 * y,
                       decoration: const BoxDecoration(
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(35),
@@ -48,21 +48,21 @@ class _GameFormState extends State<GameForm> {
                         color: Colors.white,
                       ))),
               Positioned(
-                top: 24,
-                left: 32,
-                width: 324,
-                height: 120,
+                top: 24 * y,
+                left: 32 * y,
+                width: 324 * x,
+                height: 120 * y,
                 child: SingleChildScrollView(
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: const [
+                      children: [
                         Text(
                           'Choose your',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               color: Colors.black,
                               fontFamily: 'Poppins',
-                              fontSize: 36,
+                              fontSize: 36 * y,
                               fontWeight: FontWeight.normal,
                               height: 1),
                         ),
@@ -72,7 +72,7 @@ class _GameFormState extends State<GameForm> {
                           style: TextStyle(
                               color: Colors.black,
                               fontFamily: 'Poppins',
-                              fontSize: 36,
+                              fontSize: 36 * y,
                               fontWeight: FontWeight.normal,
                               height: 1),
                         )
@@ -81,14 +81,14 @@ class _GameFormState extends State<GameForm> {
               )
             ])),
         SizedBox(
-            width: 390,
-            height: 64,
+            width: 390 * x,
+            height: 64 * y,
             child: Stack(children: <Widget>[
               Positioned(
                   left: 32,
                   child: Container(
-                      width: 324,
-                      height: 64,
+                      width: 324 * x,
+                      height: 64 * y,
                       decoration: const BoxDecoration(
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(15),
@@ -98,50 +98,50 @@ class _GameFormState extends State<GameForm> {
                         ),
                         color: Colors.white,
                       ))),
-              const Positioned(
-                  left: 32,
-                  width: 162,
-                  height: 64,
-                  top: 17,
+              Positioned(
+                  left: 32 * x,
+                  width: 162 * x,
+                  height: 64 * y,
+                  top: 17 * y,
                   child: Text(
                     "Public",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: Colors.grey,
                         fontFamily: 'Poppins',
-                        fontSize: 30,
+                        fontSize: 30 * y,
                         fontWeight: FontWeight.normal,
                         height: 1),
                   )),
-              const Positioned(
-                  left: 194,
-                  width: 162,
-                  height: 64,
-                  top: 17,
+              Positioned(
+                  left: 194 * x,
+                  width: 162 * x,
+                  height: 64 * y,
+                  top: 17 * y,
                   child: Text(
                     "Private",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: Colors.grey,
                         fontFamily: 'Poppins',
-                        fontSize: 30,
+                        fontSize: 30 * y,
                         fontWeight: FontWeight.normal,
                         height: 1),
                   )),
               Positioned(
-                left: 32,
-                width: 324,
-                height: 64,
+                left: 20 * x,
+                width: 340 * x,
+                height: 64 * y,
                 child: ClipRRect(
                     borderRadius: BorderRadius.circular(15),
                     child: SizedBox(
-                      width: 195,
-                      height: 64,
+                      width: 195 * x,
+                      height: 64 * y,
                       child: Stack(
                         children: <Widget>[
                           AnimatedPositioned(
-                            width: 162,
-                            height: 64,
+                            width: 180 * x,
+                            height: 64 * y,
                             left: selected ? 0 : 162,
                             duration: const Duration(seconds: 2),
                             curve: Curves.fastOutSlowIn,
@@ -149,7 +149,7 @@ class _GameFormState extends State<GameForm> {
                               onTap: () {
                                 setState(() {
                                   selected = !selected;
-                                  if(selected) {
+                                  if (selected) {
                                     name = 'Public';
                                   } else {
                                     name = "Private";
@@ -159,37 +159,31 @@ class _GameFormState extends State<GameForm> {
                               child: Container(
                                 color: Colors.cyan,
                                 child: Center(
-                                    child: Text(
-                                        name,
+                                    child: Text(name,
                                         textAlign: TextAlign.center,
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                             color: Colors.black,
                                             fontFamily: 'Poppins',
-                                            fontSize: 30,
+                                            fontSize: 30 * y,
                                             fontWeight: FontWeight.normal,
-                                            height: 1
-                                        )
-                                    )
-                                ),
+                                            height: 1))),
                               ),
                             ),
                           ),
                         ],
                       ),
-                    )
-                ),
+                    )),
               ),
-            ])
-        ),
+            ])),
         SizedBox(
-            width: 390,
-            height: 64,
+            width: 390 * x,
+            height: 64 * y,
             child: Stack(children: <Widget>[
               Positioned(
-                  left: 32,
+                  left: 32 * x,
                   child: Container(
-                    width: 324,
-                    height: 64,
+                    width: 324 * x,
+                    height: 64 * y,
                     decoration: const BoxDecoration(
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(15),
@@ -197,121 +191,117 @@ class _GameFormState extends State<GameForm> {
                           bottomLeft: Radius.circular(15),
                           bottomRight: Radius.circular(15),
                         ),
-                        color: Colors.white
-                    ),
-                  )
-              ),
+                        color: Colors.white),
+                  )),
               Positioned(
-                  left: 258,
+                  left: 258 * x,
                   child: ElevatedButton(
                     onPressed: _newCategory,
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.cyan,
-                        fixedSize: const Size(100, 64),
+                        fixedSize: Size(100 * x, 68 * y),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15.0),
                         )),
-                    child: const Text(
+                    child: Text(
                       'Pick',
-                      style: TextStyle(fontSize: 30, color: Colors.black),
+                      style: TextStyle(fontSize: 30 * x, color: Colors.black),
                     ),
-                  )
-              ),
+                  )),
               Positioned(
-                  left: 48,
-                  top: 16,
+                  left: 48 * x,
+                  top: 16 * y,
                   child: Text(
                     _category,
-                    style: const TextStyle(fontSize: 25, color: Colors.black),
-                  )
-              ),
-            ])
-        ),
+                    style: TextStyle(fontSize: 25 * y, color: Colors.black),
+                  )),
+            ])),
         SizedBox(
-          width: 390,
-          height: 96,
-          child: Stack(children: <Widget>[
-            Positioned(
-                left: 32,
-                child: Container(
-                  width: 324,
-                  height: 96,
-                  decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(15),
-                        topRight: Radius.circular(15),
-                        bottomLeft: Radius.circular(15),
-                        bottomRight: Radius.circular(15),
+          width: 390 * x,
+          height: 110 * y,
+          child: Stack(
+            children: <Widget>[
+              Positioned(
+                  left: 32 * x,
+                  child: Container(
+                    width: 324 * x,
+                    height: 110 * y,
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(15),
+                          topRight: Radius.circular(15),
+                          bottomLeft: Radius.circular(15),
+                          bottomRight: Radius.circular(15),
+                        ),
+                        color: Colors.white),
+                    child: Column(children: [
+                      Container(
+                        height: 16 * y,
                       ),
-                      color: Colors.white
-                  ),
-                  child: Column(
-                      children:
-                      [
-                        Container(height: 16,),
-                        Text(
-                            'Max players: ${_currentSliderValue.toInt()}',
-                            style: const TextStyle(
-                                fontSize: 20,
-                                color: Colors.black
-                            )
-                        ),
-                        SliderTheme(
-                            data: const SliderThemeData(
-                                trackHeight: 32,
-                                activeTrackColor: Colors.cyan,
-                                thumbShape: RoundSliderThumbShape(enabledThumbRadius: 16),
-                                thumbColor: Colors.cyan
-                            ),
-                            child: Slider(
-                              value: _currentSliderValue,
-                              min: 1,
-                              max: 10,
-                              divisions: 10,
-                              onChanged: (double value) {
-                                setState(() {
-                                  _currentSliderValue = value;
-                                });
-                              },
-                            )
-                        ),
-                      ]
-                  ),
-                )
-            ),
-          ],),
+                      Text('Max players: ${_currentSliderValue.toInt()}',
+                          style:
+                              TextStyle(fontSize: 20 * y, color: Colors.black)),
+                      SliderTheme(
+                          data: SliderThemeData(
+                              trackHeight: 32 * y,
+                              activeTrackColor: Colors.cyan,
+                              thumbShape: RoundSliderThumbShape(
+                                  enabledThumbRadius: 16 * y),
+                              thumbColor: Colors.cyan),
+                          child: Slider(
+                            value: _currentSliderValue,
+                            min: 1,
+                            max: 10,
+                            divisions: 10,
+                            onChanged: (double value) {
+                              setState(() {
+                                _currentSliderValue = value;
+                              });
+                            },
+                          )),
+                    ]),
+                  )),
+            ],
+          ),
         ),
         ElevatedButton(
-            onPressed: () {Get.to(Question(category: _category,));},
+            onPressed: () {
+              Get.to(Question(
+                category: _category,
+              ));
+            },
             style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.cyan,
-                fixedSize: const Size(280, 120),
+                fixedSize: Size(280 * x, 120 * y),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(32.0),
                 )),
-            child: const Text(
+            child: Text(
               'Play!',
-              style:  TextStyle(fontSize: 30, color: Colors.white),
-            )
-        )
+              style: TextStyle(fontSize: 30 * y, color: Colors.white),
+            ))
       ],
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    double x = MediaQuery.of(context).size.width / 411.42857142857144;
+    double y = MediaQuery.of(context).size.height / 866.2857142857143;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: SafeArea(
           child: Scaffold(
         backgroundColor: Colors.grey[300],
-        appBar: const PreferredSize(
-          preferredSize: Size.fromHeight(70),
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(70 * y),
           child: Header(
-              leftIcon: 'assets/images/profile.png',
-              rightIcon: 'assets/images/settings.png'),
+            leftIcon: 'assets/images/profile.png',
+            rightIcon: 'assets/images/settings.png',
+            y: y,
+          ),
         ),
-        body: form(),
+        body: form(x, y),
       )),
     );
   }

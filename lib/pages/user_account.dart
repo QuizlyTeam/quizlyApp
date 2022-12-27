@@ -10,7 +10,9 @@ class UserAccount extends StatelessWidget {
       String cat = 'Dogs',
       points = 1043,
       name = 'Guest314159',
-      url = 'https://img.redro.pl/obrazy/czarny-pies-700-138366861.jpg'})
+      url = 'https://img.redro.pl/obrazy/czarny-pies-700-138366861.jpg',
+      double x1 = 1,
+      double y1 = 1})
       : super(key: key) {
     _wins = w;
     _loses = l;
@@ -18,6 +20,8 @@ class UserAccount extends StatelessWidget {
     _mostPoints = points;
     _name = name;
     pictureUrl = url;
+    x = x1;
+    y = y1;
     if (w != 0 || l != 0) {
       _progress = w / (w + l);
     } else {
@@ -27,17 +31,17 @@ class UserAccount extends StatelessWidget {
     if (url == '') {
       defaultPicture = Image.asset(
         'assets/images/profile.png',
-        width: 150,
-        height: 150,
+        width: 150 * x,
+        height: 150 * y,
       );
       avatar = CircleAvatar(
-          minRadius: 125,
+          minRadius: 125 * y,
           backgroundColor: Colors.white,
           backgroundImage: defaultPicture.image);
     } else {
       avatarPicture = NetworkImage(pictureUrl);
       avatar = CircleAvatar(
-          minRadius: 125,
+          minRadius: 110 * y,
           backgroundColor: Colors.white,
           backgroundImage: avatarPicture);
     }
@@ -45,7 +49,8 @@ class UserAccount extends StatelessWidget {
 
   final Color? _backgroundColor = Colors.grey[300];
   final Color _appColor = Colors.cyan;
-
+  late double x;
+  late double y;
   late int _wins;
   late int _loses;
   late double _progress;
@@ -56,14 +61,14 @@ class UserAccount extends StatelessWidget {
   late NetworkImage avatarPicture;
   late Image defaultPicture;
 
-  late final TextStyle nick = const TextStyle(
-      fontWeight: FontWeight.bold, color: Colors.black, fontSize: 25);
+  late final TextStyle nick = TextStyle(
+      fontWeight: FontWeight.bold, color: Colors.black, fontSize: 25 * y);
 
-  late final TextStyle regular = const TextStyle(
-      fontWeight: FontWeight.bold, color: Colors.black, fontSize: 25);
+  late final TextStyle regular = TextStyle(
+      fontWeight: FontWeight.bold, color: Colors.black, fontSize: 25 * y);
 
-  late final TextStyle title = const TextStyle(
-      fontWeight: FontWeight.bold, color: Colors.white, fontSize: 25);
+  late final TextStyle title = TextStyle(
+      fontWeight: FontWeight.bold, color: Colors.white, fontSize: 25 * y);
 
   late Text ratio = Text('Ratio: ', style: title);
   late Text ratioStat = Text('$_wins:$_loses', style: regular);
@@ -76,9 +81,9 @@ class UserAccount extends StatelessWidget {
     borderRadius: BorderRadius.circular(30.0),
     child: Container(
       alignment: Alignment.center,
-      constraints: const BoxConstraints(
-        maxWidth: 300,
-        maxHeight: 45,
+      constraints: BoxConstraints(
+        maxWidth: 300 * x,
+        maxHeight: 45 * y,
       ),
       color: Colors.white,
       child: Text(_name, style: nick),
@@ -91,30 +96,30 @@ class UserAccount extends StatelessWidget {
     backgroundColor: Colors.red,
     color: Colors.green,
     value: _progress,
-    minHeight: 15,
+    minHeight: 25 * y,
   );
 
   late Row winsRatio = Row(
     children: [
-      const Text(
+      Text(
         'W',
         style: TextStyle(
-            color: Colors.green, fontWeight: FontWeight.bold, fontSize: 20),
+            color: Colors.green, fontWeight: FontWeight.bold, fontSize: 20 * y),
       ),
       Expanded(child: winsToLoses),
-      const Text(
+      Text(
         'L',
         style: TextStyle(
-            color: Colors.red, fontWeight: FontWeight.bold, fontSize: 20),
+            color: Colors.red, fontWeight: FontWeight.bold, fontSize: 20 * y),
       ),
     ],
   );
 
   late Container ratioWrapper = Container(
     alignment: Alignment.center,
-    constraints: const BoxConstraints(
-      maxWidth: 300,
-      maxHeight: 45,
+    constraints: BoxConstraints(
+      maxWidth: 300 * x,
+      maxHeight: 45 * y,
     ),
     child: winsRatio,
   );
@@ -122,9 +127,9 @@ class UserAccount extends StatelessWidget {
   Container titleField(Text t) {
     return Container(
       alignment: Alignment.center,
-      constraints: const BoxConstraints(
-        maxWidth: 300,
-        maxHeight: 40,
+      constraints: BoxConstraints(
+        maxWidth: 300 * x,
+        maxHeight: 40 * y,
       ),
       color: _appColor,
       child: t,
@@ -134,9 +139,9 @@ class UserAccount extends StatelessWidget {
   Container valueField(Text t) {
     return Container(
       alignment: Alignment.center,
-      constraints: const BoxConstraints(
-        maxWidth: 300,
-        maxHeight: 40,
+      constraints: BoxConstraints(
+        maxWidth: 300 * x,
+        maxHeight: 40 * y,
       ),
       color: Colors.white,
       child: t,
@@ -157,7 +162,7 @@ class UserAccount extends StatelessWidget {
   late ClipRRect roundedTable =
       ClipRRect(borderRadius: BorderRadius.circular(30.0), child: table);
 
-  late SizedBox someSpace = const SizedBox(width: 300, height: 20);
+  late SizedBox someSpace = SizedBox(width: 300 * x, height: 20 * y);
 
   late Column appBody = Column(
     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -175,13 +180,17 @@ class UserAccount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    x = MediaQuery.of(context).size.width / 411.42857142857144;
+    y = MediaQuery.of(context).size.height / 866.2857142857143;
     return SafeArea(
       child: Scaffold(
-        appBar: const PreferredSize(
-          preferredSize: Size.fromHeight(70),
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(70 * y),
           child: Header(
-              leftIcon: 'assets/images/back.png',
-              rightIcon: 'assets/images/settings.png'),
+            leftIcon: 'assets/images/back.png',
+            rightIcon: 'assets/images/settings.png',
+            y: y,
+          ),
         ),
         // body is the majority of the screen.
         body: SingleChildScrollView(

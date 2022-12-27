@@ -65,29 +65,30 @@ class _CategoryPageState extends State<CategoryPage> {
     }
   }
 
-  Widget categoryButton(String categoryName, String categoryImage) {
+  Widget categoryButton(
+      String categoryName, String categoryImage, double x, double y) {
     return ElevatedButton(
       onPressed: () {
         Get.back(result: categoryName);
       },
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.cyan,
-        fixedSize: const Size(110, 145),
+        fixedSize: Size(110 * x, 145 * y),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(32.0),
         ),
       ),
       child: Column(
         children: [
-          const SizedBox(
-            height: 20,
+          SizedBox(
+            height: 20 * y,
           ),
           Padding(
             padding: const EdgeInsets.only(left: 1.0, right: 1.0),
             child: Center(
               child: Container(
-                width: 62,
-                height: 62,
+                width: 62 * x,
+                height: 62 * x,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   image: DecorationImage(image: AssetImage(categoryImage)),
@@ -96,8 +97,8 @@ class _CategoryPageState extends State<CategoryPage> {
               ),
             ),
           ),
-          const SizedBox(
-            height: 10,
+          SizedBox(
+            height: 10 * y,
           ),
           FittedBox(
             fit: BoxFit.fitWidth,
@@ -139,22 +140,28 @@ class _CategoryPageState extends State<CategoryPage> {
 
   @override
   Widget build(BuildContext context) {
+    double x = MediaQuery.of(context).size.width / 411.42857142857144;
+    double y = MediaQuery.of(context).size.height / 866.2857142857143;
     return MaterialApp(
         home: SafeArea(
       child: Scaffold(
         backgroundColor: Colors.grey[300],
-        appBar: const PreferredSize(
-          preferredSize: Size.fromHeight(70),
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(70 * y),
           child: Header(
-              leftIcon: 'assets/images/profile.png',
-              rightIcon: 'assets/images/settings.png'),
+            leftIcon: 'assets/images/profile.png',
+            rightIcon: 'assets/images/settings.png',
+            y: y,
+          ),
         ),
         body: FutureBuilder<List<String>>(
             future: futureCategories,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 categories = snapshot.data!;
-                search.addAll(categories);
+                if (search.isEmpty) {
+                  search.addAll(categories);
+                }
 
                 return SingleChildScrollView(
                     child: Column(
@@ -170,11 +177,11 @@ class _CategoryPageState extends State<CategoryPage> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               categoryButton(search.elementAt(i),
-                                  pathToImages.elementAt(0)),
+                                  pathToImages.elementAt(0), x, y),
                               categoryButton(search.elementAt(i + 1),
-                                  pathToImages.elementAt(0)),
+                                  pathToImages.elementAt(0), x, y),
                               categoryButton(search.elementAt(i + 2),
-                                  pathToImages.elementAt(0)),
+                                  pathToImages.elementAt(0), x, y),
                             ],
                           ),
                           const SizedBox(
@@ -187,12 +194,12 @@ class _CategoryPageState extends State<CategoryPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           categoryButton(search.elementAt(search.length - 1),
-                              pathToImages.elementAt(0)),
-                          const SizedBox(
-                            width: 110,
+                              pathToImages.elementAt(0), x, y),
+                          SizedBox(
+                            width: 110 * x,
                           ),
-                          const SizedBox(
-                            width: 110,
+                          SizedBox(
+                            width: 110 * x,
                           )
                         ],
                       ),
@@ -201,11 +208,11 @@ class _CategoryPageState extends State<CategoryPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           categoryButton(search.elementAt(search.length - 2),
-                              pathToImages.elementAt(0)),
+                              pathToImages.elementAt(0), x, y),
                           categoryButton(search.elementAt(search.length - 1),
-                              pathToImages.elementAt(0)),
-                          const SizedBox(
-                            width: 110,
+                              pathToImages.elementAt(0), x, y),
+                          SizedBox(
+                            width: 110 * x,
                           )
                         ],
                       ),

@@ -1,4 +1,6 @@
 import 'dart:async';
+
+import 'package:auto_size_text/auto_size_text.dart';
 // ignore: library_prefixes
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:flutter/material.dart';
@@ -77,11 +79,13 @@ class _QuestionState extends State<Question> {
         });
       }
     });
-    widget.socket.on('results', (data) {totalScore = data['guest'];});
+    widget.socket.on('results', (data) {
+      totalScore = data['guest'];
+    });
     determinateIndicator();
   }
 
-  Widget answerButton(String answer, int index) {
+  Widget answerButton(String answer, int index, double x, double y) {
     if (answer == correctAnswer && clickedAnything) {
       normalColor = Colors.green;
     } else if (answer != correctAnswer && wasClicked.elementAt(index)) {
@@ -91,11 +95,13 @@ class _QuestionState extends State<Question> {
     }
 
     return ElevatedButton(
-      onPressed: clickedAnything && questionNumber<=10
+      onPressed: clickedAnything && questionNumber <= 10
           ? () {}
           : () {
               widget.socket.emit("answer", {"answer": answer, "time": 0});
-              widget.socket.on("answer", (data) {correctAnswer = data;});
+              widget.socket.on("answer", (data) {
+                correctAnswer = data;
+              });
               if (answer == correctAnswer) {
                 setState(() {
                   clickedAnything = true;
@@ -113,13 +119,13 @@ class _QuestionState extends State<Question> {
             },
       style: ElevatedButton.styleFrom(
           backgroundColor: normalColor,
-          fixedSize: const Size(190, 120),
+          fixedSize: Size(190 * x, 160 * y),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(32.0),
           )),
       child: Text(
         answer,
-        style: const TextStyle(fontSize: 20, color: Colors.black),
+        style: TextStyle(fontSize: 30 * y, color: Colors.black),
       ),
     );
   }
@@ -127,7 +133,7 @@ class _QuestionState extends State<Question> {
   void determinateIndicator() {
     Timer.periodic(const Duration(milliseconds: 1), (Timer timer) {
       if (value <= 0) {
-        if ( questionNumber == 3 ) {
+        if (questionNumber == 3) {
           timer.cancel();
           Get.to(Score(score: totalScore));
         } else {
@@ -153,62 +159,55 @@ class _QuestionState extends State<Question> {
     });
   }
 
-  Widget bodyOfQuestion() {
+  Widget bodyOfQuestion(double x, double y) {
     return Column(
       children: [
-        const SizedBox(height: 20),
+        SizedBox(height: 30 * y),
         Text(
           "Question $questionNumber:",
-          style: const TextStyle(
-              fontSize: 50,
+          style: TextStyle(
+              fontSize: 50 * y,
               height: 1,
               fontWeight: FontWeight.bold,
               fontStyle: FontStyle.italic),
         ),
-        const SizedBox(height: 20),
+        SizedBox(height: 25 * y),
         SizedBox(
-          child: Text(
+          height: 110 * y,
+          child: AutoSizeText(
             question,
             textAlign: TextAlign.center,
-            style: const TextStyle(height: 1.2, fontSize: 30),
+            style: TextStyle(height: 1.2, fontSize: 30 * y),
+            maxLines: 3,
           ),
         ),
-        const SizedBox(height: 30),
-        const SizedBox(
-          height: 20,
-        ),
+        SizedBox(height: 30 * y),
         SizedBox(
-            width: 350,
+            width: 350 * x,
             child: ClipRRect(
               borderRadius: const BorderRadius.all(Radius.circular(8)),
               child: LinearProgressIndicator(
                 backgroundColor: Colors.grey.shade300,
                 color: Colors.cyan,
-                minHeight: 20,
+                minHeight: 50 * y,
                 value: value,
 
                 //   value: controller.value,
               ),
             )),
-        const SizedBox(
-          height: 20,
+        SizedBox(
+          height: 50 * y,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            answerButton(ans1, 0),
-            answerButton(ans2, 1)
-          ],
+          children: [answerButton(ans1, 0, x, y), answerButton(ans2, 1, x, y)],
         ),
-        const SizedBox(
-          height: 10,
+        SizedBox(
+          height: 30 * y,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            answerButton(ans3, 2),
-            answerButton(ans4, 3)
-          ],
+          children: [answerButton(ans3, 2, x, y), answerButton(ans4, 3, x, y)],
         )
       ],
     );
@@ -216,19 +215,23 @@ class _QuestionState extends State<Question> {
 
   @override
   Widget build(BuildContext context) {
+    double x = MediaQuery.of(context).size.width / 411.42857142857144;
+    double y = MediaQuery.of(context).size.height / 866.2857142857143;
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: SafeArea(
           child: Scaffold(
             backgroundColor: Colors.grey[300],
-            appBar: const PreferredSize(
-              preferredSize: Size.fromHeight(70),
+            appBar: PreferredSize(
+              preferredSize:  Size.fromHeight(70*y),
               child: Header(
-                  leftIcon: 'assets/images/back.png',
-                  rightIcon: 'assets/images/settings.png'),
+                leftIcon: 'assets/images/back.png',
+                rightIcon: 'assets/images/settings.png',
+                y: y,
+              ),
             ),
             body: SingleChildScrollView(
-              child: bodyOfQuestion(),
+              child: bodyOfQuestion(x, y),
             ),
           ),
         ));

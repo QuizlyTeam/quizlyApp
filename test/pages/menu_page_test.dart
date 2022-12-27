@@ -4,7 +4,7 @@ import 'package:quizly_app/pages/menu.dart';
 
 void main() {
   testWidgets('Widget Home display Image', (WidgetTester tester) async {
-    await tester.pumpWidget(const MenuPage());
+    await tester.pumpWidget(const MaterialApp(home:  MenuPage()));
     expect(find.image(const AssetImage('assets/images/profile.png')),
         findsOneWidget);
     expect(
