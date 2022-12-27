@@ -1,4 +1,5 @@
 import 'dart:async';
+// ignore: library_prefixes
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
