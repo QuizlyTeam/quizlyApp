@@ -1,58 +1,102 @@
 import 'dart:async';
-
+// ignore: library_prefixes
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:flutter/material.dart';
-//import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:quizly_app/widgets/header.dart';
+import 'package:quizly_app/pages/score.dart';
 
 class Question extends StatefulWidget {
-  final String question;
-  final String ans1;
-  final String ans2;
-  final String ans3;
-  final String ans4;
-  final String correctAnswer;
-  const Question(
-      {super.key,
-      required this.question,
-      required this.ans1,
-      required this.ans2,
-      required this.ans3,
-      required this.ans4,
-      required this.correctAnswer});
+  final IO.Socket socket = IO.io('http://10.0.2.2:8000/',
+      IO.OptionBuilder().setTransports(['websocket']).build());
+  final String category;
+  Question({super.key, required this.category});
 
   @override
   State<Question> createState() => _QuestionState();
 }
 
 class _QuestionState extends State<Question> {
+  String question = "";
+  String tempQuestion = "";
+  String ans1 = "";
+  String ans2 = "";
+  String ans3 = "";
+  String ans4 = "";
+  String tempAns1 = "";
+  String tempAns2 = "";
+  String tempAns3 = "";
+  String tempAns4 = "";
+  String correctAnswer = "";
+  String tempCorrectAnswer = "";
+  bool first = true;
+
+  int totalScore = 0;
+
   double value = 1;
+  int questionNumber = 1;
   bool clickedAnything = false;
+
   var normalColor = Colors.cyan;
+
   List<bool> wasClicked = [false, false, false, false];
   @override
   void initState() {
     super.initState();
     value = 1;
 
-    determinateIndicator();
+    String cat = widget.category.replaceFirst(r' & ', '_and_').toLowerCase();
 
-    //setState(() {});
+    var quizOptions = {
+      "name": "guest",
+      "categories": cat,
+      "max_players": 1,
+      "limit": 3
+    };
+    widget.socket.emit("join", quizOptions);
+    //widget.socket.emit('question');
+    widget.socket.on('question', (data) {
+      if (first) {
+        first = false;
+        question = data['question'];
+        data['answers'].shuffle();
+        ans1 = data['answers'][0];
+        ans2 = data['answers'][1];
+        ans3 = data['answers'][2];
+        ans4 = data['answers'][3];
+        correctAnswer = data['answers'][0];
+      } else {
+        setState(() {
+          tempQuestion = data['question'];
+          data['answers'].shuffle();
+          tempAns1 = data['answers'][0];
+          tempAns2 = data['answers'][1];
+          tempAns3 = data['answers'][2];
+          tempAns4 = data['answers'][3];
+          tempCorrectAnswer = data['answers'][0];
+        });
+      }
+    });
+    widget.socket.on('results', (data) {totalScore = data['guest'];});
+    determinateIndicator();
   }
 
   Widget answerButton(String answer, int index) {
-    if (answer == widget.correctAnswer && clickedAnything) {
+    if (answer == correctAnswer && clickedAnything) {
       normalColor = Colors.green;
-    } else if (answer != widget.correctAnswer && wasClicked.elementAt(index)) {
+    } else if (answer != correctAnswer && wasClicked.elementAt(index)) {
       normalColor = Colors.red;
     } else {
       normalColor = Colors.cyan;
     }
 
     return ElevatedButton(
-      onPressed: clickedAnything
+      onPressed: clickedAnything && questionNumber<=10
           ? () {}
           : () {
-              if (answer == widget.correctAnswer) {
+              widget.socket.emit("answer", {"answer": answer, "time": 0});
+              widget.socket.on("answer", (data) {correctAnswer = data;});
+              if (answer == correctAnswer) {
                 setState(() {
                   clickedAnything = true;
                   //  wasClicked[index]= true;
@@ -63,7 +107,7 @@ class _QuestionState extends State<Question> {
                   clickedAnything = true;
                   wasClicked[index] = true;
 
-                  //   normalColor = Colors.red;
+                  // normalColor = Colors.red;
                 });
               }
             },
@@ -75,20 +119,37 @@ class _QuestionState extends State<Question> {
           )),
       child: Text(
         answer,
-        style: const TextStyle(fontSize: 30, color: Colors.black),
+        style: const TextStyle(fontSize: 20, color: Colors.black),
       ),
     );
   }
 
   void determinateIndicator() {
     Timer.periodic(const Duration(milliseconds: 1), (Timer timer) {
-      setState(() {
-        if (value <= 0) {
+      if (value <= 0) {
+        if ( questionNumber == 3 ) {
           timer.cancel();
+          Get.to(Score(score: totalScore));
         } else {
-          value = value - 0.00015;
+          setState(() {
+            clickedAnything = false;
+            wasClicked = [false, false, false, false];
+            value = 1;
+            questionNumber++;
+
+            question = tempQuestion;
+            ans1 = tempAns1;
+            ans2 = tempAns2;
+            ans3 = tempAns3;
+            ans4 = tempAns4;
+            correctAnswer = tempCorrectAnswer;
+          });
         }
-      });
+      } else {
+        setState(() {
+          value = value - 0.0000774;
+        });
+      }
     });
   }
 
@@ -96,9 +157,9 @@ class _QuestionState extends State<Question> {
     return Column(
       children: [
         const SizedBox(height: 20),
-        const Text(
-          "Pytanie 1:",
-          style: TextStyle(
+        Text(
+          "Question $questionNumber:",
+          style: const TextStyle(
               fontSize: 50,
               height: 1,
               fontWeight: FontWeight.bold,
@@ -107,16 +168,12 @@ class _QuestionState extends State<Question> {
         const SizedBox(height: 20),
         SizedBox(
           child: Text(
-            widget.question,
+            question,
             textAlign: TextAlign.center,
-            style: const TextStyle(height: 1.2, fontSize: 40),
+            style: const TextStyle(height: 1.2, fontSize: 30),
           ),
         ),
         const SizedBox(height: 30),
-        const Image(
-          image: AssetImage('assets/images/flag.png'),
-          height: 200,
-        ),
         const SizedBox(
           height: 20,
         ),
@@ -139,8 +196,8 @@ class _QuestionState extends State<Question> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            answerButton(widget.ans1, 0),
-            answerButton(widget.ans2, 1)
+            answerButton(ans1, 0),
+            answerButton(ans2, 1)
           ],
         ),
         const SizedBox(
@@ -149,8 +206,8 @@ class _QuestionState extends State<Question> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            answerButton(widget.ans3, 2),
-            answerButton(widget.ans4, 3)
+            answerButton(ans3, 2),
+            answerButton(ans4, 3)
           ],
         )
       ],
