@@ -53,7 +53,7 @@ class _QuestionState extends State<Question> {
       "limit": 3
     };
     widget.socket.emit("join", quizOptions);
-    widget.socket.emit('question');
+    //widget.socket.emit('question');
     widget.socket.on('question', (data) {
       if (first) {
         first = false;
