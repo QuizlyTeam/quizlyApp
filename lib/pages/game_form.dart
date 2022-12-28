@@ -20,6 +20,7 @@ class _GameFormState extends State<GameForm> {
   String name = 'Private';
 
   String _category = "Category";
+  List<String> _tags = ["Tags"];
 
   void _newCategory() async {
     _category = await Get.to(const CategoryPage());
@@ -156,7 +157,50 @@ class _GameFormState extends State<GameForm> {
                     _category,
                     style: TextStyle(fontSize: 25 * y, color: Colors.black),
                   )),
-            ])),
+            ])
+        ),
+        SizedBox(
+            width: 390 * x,
+            height: 64 * y,
+            child: Stack(children: <Widget>[
+              Positioned(
+                  left: 32 * x,
+                  child: Container(
+                    width: 324 * x,
+                    height: 64 * y,
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(15),
+                          topRight: Radius.circular(15),
+                          bottomLeft: Radius.circular(15),
+                          bottomRight: Radius.circular(15),
+                        ),
+                        color: Colors.white),
+                  )),
+              Positioned(
+                  left: 258 * x,
+                  child: ElevatedButton(
+                    onPressed: (){},
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.cyan,
+                        fixedSize: Size(100 * x, 68 * y),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        )),
+                    child: Text(
+                      'Pick',
+                      style: TextStyle(fontSize: 30 * x, color: Colors.black),
+                    ),
+                  )),
+              Positioned(
+                  left: 48 * x,
+                  top: 16 * y,
+                  child: Text(
+                    _tags[0],
+                    style: TextStyle(fontSize: 25 * y, color: Colors.black),
+                  )),
+            ])
+        ),
         SizedBox(
           width: 390 * x,
           height: 110 * y,
