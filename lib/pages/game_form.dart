@@ -12,7 +12,8 @@ class GameForm extends StatefulWidget {
 }
 
 class _GameFormState extends State<GameForm> {
-  double _currentSliderValue = 5;
+  double _currentSliderValue = 4;
+  double _numberOfQuestions = 10;
   bool selected = false;
   String name = 'Private';
 
@@ -246,16 +247,64 @@ class _GameFormState extends State<GameForm> {
                               trackHeight: 32 * y,
                               activeTrackColor: Colors.cyan,
                               thumbShape: RoundSliderThumbShape(
-                                  enabledThumbRadius: 16 * y),
+                                  enabledThumbRadius: 24 * y),
                               thumbColor: Colors.cyan),
                           child: Slider(
                             value: _currentSliderValue,
                             min: 1,
                             max: 10,
-                            divisions: 10,
+                            divisions: 9,
                             onChanged: (double value) {
                               setState(() {
                                 _currentSliderValue = value;
+                              });
+                            },
+                          )),
+                    ]),
+                  )),
+            ],
+          ),
+        ),
+        SizedBox(
+          width: 390 * x,
+          height: 110 * y,
+          child: Stack(
+            children: <Widget>[
+              Positioned(
+                  left: 32 * x,
+                  child: Container(
+                    width: 324 * x,
+                    height: 110 * y,
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(15),
+                          topRight: Radius.circular(15),
+                          bottomLeft: Radius.circular(15),
+                          bottomRight: Radius.circular(15),
+                        ),
+                        color: Colors.white),
+                    child: Column(children: [
+                      Container(
+                        height: 16 * y,
+                      ),
+                      Text('Number of questions: ${_numberOfQuestions.toInt()}',
+                          style:
+                          TextStyle(fontSize: 20 * y, color: Colors.black)),
+                      SliderTheme(
+                          data: SliderThemeData(
+                              trackHeight: 32 * y,
+                              activeTrackColor: Colors.cyan,
+                              thumbShape: RoundSliderThumbShape(
+                                  enabledThumbRadius: 24 * y),
+                              thumbColor: Colors.cyan),
+                          child: Slider(
+                            value: _numberOfQuestions,
+                            min: 5,
+                            max: 20,
+                            divisions: 3,
+                            onChanged: (double value) {
+                              setState(() {
+                                _numberOfQuestions = value;
                               });
                             },
                           )),
