@@ -33,6 +33,9 @@ class _GameFormState extends State<GameForm> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
+        /*
+        Game options
+         */
         SizedBox(
             width: 390 * x,
             height: 120 * y,
@@ -85,6 +88,9 @@ class _GameFormState extends State<GameForm> {
               )
             ])
         ),
+        /*
+        Game privacy options
+         */
         SizedBox(
           width: 390 * x,
           height: 64 * y,
@@ -117,6 +123,9 @@ class _GameFormState extends State<GameForm> {
           ],)
 
         ),
+        /*
+        Category
+         */
         SizedBox(
             width: 390 * x,
             height: 64 * y,
@@ -159,6 +168,9 @@ class _GameFormState extends State<GameForm> {
                   )),
             ])
         ),
+        /*
+        Tags
+         */
         SizedBox(
             width: 390 * x,
             height: 64 * y,
@@ -201,16 +213,19 @@ class _GameFormState extends State<GameForm> {
                   )),
             ])
         ),
+        /*
+        Maximum number of players
+         */
         SizedBox(
           width: 390 * x,
-          height: 110 * y,
+          height: 96 * y,
           child: Stack(
             children: <Widget>[
               Positioned(
                   left: 32 * x,
                   child: Container(
                     width: 324 * x,
-                    height: 110 * y,
+                    height: 96 * y,
                     decoration: const BoxDecoration(
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(15),
@@ -228,10 +243,10 @@ class _GameFormState extends State<GameForm> {
                               TextStyle(fontSize: 20 * y, color: Colors.black)),
                       SliderTheme(
                           data: SliderThemeData(
-                              trackHeight: 32 * y,
+                              trackHeight: 24 * y,
                               activeTrackColor: Colors.cyan,
                               thumbShape: RoundSliderThumbShape(
-                                  enabledThumbRadius: 24 * y),
+                                  enabledThumbRadius: 18 * y),
                               thumbColor: Colors.cyan),
                           child: Slider(
                             value: _currentSliderValue,
@@ -249,16 +264,19 @@ class _GameFormState extends State<GameForm> {
             ],
           ),
         ),
+        /*
+        Number of questions
+         */
         SizedBox(
           width: 390 * x,
-          height: 110 * y,
+          height: 96 * y,
           child: Stack(
             children: <Widget>[
               Positioned(
                   left: 32 * x,
                   child: Container(
                     width: 324 * x,
-                    height: 110 * y,
+                    height: 96 * y,
                     decoration: const BoxDecoration(
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(15),
@@ -276,10 +294,10 @@ class _GameFormState extends State<GameForm> {
                           TextStyle(fontSize: 20 * y, color: Colors.black)),
                       SliderTheme(
                           data: SliderThemeData(
-                              trackHeight: 32 * y,
+                              trackHeight: 24 * y,
                               activeTrackColor: Colors.cyan,
                               thumbShape: RoundSliderThumbShape(
-                                  enabledThumbRadius: 24 * y),
+                                  enabledThumbRadius: 18 * y),
                               thumbColor: Colors.cyan),
                           child: Slider(
                             value: _numberOfQuestions,
@@ -297,6 +315,9 @@ class _GameFormState extends State<GameForm> {
             ],
           ),
         ),
+        /*
+        Play button
+         */
         ElevatedButton(
             onPressed: () {
               Get.to(Question(
@@ -305,7 +326,7 @@ class _GameFormState extends State<GameForm> {
             },
             style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.cyan,
-                fixedSize: Size(280 * x, 120 * y),
+                fixedSize: Size(280 * x, 100 * y),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(32.0),
                 )),
