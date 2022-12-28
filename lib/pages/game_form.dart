@@ -15,8 +15,8 @@ class GameForm extends StatefulWidget {
 class _GameFormState extends State<GameForm> {
   double _currentSliderValue = 4;
   double _numberOfQuestions = 10;
-  bool selected = false;
-  int _selectedIndex = 1;
+  int _selectedPrivacy = 1;
+  int _selectedDifficulty = 0;
   String name = 'Private';
 
   String _category = "Category";
@@ -38,13 +38,13 @@ class _GameFormState extends State<GameForm> {
          */
         SizedBox(
             width: 390 * x,
-            height: 120 * y,
+            height: 84 * y,
             child: Stack(children: <Widget>[
               Positioned(
                   left: 32 * x,
                   child: Container(
                       width: 324 * x,
-                      height: 120 * y,
+                      height: 84 * y,
                       decoration: const BoxDecoration(
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(35),
@@ -55,10 +55,10 @@ class _GameFormState extends State<GameForm> {
                         color: Colors.white,
                       ))),
               Positioned(
-                top: 24 * y,
+                top: 8 * y,
                 left: 32 * y,
                 width: 324 * x,
-                height: 120 * y,
+                height: 84 * y,
                 child: SingleChildScrollView(
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -93,17 +93,17 @@ class _GameFormState extends State<GameForm> {
          */
         SizedBox(
           width: 390 * x,
-          height: 64 * y,
+          height: 48 * y,
           child: Stack(children: <Widget>[
             Positioned(
               left: 32 * x,
               child: FlutterToggleTab(
                 width: 83 * x,
-                height: 64 * y,
+                height: 48 * y,
                 borderRadius: 15,
                 selectedBackgroundColors: const [Colors.cyan],
                 unSelectedBackgroundColors: const [Colors.white],
-                selectedIndex: _selectedIndex,
+                selectedIndex: _selectedPrivacy,
                 selectedTextStyle: TextStyle(
                     color: Colors.black,
                     fontSize: 30 * y,
@@ -115,7 +115,7 @@ class _GameFormState extends State<GameForm> {
                 labels: const ["Public", "Private"],
                 selectedLabelIndex: (index) {
                   setState(() {
-                    _selectedIndex = index;
+                    _selectedPrivacy = index;
                   });
                 },
               ),
@@ -124,108 +124,18 @@ class _GameFormState extends State<GameForm> {
 
         ),
         /*
-        Category
-         */
-        SizedBox(
-            width: 390 * x,
-            height: 64 * y,
-            child: Stack(children: <Widget>[
-              Positioned(
-                  left: 32 * x,
-                  child: Container(
-                    width: 324 * x,
-                    height: 64 * y,
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(15),
-                          topRight: Radius.circular(15),
-                          bottomLeft: Radius.circular(15),
-                          bottomRight: Radius.circular(15),
-                        ),
-                        color: Colors.white),
-                  )),
-              Positioned(
-                  left: 258 * x,
-                  child: ElevatedButton(
-                    onPressed: _newCategory,
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.cyan,
-                        fixedSize: Size(100 * x, 68 * y),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                        )),
-                    child: Text(
-                      'Pick',
-                      style: TextStyle(fontSize: 30 * x, color: Colors.black),
-                    ),
-                  )),
-              Positioned(
-                  left: 48 * x,
-                  top: 16 * y,
-                  child: Text(
-                    _category,
-                    style: TextStyle(fontSize: 25 * y, color: Colors.black),
-                  )),
-            ])
-        ),
-        /*
-        Tags
-         */
-        SizedBox(
-            width: 390 * x,
-            height: 64 * y,
-            child: Stack(children: <Widget>[
-              Positioned(
-                  left: 32 * x,
-                  child: Container(
-                    width: 324 * x,
-                    height: 64 * y,
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(15),
-                          topRight: Radius.circular(15),
-                          bottomLeft: Radius.circular(15),
-                          bottomRight: Radius.circular(15),
-                        ),
-                        color: Colors.white),
-                  )),
-              Positioned(
-                  left: 258 * x,
-                  child: ElevatedButton(
-                    onPressed: (){},
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.cyan,
-                        fixedSize: Size(100 * x, 68 * y),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                        )),
-                    child: Text(
-                      'Pick',
-                      style: TextStyle(fontSize: 30 * x, color: Colors.black),
-                    ),
-                  )),
-              Positioned(
-                  left: 48 * x,
-                  top: 16 * y,
-                  child: Text(
-                    _tags[0],
-                    style: TextStyle(fontSize: 25 * y, color: Colors.black),
-                  )),
-            ])
-        ),
-        /*
         Maximum number of players
          */
         SizedBox(
           width: 390 * x,
-          height: 96 * y,
+          height: 84 * y,
           child: Stack(
             children: <Widget>[
               Positioned(
                   left: 32 * x,
                   child: Container(
                     width: 324 * x,
-                    height: 96 * y,
+                    height: 84 * y,
                     decoration: const BoxDecoration(
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(15),
@@ -236,11 +146,11 @@ class _GameFormState extends State<GameForm> {
                         color: Colors.white),
                     child: Column(children: [
                       Container(
-                        height: 16 * y,
+                        height: 7 * y,
                       ),
                       Text('Max players: ${_currentSliderValue.toInt()}',
                           style:
-                              TextStyle(fontSize: 20 * y, color: Colors.black)),
+                          TextStyle(fontSize: 20 * y, color: Colors.black)),
                       SliderTheme(
                           data: SliderThemeData(
                               trackHeight: 24 * y,
@@ -263,6 +173,96 @@ class _GameFormState extends State<GameForm> {
                   )),
             ],
           ),
+        ),
+        /*
+        Category
+         */
+        SizedBox(
+            width: 390 * x,
+            height: 48 * y,
+            child: Stack(children: <Widget>[
+              Positioned(
+                  left: 32 * x,
+                  child: Container(
+                    width: 324 * x,
+                    height: 48 * y,
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(15),
+                          topRight: Radius.circular(15),
+                          bottomLeft: Radius.circular(15),
+                          bottomRight: Radius.circular(15),
+                        ),
+                        color: Colors.white),
+                  )),
+              Positioned(
+                  left: 258 * x,
+                  child: ElevatedButton(
+                    onPressed: _newCategory,
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.cyan,
+                        fixedSize: Size(100 * x, 50 * y),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        )),
+                    child: Text(
+                      'Pick',
+                      style: TextStyle(fontSize: 30 * x, color: Colors.black),
+                    ),
+                  )),
+              Positioned(
+                  left: 48 * x,
+                  top: 8 * y,
+                  child: Text(
+                    _category,
+                    style: TextStyle(fontSize: 25 * y, color: Colors.black),
+                  )),
+            ])
+        ),
+        /*
+        Tags
+         */
+        SizedBox(
+            width: 390 * x,
+            height: 48 * y,
+            child: Stack(children: <Widget>[
+              Positioned(
+                  left: 32 * x,
+                  child: Container(
+                    width: 324 * x,
+                    height: 48 * y,
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(15),
+                          topRight: Radius.circular(15),
+                          bottomLeft: Radius.circular(15),
+                          bottomRight: Radius.circular(15),
+                        ),
+                        color: Colors.white),
+                  )),
+              Positioned(
+                  left: 258 * x,
+                  child: ElevatedButton(
+                    onPressed: (){},
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.cyan,
+                        fixedSize: Size(100 * x, 50 * y),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        )),
+                    child: Text(
+                      'Pick',
+                      style: TextStyle(fontSize: 30 * x, color: Colors.black),
+                    ),
+                  )),
+              Positioned(
+                  left: 48 * x,
+                  top: 8 * y,
+                  child: Text(
+                    _tags[0],
+                    style: TextStyle(fontSize: 25 * y, color: Colors.black),
+                  )),
+            ])
         ),
         /*
         Number of questions
@@ -316,6 +316,63 @@ class _GameFormState extends State<GameForm> {
           ),
         ),
         /*
+        Difficulty
+         */
+        SizedBox(
+            width: 390 * x,
+            height: 72 * y,
+            child: Stack(children: <Widget>[
+              Positioned(
+                  left: 32 * x,
+                  child: Container(
+                    width: 324 * x,
+                    height: 72 * y,
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(15),
+                          topRight: Radius.circular(15),
+                          bottomLeft: Radius.circular(15),
+                          bottomRight: Radius.circular(15),
+                        ),
+                        color: Colors.white),
+                    child: Column(children: [
+                      Container(
+                        height: 7 * y,
+                      ),
+                      Text('Difficulty level:',
+                          style:
+                          TextStyle(fontSize: 20 * y, color: Colors.black)),
+                      FlutterToggleTab(
+                        width: 72 * x,
+                        height: 32 * y,
+                        borderRadius: 5,
+                        selectedBackgroundColors: const [Colors.cyan],
+                        unSelectedBackgroundColors: const [Colors.white],
+                        selectedIndex: _selectedDifficulty,
+                        selectedTextStyle: TextStyle(
+                            color: Colors.black,
+                            fontSize: 24 * y,
+                            fontWeight: FontWeight.w600),
+                        unSelectedTextStyle: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 24 * y,
+                            fontWeight: FontWeight.normal),
+                        labels: const ["Easy", "Medium", "Hard"],
+                        selectedLabelIndex: (index) {
+                          setState(() {
+                            _selectedDifficulty = index;
+                          });
+                        },
+                      ),
+                      Container(
+                        height: 7 * y,
+                      ),
+                    ]),
+                  )),
+            ],)
+
+        ),
+        /*
         Play button
          */
         ElevatedButton(
@@ -326,7 +383,7 @@ class _GameFormState extends State<GameForm> {
             },
             style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.cyan,
-                fixedSize: Size(280 * x, 100 * y),
+                fixedSize: Size(280 * x, 96 * y),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(32.0),
                 )),
