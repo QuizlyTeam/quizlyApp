@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:quizly_app/widgets/header.dart';
 import 'package:quizly_app/pages/category_page.dart';
 import 'package:quizly_app/pages/question.dart';
+import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 
 class GameForm extends StatefulWidget {
   const GameForm({super.key});
@@ -15,6 +16,7 @@ class _GameFormState extends State<GameForm> {
   double _currentSliderValue = 4;
   double _numberOfQuestions = 10;
   bool selected = false;
+  int _selectedIndex = 1;
   String name = 'Private';
 
   String _category = "Category";
@@ -80,102 +82,40 @@ class _GameFormState extends State<GameForm> {
                       ]),
                 ),
               )
-            ])),
+            ])
+        ),
         SizedBox(
-            width: 390 * x,
-            height: 64 * y,
-            child: Stack(children: <Widget>[
-              Positioned(
-                  left: 32,
-                  child: Container(
-                      width: 324 * x,
-                      height: 64 * y,
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(15),
-                          topRight: Radius.circular(15),
-                          bottomLeft: Radius.circular(15),
-                          bottomRight: Radius.circular(15),
-                        ),
-                        color: Colors.white,
-                      ))),
-              Positioned(
-                  left: 32 * x,
-                  width: 162 * x,
-                  height: 64 * y,
-                  top: 17 * y,
-                  child: Text(
-                    "Public",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontFamily: 'Poppins',
-                        fontSize: 30 * y,
-                        fontWeight: FontWeight.normal,
-                        height: 1),
-                  )),
-              Positioned(
-                  left: 194 * x,
-                  width: 162 * x,
-                  height: 64 * y,
-                  top: 17 * y,
-                  child: Text(
-                    "Private",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontFamily: 'Poppins',
-                        fontSize: 30 * y,
-                        fontWeight: FontWeight.normal,
-                        height: 1),
-                  )),
-              Positioned(
-                left: 20 * x,
-                width: 340 * x,
+          width: 390 * x,
+          height: 64 * y,
+          child: Stack(children: <Widget>[
+            Positioned(
+              left: 32 * x,
+              child: FlutterToggleTab(
+                width: 83 * x,
                 height: 64 * y,
-                child: ClipRRect(
-                    borderRadius: BorderRadius.circular(15),
-                    child: SizedBox(
-                      width: 195 * x,
-                      height: 64 * y,
-                      child: Stack(
-                        children: <Widget>[
-                          AnimatedPositioned(
-                            width: 180 * x,
-                            height: 64 * y,
-                            left: selected ? 0 : 162,
-                            duration: const Duration(seconds: 2),
-                            curve: Curves.fastOutSlowIn,
-                            child: GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  selected = !selected;
-                                  if (selected) {
-                                    name = 'Public';
-                                  } else {
-                                    name = "Private";
-                                  }
-                                });
-                              },
-                              child: Container(
-                                color: Colors.cyan,
-                                child: Center(
-                                    child: Text(name,
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontFamily: 'Poppins',
-                                            fontSize: 30 * y,
-                                            fontWeight: FontWeight.normal,
-                                            height: 1))),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    )),
+                borderRadius: 15,
+                selectedBackgroundColors: const [Colors.cyan],
+                unSelectedBackgroundColors: const [Colors.white],
+                selectedIndex: _selectedIndex,
+                selectedTextStyle: TextStyle(
+                    color: Colors.black,
+                    fontSize: 30 * y,
+                    fontWeight: FontWeight.w600),
+                unSelectedTextStyle: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 30 * y,
+                    fontWeight: FontWeight.normal),
+                labels: const ["Public", "Private"],
+                selectedLabelIndex: (index) {
+                  setState(() {
+                    _selectedIndex = index;
+                  });
+                },
               ),
-            ])),
+            )
+          ],)
+
+        ),
         SizedBox(
             width: 390 * x,
             height: 64 * y,
