@@ -144,32 +144,34 @@ class _GameFormState extends State<GameForm> {
                           bottomRight: Radius.circular(15),
                         ),
                         color: Colors.white),
-                    child: Column(children: [
-                      Container(
-                        height: 7 * y,
-                      ),
-                      Text('Max players: ${_currentSliderValue.toInt()}',
-                          style:
-                          TextStyle(fontSize: 20 * y, color: Colors.black)),
-                      SliderTheme(
-                          data: SliderThemeData(
-                              trackHeight: 24 * y,
-                              activeTrackColor: Colors.cyan,
-                              thumbShape: RoundSliderThumbShape(
-                                  enabledThumbRadius: 18 * y),
-                              thumbColor: Colors.cyan),
-                          child: Slider(
-                            value: _currentSliderValue,
-                            min: 1,
-                            max: 10,
-                            divisions: 9,
-                            onChanged: (double value) {
-                              setState(() {
-                                _currentSliderValue = value;
-                              });
-                            },
-                          )),
-                    ]),
+                    child: SingleChildScrollView(
+                      child: Column(children: [
+                        Container(
+                          height: 7 * y,
+                        ),
+                        Text('Max players: ${_currentSliderValue.toInt()}',
+                            style:
+                            TextStyle(fontSize: 20 * y, color: Colors.black)),
+                        SliderTheme(
+                            data: SliderThemeData(
+                                trackHeight: 24 * y,
+                                activeTrackColor: Colors.cyan,
+                                thumbShape: RoundSliderThumbShape(
+                                    enabledThumbRadius: 18 * y),
+                                thumbColor: Colors.cyan),
+                            child: Slider(
+                              value: _currentSliderValue,
+                              min: 1,
+                              max: 10,
+                              divisions: 9,
+                              onChanged: (double value) {
+                                setState(() {
+                                  _currentSliderValue = value;
+                                });
+                              },
+                            )),
+                      ]),
+                    ),
                   )),
             ],
           ),
@@ -289,7 +291,7 @@ class _GameFormState extends State<GameForm> {
                         color: Colors.white),
                     child: Column(children: [
                       Container(
-                        height: 16 * y,
+                        height: 6 * y,
                       ),
                       Text('Number of questions: ${_numberOfQuestions.toInt()}',
                           style:
@@ -392,7 +394,8 @@ class _GameFormState extends State<GameForm> {
             child: Text(
               'Play!',
               style: TextStyle(fontSize: 30 * y, color: Colors.white),
-            ))
+            )
+        )
       ],
     );
   }
@@ -409,15 +412,11 @@ class _GameFormState extends State<GameForm> {
             backgroundColor: Colors.grey[300],
             appBar: PreferredSize(
               preferredSize: Size.fromHeight(80 * y),
-              child: Column(
-                children: [
-                  Header(
+              child: Header(
                     leftIcon: 'assets/images/profile.png',
                     rightIcon: 'assets/images/settings.png',
                     y: y,
                   ),
-                ],
-              )
             ),
             body: DefaultTabController(
               length: 2,
