@@ -4,7 +4,7 @@ import 'package:quizly_app/pages/settings.dart';
 
 void main() {
   testWidgets('Widget Home display Image', (WidgetTester tester) async {
-    await tester.pumpWidget(const MaterialApp(home:SettingsPage()));
+    await tester.pumpWidget(const MaterialApp(home: SettingsPage()));
     expect(find.text('Settings'), findsOneWidget);
     expect(find.text('Music'), findsOneWidget);
     expect(find.text('Sound'), findsOneWidget);

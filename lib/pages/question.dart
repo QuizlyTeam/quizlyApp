@@ -223,7 +223,7 @@ class _QuestionState extends State<Question> {
           child: Scaffold(
             backgroundColor: Colors.grey[300],
             appBar: PreferredSize(
-              preferredSize:  Size.fromHeight(70*y),
+              preferredSize: Size.fromHeight(70 * y),
               child: Header(
                 leftIcon: 'assets/images/back.png',
                 rightIcon: 'assets/images/settings.png',

@@ -4,7 +4,7 @@ import 'package:quizly_app/pages/login_page.dart';
 
 void main() {
   testWidgets('Widget of login page', (WidgetTester tester) async {
-    await tester.pumpWidget(const MaterialApp(home:LoginPage()));
+    await tester.pumpWidget(const MaterialApp(home: LoginPage()));
 
     expect(find.text("Welcome to Quizly!"), findsOneWidget);
     expect(find.text("Sign in:"), findsOneWidget);
