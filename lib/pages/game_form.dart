@@ -29,7 +29,7 @@ class _GameFormState extends State<GameForm> {
     });
   }
 
-  Widget form(double x, double y) {
+  Column customQuiz(double x, double y) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -38,13 +38,13 @@ class _GameFormState extends State<GameForm> {
          */
         SizedBox(
             width: 390 * x,
-            height: 84 * y,
+            height: 80 * y,
             child: Stack(children: <Widget>[
               Positioned(
                   left: 32 * x,
                   child: Container(
                       width: 324 * x,
-                      height: 84 * y,
+                      height: 80 * y,
                       decoration: const BoxDecoration(
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(35),
@@ -58,7 +58,7 @@ class _GameFormState extends State<GameForm> {
                 top: 8 * y,
                 left: 32 * y,
                 width: 324 * x,
-                height: 84 * y,
+                height: 80 * y,
                 child: SingleChildScrollView(
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -92,35 +92,35 @@ class _GameFormState extends State<GameForm> {
         Game privacy options
          */
         SizedBox(
-          width: 390 * x,
-          height: 48 * y,
-          child: Stack(children: <Widget>[
-            Positioned(
-              left: 32 * x,
-              child: FlutterToggleTab(
-                width: 83 * x,
-                height: 48 * y,
-                borderRadius: 15,
-                selectedBackgroundColors: const [Colors.cyan],
-                unSelectedBackgroundColors: const [Colors.white],
-                selectedIndex: _selectedPrivacy,
-                selectedTextStyle: TextStyle(
-                    color: Colors.black,
-                    fontSize: 30 * y,
-                    fontWeight: FontWeight.w600),
-                unSelectedTextStyle: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 30 * y,
-                    fontWeight: FontWeight.normal),
-                labels: const ["Public", "Private"],
-                selectedLabelIndex: (index) {
-                  setState(() {
-                    _selectedPrivacy = index;
-                  });
-                },
-              ),
-            )
-          ],)
+            width: 390 * x,
+            height: 44 * y,
+            child: Stack(children: <Widget>[
+              Positioned(
+                left: 32 * x,
+                child: FlutterToggleTab(
+                  width: 83 * x,
+                  height: 44 * y,
+                  borderRadius: 15,
+                  selectedBackgroundColors: const [Colors.cyan],
+                  unSelectedBackgroundColors: const [Colors.white],
+                  selectedIndex: _selectedPrivacy,
+                  selectedTextStyle: TextStyle(
+                      color: Colors.black,
+                      fontSize: 30 * y,
+                      fontWeight: FontWeight.w600),
+                  unSelectedTextStyle: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 30 * y,
+                      fontWeight: FontWeight.normal),
+                  labels: const ["Public", "Private"],
+                  selectedLabelIndex: (index) {
+                    setState(() {
+                      _selectedPrivacy = index;
+                    });
+                  },
+                ),
+              )
+            ],)
 
         ),
         /*
@@ -395,24 +395,58 @@ class _GameFormState extends State<GameForm> {
     );
   }
 
+  Widget form(double x, double y) {
+    return customQuiz(x, y);
+  }
+
   @override
   Widget build(BuildContext context) {
     double x = MediaQuery.of(context).size.width / 411.42857142857144;
     double y = MediaQuery.of(context).size.height / 866.2857142857143;
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: SafeArea(
           child: Scaffold(
-        backgroundColor: Colors.grey[300],
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(70 * y),
-          child: Header(
-            leftIcon: 'assets/images/profile.png',
-            rightIcon: 'assets/images/settings.png',
-            y: y,
-          ),
-        ),
-        body: form(x, y),
+            backgroundColor: Colors.grey[300],
+            appBar: PreferredSize(
+              preferredSize: Size.fromHeight(80 * y),
+              child: Column(
+                children: [
+                  Header(
+                    leftIcon: 'assets/images/profile.png',
+                    rightIcon: 'assets/images/settings.png',
+                    y: y,
+                  ),
+                ],
+              )
+            ),
+            body: DefaultTabController(
+              length: 2,
+              child: Column(
+                children: [
+                  TabBar(
+                    indicatorColor: Colors.cyan,
+                    labelStyle: TextStyle(
+                      fontSize: 24 * y,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    tabs: const [
+                      Tab(text: 'Custom game'),
+                      Tab(text: 'My quizzes'),
+                    ],
+                  ),
+                  Expanded(
+                    child: TabBarView(
+                      children: [
+                        form(x, y),
+                        const Text('Tab 2 content'),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            )
       )),
     );
   }
