@@ -197,6 +197,7 @@ class _GameFormState extends State<GameForm> {
                   )),
               Positioned(
                   left: 258 * x,
+                  top: -3 * y,
                   child: ElevatedButton(
                     onPressed: _newCategory,
                     style: ElevatedButton.styleFrom(
@@ -242,6 +243,7 @@ class _GameFormState extends State<GameForm> {
                   )),
               Positioned(
                   left: 258 * x,
+                  top: -3 * y,
                   child: ElevatedButton(
                     onPressed: (){},
                     style: ElevatedButton.styleFrom(
@@ -395,10 +397,6 @@ class _GameFormState extends State<GameForm> {
     );
   }
 
-  Widget form(double x, double y) {
-    return customQuiz(x, y);
-  }
-
   @override
   Widget build(BuildContext context) {
     double x = MediaQuery.of(context).size.width / 411.42857142857144;
@@ -439,7 +437,7 @@ class _GameFormState extends State<GameForm> {
                   Expanded(
                     child: TabBarView(
                       children: [
-                        form(x, y),
+                        customQuiz(x,y),
                         const Text('Tab 2 content'),
                       ],
                     ),
