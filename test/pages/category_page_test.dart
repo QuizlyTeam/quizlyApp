@@ -77,7 +77,7 @@ void main() {
 
               final catName = find.text("Geography");
               final catIcon =
-                  find.image(AssetImage('assets/images/global.png'));
+                  find.image(const AssetImage('assets/images/global.png'));
               expect(find.byKey(const Key("categoryButton")), findsOneWidget);
               expect(catIcon, findsOneWidget);
               expect(catName, findsOneWidget);
