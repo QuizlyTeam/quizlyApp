@@ -393,7 +393,7 @@ class _GameFormState extends State<GameForm> {
             onPressed: () {
               Get.to(Question(
                 category: _category,
-                tags: [],
+                tags: const [],
                 maxPlayers: _currentSliderValue.toInt(),
                 numOfQuestions: _numberOfQuestions.toInt(),
                 difficulty: arr[_selectedDifficulty],
