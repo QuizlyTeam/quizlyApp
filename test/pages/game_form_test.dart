@@ -24,4 +24,12 @@ void main() {
         expect(find.text('Medium'), findsOneWidget);
         expect(find.byType(FlutterToggleTab), findsNWidgets(2));
       });
+
+  testWidgets('Test tags and categories',
+          (WidgetTester tester) async {
+        await tester.pumpWidget(const MaterialApp(home: GameForm()));
+
+        expect(find.text('Category'), findsOneWidget);
+        expect(find.text('0 tags selected'), findsOneWidget);
+      });
 }

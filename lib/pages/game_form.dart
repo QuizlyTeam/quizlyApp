@@ -20,6 +20,8 @@ class _GameFormState extends State<GameForm> {
   int _selectedDifficulty = 0;
   String name = 'Private';
 
+  var arr = ["easy", "medium", "hard"];
+
   String _category = "Category";
   List<String> _tags = [];
 
@@ -391,6 +393,11 @@ class _GameFormState extends State<GameForm> {
             onPressed: () {
               Get.to(Question(
                 category: _category,
+                tags: [],
+                maxPlayers: _currentSliderValue.toInt(),
+                numOfQuestions: _numberOfQuestions.toInt(),
+                difficulty: arr[_selectedDifficulty],
+                private: _selectedPrivacy>0,
               ));
             },
             style: ElevatedButton.styleFrom(
