@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:quizly_app/widgets/header.dart';
 import 'package:quizly_app/pages/category_page.dart';
 import 'package:quizly_app/pages/question.dart';
+import 'package:quizly_app/pages/tag_page.dart';
 import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 
 class GameForm extends StatefulWidget {
@@ -20,12 +21,19 @@ class _GameFormState extends State<GameForm> {
   String name = 'Private';
 
   String _category = "Category";
-  List<String> _tags = ["Tags"];
+  List<String> _tags = [];
 
   void _newCategory() async {
     _category = await Get.to(const CategoryPage());
     setState(() {
       _category = _category;
+    });
+  }
+
+  void _newTags() async {
+    _tags = await Get.to(const TagPage());
+    setState(() {
+      _tags = _tags;
     });
   }
 
@@ -247,7 +255,7 @@ class _GameFormState extends State<GameForm> {
                   left: 258 * x,
                   top: -3 * y,
                   child: ElevatedButton(
-                    onPressed: (){},
+                    onPressed: _newTags,
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.cyan,
                         fixedSize: Size(100 * x, 50 * y),
@@ -263,7 +271,7 @@ class _GameFormState extends State<GameForm> {
                   left: 48 * x,
                   top: 8 * y,
                   child: Text(
-                    _tags[0],
+                    (_tags.isEmpty?'0 tags selected':'${_tags.length} tags selected'),
                     style: TextStyle(fontSize: 25 * y, color: Colors.black),
                   )),
             ])
