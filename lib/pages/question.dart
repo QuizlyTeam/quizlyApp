@@ -12,7 +12,12 @@ class Question extends StatefulWidget {
   final IO.Socket socket = IO.io('http://10.0.2.2:8000/',
       IO.OptionBuilder().setTransports(['websocket']).build());
   final String category;
-  Question({super.key, required this.category});
+  final List<String> tags;
+  final int maxPlayers;
+  final int numOfQuestions;
+  final String difficulty;
+  final bool private;
+  Question({super.key, required this.category, required this.tags, required this.maxPlayers, required this.numOfQuestions, required this.difficulty, required this.private});
 
   @override
   State<Question> createState() => _QuestionState();
@@ -49,12 +54,27 @@ class _QuestionState extends State<Question> {
 
     String cat = widget.category.replaceFirst(r' & ', '_and_').toLowerCase();
 
-    var quizOptions = {
-      "name": "guest",
-      "categories": cat,
-      "max_players": 1,
-      "limit": 3
-    };
+    var quizOptions = {};
+    if(widget.tags.isNotEmpty){
+      quizOptions = {
+        "name": "guest",
+        "categories": cat,
+        "difficulty": widget.difficulty,
+        "limit": widget.numOfQuestions,
+        "tags": widget.tags,
+        "with_friends": !widget.private,
+        "max_players": 1,
+      };
+    } else {
+      quizOptions = {
+        "name": "guest",
+        "categories": cat,
+        "difficulty": widget.difficulty,
+        "limit": widget.numOfQuestions,
+        "with_friends": !widget.private,
+        "max_players": 1,
+      };
+    }
     widget.socket.emit("join", quizOptions);
     //widget.socket.emit('question');
     widget.socket.on('question', (data) {
@@ -133,7 +153,7 @@ class _QuestionState extends State<Question> {
   void determinateIndicator() {
     Timer.periodic(const Duration(milliseconds: 1), (Timer timer) {
       if (value <= 0) {
-        if (questionNumber == 3) {
+        if (questionNumber == widget.numOfQuestions) {
           timer.cancel();
           Get.to(Score(score: totalScore));
         } else {
@@ -153,7 +173,7 @@ class _QuestionState extends State<Question> {
         }
       } else {
         setState(() {
-          value = value - 0.0000774;
+          value = value - 1/12000;
         });
       }
     });
