@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 List<bool> shaded = [];
+List<String> selectedTags = [];
 
 Future<List<String>> fetchTags() async {
   final response =
@@ -36,7 +37,7 @@ class TagPage extends StatefulWidget {
 
 class _TagPageState extends State<TagPage> {
   late List<String> tags = [];
-  late List<String> selectedTags = [];
+
   late List<String> search = [];
   late Future<List<String>> futureTags;
   var helper = 0;
