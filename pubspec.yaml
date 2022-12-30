@@ -87,6 +87,16 @@ flutter:
     - assets/images/Facebook (icon — Colour).png
     - assets/images/Google (icon — Colour).png
     - assets/images/Mask group.png
+    - assets/images/global.png
+    - assets/images/brush.png
+    - assets/images/videovertical.png
+    - assets/images/milk.png
+    - assets/images/book.png
+    - assets/images/courthouse.png
+    - assets/images/music.png
+    - assets/images/chemicalglass.png
+    - assets/images/people.png
+    - assets/images/dribbble.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
