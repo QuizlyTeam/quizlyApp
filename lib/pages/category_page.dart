@@ -26,25 +26,24 @@ class CategoryPage extends StatefulWidget {
   State<CategoryPage> createState() => _CategoryPageState();
 }
 
-
-
 class _CategoryPageState extends State<CategoryPage> {
   late List<String> categories = [];
   late List<String> search = [];
   late List<String> pathToImages = ['assets/images/game.png'];
   late Future<List<String>> futureCategories;
   var helper = 0;
-  Map<String,String> iconMap = {
-    "Geography":            'assets/images/global.png',
-    "Arts & Literature":    'assets/images/brush.png',
-    "Film & TV":            'assets/images/videovertical.png',
-    "Food & Drink":         'assets/images/milk.png',
-    "General Knowledge":    'assets/images/book.png',
-    "History":              'assets/images/courthouse.png',
-    "Music":                'assets/images/music.png',
-    "Science":              'assets/images/chemicalglass.png',
-    "Society & Culture":    'assets/images/people.png',
-    "Sport & Leisure":      'assets/images/dribbble.png'};
+  Map<String, String> iconMap = {
+    "Geography": 'assets/images/global.png',
+    "Arts & Literature": 'assets/images/brush.png',
+    "Film & TV": 'assets/images/videovertical.png',
+    "Food & Drink": 'assets/images/milk.png',
+    "General Knowledge": 'assets/images/book.png',
+    "History": 'assets/images/courthouse.png',
+    "Music": 'assets/images/music.png',
+    "Science": 'assets/images/chemicalglass.png',
+    "Society & Culture": 'assets/images/people.png',
+    "Sport & Leisure": 'assets/images/dribbble.png'
+  };
 
   void addQuiz(String categoryName, String pathToImage) {
     categories.add(categoryName);
@@ -189,12 +188,24 @@ class _CategoryPageState extends State<CategoryPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              categoryButton(search.elementAt(i),
-                                  iconMap[search.elementAt(i)] ?? 'assets/images/game.png', x, y),
-                              categoryButton(search.elementAt(i + 1),
-                                  iconMap[search.elementAt(i+1)] ?? 'assets/images/game.png', x, y),
-                              categoryButton(search.elementAt(i + 2),
-                                  iconMap[search.elementAt(i+2)] ?? 'assets/images/game.png', x, y),
+                              categoryButton(
+                                  search.elementAt(i),
+                                  iconMap[search.elementAt(i)] ??
+                                      'assets/images/game.png',
+                                  x,
+                                  y),
+                              categoryButton(
+                                  search.elementAt(i + 1),
+                                  iconMap[search.elementAt(i + 1)] ??
+                                      'assets/images/game.png',
+                                  x,
+                                  y),
+                              categoryButton(
+                                  search.elementAt(i + 2),
+                                  iconMap[search.elementAt(i + 2)] ??
+                                      'assets/images/game.png',
+                                  x,
+                                  y),
                             ],
                           ),
                           const SizedBox(
@@ -206,8 +217,12 @@ class _CategoryPageState extends State<CategoryPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          categoryButton(search.elementAt(search.length - 1),
-                              iconMap[search.elementAt(search.length - 1)] ?? 'assets/images/game.png', x, y),
+                          categoryButton(
+                              search.elementAt(search.length - 1),
+                              iconMap[search.elementAt(search.length - 1)] ??
+                                  'assets/images/game.png',
+                              x,
+                              y),
                           SizedBox(
                             width: 110 * x,
                           ),
@@ -220,10 +235,18 @@ class _CategoryPageState extends State<CategoryPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          categoryButton(search.elementAt(search.length - 2),
-                              iconMap[search.elementAt(search.length - 2)] ?? 'assets/images/game.png', x, y),
-                          categoryButton(search.elementAt(search.length - 1),
-                              iconMap[search.elementAt(search.length - 1)] ?? 'assets/images/game.png', x, y),
+                          categoryButton(
+                              search.elementAt(search.length - 2),
+                              iconMap[search.elementAt(search.length - 2)] ??
+                                  'assets/images/game.png',
+                              x,
+                              y),
+                          categoryButton(
+                              search.elementAt(search.length - 1),
+                              iconMap[search.elementAt(search.length - 1)] ??
+                                  'assets/images/game.png',
+                              x,
+                              y),
                           SizedBox(
                             width: 110 * x,
                           )
