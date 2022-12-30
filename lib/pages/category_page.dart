@@ -4,7 +4,7 @@ import 'package:quizly_app/widgets/header.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-Future<List<String>> fetchCategories(/*http.Client client*/) async {
+Future<List<String>> fetchCategories() async {
   final response =
       await http.get(Uri.parse('http://10.0.2.2:8000/v1/quizzes/categories'));
   if (response.statusCode == 200) {
@@ -32,6 +32,18 @@ class _CategoryPageState extends State<CategoryPage> {
   late List<String> pathToImages = ['assets/images/game.png'];
   late Future<List<String>> futureCategories;
   var helper = 0;
+  Map<String, String> iconMap = {
+    "Geography": 'assets/images/global.png',
+    "Arts & Literature": 'assets/images/brush.png',
+    "Film & TV": 'assets/images/videovertical.png',
+    "Food & Drink": 'assets/images/milk.png',
+    "General Knowledge": 'assets/images/book.png',
+    "History": 'assets/images/courthouse.png',
+    "Music": 'assets/images/music.png',
+    "Science": 'assets/images/chemicalglass.png',
+    "Society & Culture": 'assets/images/people.png',
+    "Sport & Leisure": 'assets/images/dribbble.png'
+  };
 
   void addQuiz(String categoryName, String pathToImage) {
     categories.add(categoryName);
@@ -40,7 +52,7 @@ class _CategoryPageState extends State<CategoryPage> {
 
   @override
   void initState() {
-    futureCategories = fetchCategories(/*http.Client()*/);
+    futureCategories = fetchCategories();
     super.initState();
   }
 
@@ -176,12 +188,24 @@ class _CategoryPageState extends State<CategoryPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              categoryButton(search.elementAt(i),
-                                  pathToImages.elementAt(0), x, y),
-                              categoryButton(search.elementAt(i + 1),
-                                  pathToImages.elementAt(0), x, y),
-                              categoryButton(search.elementAt(i + 2),
-                                  pathToImages.elementAt(0), x, y),
+                              categoryButton(
+                                  search.elementAt(i),
+                                  iconMap[search.elementAt(i)] ??
+                                      'assets/images/game.png',
+                                  x,
+                                  y),
+                              categoryButton(
+                                  search.elementAt(i + 1),
+                                  iconMap[search.elementAt(i + 1)] ??
+                                      'assets/images/game.png',
+                                  x,
+                                  y),
+                              categoryButton(
+                                  search.elementAt(i + 2),
+                                  iconMap[search.elementAt(i + 2)] ??
+                                      'assets/images/game.png',
+                                  x,
+                                  y),
                             ],
                           ),
                           const SizedBox(
@@ -193,8 +217,12 @@ class _CategoryPageState extends State<CategoryPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          categoryButton(search.elementAt(search.length - 1),
-                              pathToImages.elementAt(0), x, y),
+                          categoryButton(
+                              search.elementAt(search.length - 1),
+                              iconMap[search.elementAt(search.length - 1)] ??
+                                  'assets/images/game.png',
+                              x,
+                              y),
                           SizedBox(
                             width: 110 * x,
                           ),
@@ -207,10 +235,18 @@ class _CategoryPageState extends State<CategoryPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          categoryButton(search.elementAt(search.length - 2),
-                              pathToImages.elementAt(0), x, y),
-                          categoryButton(search.elementAt(search.length - 1),
-                              pathToImages.elementAt(0), x, y),
+                          categoryButton(
+                              search.elementAt(search.length - 2),
+                              iconMap[search.elementAt(search.length - 2)] ??
+                                  'assets/images/game.png',
+                              x,
+                              y),
+                          categoryButton(
+                              search.elementAt(search.length - 1),
+                              iconMap[search.elementAt(search.length - 1)] ??
+                                  'assets/images/game.png',
+                              x,
+                              y),
                           SizedBox(
                             width: 110 * x,
                           )
