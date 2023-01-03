@@ -50,6 +50,7 @@ class _QuestionState extends State<Question> {
   final stopwatch = Stopwatch();
 
   bool ready = false;
+  bool emittedProperAnswer = false;
 
   List<bool> wasClicked = [false, false, false, false];
   @override
@@ -70,9 +71,11 @@ class _QuestionState extends State<Question> {
 
 
     widget.socket.emit("join", quizOptions);
+
     widget.socket.on('question', (data) {
       ready = true;
       stopwatch.reset();
+      emittedProperAnswer = false;
       if (first) {
         first = false;
         question = data['question'];
@@ -81,7 +84,7 @@ class _QuestionState extends State<Question> {
         ans2 = data['answers'][1];
         ans3 = data['answers'][2];
         ans4 = data['answers'][3];
-        correctAnswer = data['answers'][0];
+        correctAnswer = "";
       } else {
         setState(() {
           tempQuestion = data['question'];
@@ -90,26 +93,43 @@ class _QuestionState extends State<Question> {
           tempAns2 = data['answers'][1];
           tempAns3 = data['answers'][2];
           tempAns4 = data['answers'][3];
-          tempCorrectAnswer = data['answers'][0];
+          tempCorrectAnswer = "";
         });
       }
     });
+
     widget.socket.on('results', (data) {
       totalScore = data['guest'];
       widget.socket.disconnect();
       Get.to(Score(score: totalScore));
     });
+
+    widget.socket.on("answer", (data) {
+      correctAnswer = data;
+      emittedProperAnswer = true;
+    });
+
     stopwatch.start();
     determinateIndicator();
   }
 
   Widget answerButton(String answer, int index, double x, double y) {
     if (answer == correctAnswer && clickedAnything) {
-      normalColor = Colors.green;
-    } else if (answer != correctAnswer && wasClicked.elementAt(index)) {
-      normalColor = Colors.red;
+      setState(() {
+        normalColor = Colors.green;
+      });
+    } else if (answer != correctAnswer && wasClicked[index]) {
+      setState(() {
+        normalColor = Colors.red;
+      });
+    } else if (answer == correctAnswer && emittedProperAnswer){
+      setState(() {
+        normalColor = Colors.yellow;
+      });
     } else {
-      normalColor = Colors.cyan;
+      setState(() {
+        normalColor = Colors.cyan;
+      });
     }
 
     return ElevatedButton(
@@ -119,21 +139,15 @@ class _QuestionState extends State<Question> {
               double time = stopwatch.elapsedMilliseconds/1000;
               time = time > 12 ? 12:time;
               widget.socket.emit("answer", {"answer": answer, "time": time});
-              widget.socket.on("answer", (data) {
-                correctAnswer = data;
-              });
+
               if (answer == correctAnswer) {
                 setState(() {
                   clickedAnything = true;
-                  //  wasClicked[index]= true;
-                  // normalColor = Colors.green;
                 });
               } else {
                 setState(() {
-                  clickedAnything = true;
                   wasClicked[index] = true;
-
-                  // normalColor = Colors.red;
+                  clickedAnything = true;
                 });
               }
             },
