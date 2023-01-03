@@ -46,6 +46,11 @@ class _QuestionState extends State<Question> {
 
   var normalColor = Colors.cyan;
 
+  //to time measurement
+  final stopwatch = Stopwatch();
+
+  bool ready = false;
+
   List<bool> wasClicked = [false, false, false, false];
   @override
   void initState() {
@@ -57,27 +62,25 @@ class _QuestionState extends State<Question> {
     var quizOptions = {};
     if(widget.tags.isNotEmpty){
       quizOptions = {
-        "name": "guest",
+        "nickname": "guest",
         "categories": cat,
         "difficulty": widget.difficulty,
         "limit": widget.numOfQuestions,
         "tags": widget.tags,
-        "with_friends": !widget.private,
         "max_players": 1,
       };
     } else {
       quizOptions = {
-        "name": "guest",
+        "nickname": "guest",
         "categories": cat,
         "difficulty": widget.difficulty,
         "limit": widget.numOfQuestions,
-        "with_friends": !widget.private,
         "max_players": 1,
       };
     }
     widget.socket.emit("join", quizOptions);
-    //widget.socket.emit('question');
     widget.socket.on('question', (data) {
+      ready = true;
       if (first) {
         first = false;
         question = data['question'];
@@ -102,6 +105,7 @@ class _QuestionState extends State<Question> {
     widget.socket.on('results', (data) {
       totalScore = data['guest'];
     });
+    stopwatch.start();
     determinateIndicator();
   }
 
@@ -153,27 +157,38 @@ class _QuestionState extends State<Question> {
   void determinateIndicator() {
     Timer.periodic(const Duration(milliseconds: 1), (Timer timer) {
       if (value <= 0) {
+        stopwatch.reset();
         if (questionNumber == widget.numOfQuestions) {
           timer.cancel();
           Get.to(Score(score: totalScore));
         } else {
           setState(() {
-            clickedAnything = false;
-            wasClicked = [false, false, false, false];
-            value = 1;
-            questionNumber++;
+            if (ready) {
+              value = 1;
 
-            question = tempQuestion;
-            ans1 = tempAns1;
-            ans2 = tempAns2;
-            ans3 = tempAns3;
-            ans4 = tempAns4;
-            correctAnswer = tempCorrectAnswer;
+              clickedAnything = false;
+              wasClicked = [false, false, false, false];
+              value = 1;
+              questionNumber++;
+
+              question = tempQuestion;
+              ans1 = tempAns1;
+              ans2 = tempAns2;
+              ans3 = tempAns3;
+              ans4 = tempAns4;
+              correctAnswer = tempCorrectAnswer;
+            }
           });
         }
       } else {
         setState(() {
-          value = value - 1/12000;
+          if (ready) {
+            var elapsed = stopwatch.elapsedMilliseconds;
+            if (elapsed >= 12000) {
+              ready = false;
+            }
+            value = 1 - 1 / 12000 * elapsed;
+          }
         });
       }
     });
@@ -217,6 +232,7 @@ class _QuestionState extends State<Question> {
             )),
         SizedBox(
           height: 50 * y,
+          child: Text('${(value*12).toInt()}'),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
