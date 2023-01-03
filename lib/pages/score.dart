@@ -23,7 +23,7 @@ class Score extends StatelessWidget {
         ),
         body: Center(
           child: Text(
-            'Your score: ${score * 587}',
+            'Your score: \n$score',
             style: const TextStyle(fontSize: 48),
           ),
         ),

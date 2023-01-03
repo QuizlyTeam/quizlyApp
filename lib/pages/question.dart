@@ -60,27 +60,19 @@ class _QuestionState extends State<Question> {
     String cat = widget.category.replaceFirst(r' & ', '_and_').toLowerCase();
 
     var quizOptions = {};
-    if(widget.tags.isNotEmpty){
-      quizOptions = {
-        "nickname": "guest",
-        "categories": cat,
-        "difficulty": widget.difficulty,
-        "limit": widget.numOfQuestions,
-        "tags": widget.tags,
-        "max_players": 1,
-      };
-    } else {
-      quizOptions = {
-        "nickname": "guest",
-        "categories": cat,
-        "difficulty": widget.difficulty,
-        "limit": widget.numOfQuestions,
-        "max_players": 1,
-      };
-    }
+
+    quizOptions["nickname"] = "guest";
+    cat.isEmpty ? 1+1:quizOptions["categories"] = cat;
+    quizOptions["difficulty"] = widget.difficulty;
+    quizOptions["limit"] = widget.numOfQuestions;
+    widget.tags.isNotEmpty ? quizOptions["tags"]:1+1;
+    quizOptions["max_players"] = widget.maxPlayers;
+
+
     widget.socket.emit("join", quizOptions);
     widget.socket.on('question', (data) {
       ready = true;
+      stopwatch.reset();
       if (first) {
         first = false;
         question = data['question'];
@@ -104,6 +96,8 @@ class _QuestionState extends State<Question> {
     });
     widget.socket.on('results', (data) {
       totalScore = data['guest'];
+      widget.socket.disconnect();
+      Get.to(Score(score: totalScore));
     });
     stopwatch.start();
     determinateIndicator();
@@ -119,10 +113,12 @@ class _QuestionState extends State<Question> {
     }
 
     return ElevatedButton(
-      onPressed: clickedAnything && questionNumber <= 10
+      onPressed: clickedAnything
           ? () {}
           : () {
-              widget.socket.emit("answer", {"answer": answer, "time": 0});
+              double time = stopwatch.elapsedMilliseconds/1000;
+              time = time > 12 ? 12:time;
+              widget.socket.emit("answer", {"answer": answer, "time": time});
               widget.socket.on("answer", (data) {
                 correctAnswer = data;
               });
@@ -157,10 +153,8 @@ class _QuestionState extends State<Question> {
   void determinateIndicator() {
     Timer.periodic(const Duration(milliseconds: 1), (Timer timer) {
       if (value <= 0) {
-        stopwatch.reset();
         if (questionNumber == widget.numOfQuestions) {
           timer.cancel();
-          Get.to(Score(score: totalScore));
         } else {
           setState(() {
             if (ready) {
@@ -232,7 +226,6 @@ class _QuestionState extends State<Question> {
             )),
         SizedBox(
           height: 50 * y,
-          child: Text('${(value*12).toInt()}'),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
