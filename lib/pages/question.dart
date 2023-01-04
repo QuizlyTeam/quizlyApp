@@ -41,7 +41,7 @@ class _QuestionState extends State<Question> {
   String tempCorrectAnswer = "";
   bool first = true;
 
-  int totalScore = 0;
+  Map totalScore = {};
 
   double value = 1;
   int questionNumber = 1;
@@ -112,7 +112,7 @@ class _QuestionState extends State<Question> {
     });
 
     widget.socket.on("results", (data) {
-      totalScore = data['guest'];
+      totalScore = data;
       Get.to(Score(score: totalScore));
     });
 

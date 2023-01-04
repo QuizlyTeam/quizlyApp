@@ -5,9 +5,16 @@ import 'package:quizly_app/widgets/header.dart';
 import 'package:quizly_app/pages/category_page.dart';
 import 'package:quizly_app/pages/tag_page.dart';
 import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
+import 'dart:math';
 
+// ignore: must_be_immutable
 class GameForm extends StatefulWidget {
-  const GameForm({super.key});
+  GameForm({super.key}) {
+    nick = "guest${rng.nextInt(10000)}";
+  }
+
+  var rng = Random();
+  late final String nick;
 
   @override
   State<GameForm> createState() => _GameFormState();
@@ -361,6 +368,7 @@ class _GameFormState extends State<GameForm> {
                 maxPlayers: _currentSliderValue.toInt(),
                 numOfQuestions: _numberOfQuestions.toInt(),
                 difficulty: arr[_selectedDifficulty],
+                nick: widget.nick,
               ));
             },
             style: ElevatedButton.styleFrom(

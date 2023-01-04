@@ -2,8 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:quizly_app/widgets/header.dart';
 
 class Score extends StatelessWidget {
-  final int score;
+  final Map score;
   const Score({super.key, required this.score});
+
+  String generateTable(){
+    String ans = "";
+
+    score.forEach((key, value) {ans+="$key: $value\n";});
+
+    return ans;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,22 +20,23 @@ class Score extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: SafeArea(
           child: Scaffold(
-        backgroundColor: Colors.grey[300],
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(70),
-          child: Header(
-            leftIcon: 'assets/images/profile.png',
-            rightIcon: 'assets/images/settings.png',
-            y: y,
-          ),
-        ),
-        body: Center(
-          child: Text(
-            'Your score: \n$score',
-            style: const TextStyle(fontSize: 48),
-          ),
-        ),
-      )),
+            backgroundColor: Colors.grey[300],
+            appBar: PreferredSize(
+              preferredSize: const Size.fromHeight(70),
+              child: Header(
+                leftIcon: 'assets/images/profile.png',
+                rightIcon: 'assets/images/settings.png',
+                y: y,
+              ),
+            ),
+            body: Center(
+              child: Text(
+                generateTable(),
+                style: TextStyle(fontSize: 46 * y),
+              ),
+            ),
+          )
+      ),
     );
   }
 }

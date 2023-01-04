@@ -15,6 +15,7 @@ class BetweenPage extends StatefulWidget {
   final int maxPlayers;
   final int numOfQuestions;
   final String difficulty;
+  final String nick;
 
   BetweenPage({
         super.key,
@@ -22,7 +23,8 @@ class BetweenPage extends StatefulWidget {
         required this.tags,
         required this.maxPlayers,
         required this.numOfQuestions,
-        required this.difficulty
+        required this.difficulty,
+        required this.nick
       });
 
   @override
@@ -41,7 +43,7 @@ class _BetweenPageState extends State<BetweenPage>{
 
     var quizOptions = {};
 
-    quizOptions["nickname"] = "guest";
+    quizOptions["nickname"] = widget.nick;
     cat.isEmpty ? 1+1:quizOptions["categories"] = cat;
     quizOptions["difficulty"] = widget.difficulty;
     quizOptions["limit"] = widget.numOfQuestions;

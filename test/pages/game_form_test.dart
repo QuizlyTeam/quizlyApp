@@ -6,7 +6,7 @@ import 'package:quizly_app/pages/game_form.dart';
 void main() {
   testWidgets('Test buttons',
           (WidgetTester tester) async {
-        await tester.pumpWidget(const MaterialApp(home: GameForm()));
+        await tester.pumpWidget(MaterialApp(home: GameForm()));
 
         expect(find.text('Play!'), findsOneWidget);
         expect(find.text('Difficulty level:'), findsOneWidget);
@@ -16,7 +16,7 @@ void main() {
 
   testWidgets('Test toggle tabs',
           (WidgetTester tester) async {
-        await tester.pumpWidget(const MaterialApp(home: GameForm()));
+        await tester.pumpWidget(MaterialApp(home: GameForm()));
 
         expect(find.text('Public'), findsOneWidget);
         expect(find.text('Private'), findsOneWidget);
@@ -27,7 +27,7 @@ void main() {
 
   testWidgets('Test tags and categories',
           (WidgetTester tester) async {
-        await tester.pumpWidget(const MaterialApp(home: GameForm()));
+        await tester.pumpWidget(MaterialApp(home: GameForm()));
 
         expect(find.text('Category'), findsOneWidget);
         expect(find.text('0 tags selected'), findsOneWidget);
