@@ -16,7 +16,6 @@ class GameForm extends StatefulWidget {
 class _GameFormState extends State<GameForm> {
   double _currentSliderValue = 4;
   double _numberOfQuestions = 10;
-  int _selectedPrivacy = 1;
   int _selectedDifficulty = 0;
   String name = 'Private';
 
@@ -97,41 +96,6 @@ class _GameFormState extends State<GameForm> {
                 ),
               )
             ])
-        ),
-        /*
-        Game privacy options
-         */
-        SizedBox(
-            width: 390 * x,
-            height: 44 * y,
-            child: Stack(children: <Widget>[
-              Positioned(
-                left: 32 * x,
-                child: FlutterToggleTab(
-                  width: 83 * x,
-                  height: 44 * y,
-                  borderRadius: 15,
-                  selectedBackgroundColors: const [Colors.cyan],
-                  unSelectedBackgroundColors: const [Colors.white],
-                  selectedIndex: _selectedPrivacy,
-                  selectedTextStyle: TextStyle(
-                      color: Colors.black,
-                      fontSize: 30 * y,
-                      fontWeight: FontWeight.w600),
-                  unSelectedTextStyle: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 30 * y,
-                      fontWeight: FontWeight.normal),
-                  labels: const ["Public", "Private"],
-                  selectedLabelIndex: (index) {
-                    setState(() {
-                      _selectedPrivacy = index;
-                    });
-                  },
-                ),
-              )
-            ],)
-
         ),
         /*
         Maximum number of players
@@ -397,7 +361,6 @@ class _GameFormState extends State<GameForm> {
                 maxPlayers: _currentSliderValue.toInt(),
                 numOfQuestions: _numberOfQuestions.toInt(),
                 difficulty: arr[_selectedDifficulty],
-                private: _selectedPrivacy>0,
               ));
             },
             style: ElevatedButton.styleFrom(

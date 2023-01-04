@@ -16,8 +16,7 @@ class Question extends StatefulWidget {
   final int maxPlayers;
   final int numOfQuestions;
   final String difficulty;
-  final bool private;
-  Question({super.key, required this.category, required this.tags, required this.maxPlayers, required this.numOfQuestions, required this.difficulty, required this.private});
+  Question({super.key, required this.category, required this.tags, required this.maxPlayers, required this.numOfQuestions, required this.difficulty,});
 
   @override
   State<Question> createState() => _QuestionState();
@@ -71,6 +70,10 @@ class _QuestionState extends State<Question> {
 
 
     widget.socket.emit("join", quizOptions);
+
+    widget.socket.on('join', (data) {
+      print(data["room"]);
+    });
 
     widget.socket.on('question', (data) {
       ready = true;
