@@ -1,4 +1,5 @@
 // ignore: library_prefixes
+import 'package:flutter/services.dart';
 import 'package:quizly_app/pages/question.dart';
 // ignore: library_prefixes
 import 'package:socket_io_client/socket_io_client.dart' as IO;
@@ -29,6 +30,9 @@ class BetweenPage extends StatefulWidget {
 }
 
 class _BetweenPageState extends State<BetweenPage>{
+  int ready = 1;
+  String room = "";
+
   @override
   void initState() {
     super.initState();
@@ -46,11 +50,37 @@ class _BetweenPageState extends State<BetweenPage>{
 
 
     widget.socket.emit("join", quizOptions);
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => Get.to(Question(
-      socket: widget.socket,
-      numOfQuestions: widget.numOfQuestions,
-    )));
+
+    if (widget.maxPlayers > 1) {
+      widget.socket.on('join', (data) {
+        setState(() {
+          room = data["room"];
+          ready = data["number_of_players"];
+        });
+      });
+
+      WidgetsBinding.instance
+          .addPostFrameCallback((_) => widget.socket.emit("ready"));
+
+      if (widget.maxPlayers == ready) {
+        WidgetsBinding.instance
+            .addPostFrameCallback((_) =>
+            Get.to(Question(
+              socket: widget.socket,
+              numOfQuestions: widget.numOfQuestions,
+            )));
+      }
+    }
+
+    if (widget.maxPlayers == 1) {
+      WidgetsBinding.instance
+          .addPostFrameCallback((_) =>
+          Get.to(Question(
+            socket: widget.socket,
+            numOfQuestions: widget.numOfQuestions,
+          )));
+    }
+
   }
 
   @override
@@ -70,26 +100,34 @@ class _BetweenPageState extends State<BetweenPage>{
                 y: y,
               ),
             ),
-            body: SingleChildScrollView(
-              child: ElevatedButton(
-                  onPressed: () {
-                    Get.to(Question(
-                      socket: widget.socket,
-                      numOfQuestions: widget.numOfQuestions,
-                    ));
-                  },
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.cyan,
-                      fixedSize: Size(280 * x, 96 * y),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(32.0),
-                      )),
-                  child: Text(
-                    'Play!',
-                    style: TextStyle(fontSize: 30 * y, color: Colors.white),
-                  )
-              ),
-            ),
+            body: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                  child: Text("Ready players:\n"
+                      " $ready/${widget.maxPlayers}\n"
+                      "Room id:\n"
+                      "$room",
+                  style: TextStyle(
+                    fontSize: 35 * x,
+                  ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    IconButton(
+                        onPressed: () async {
+                          await Clipboard.setData(ClipboardData(text: room));
+                        },
+                        icon: const Icon(Icons.content_copy_outlined)
+                    ),
+                    const Text("Copy to clipboard"),
+                  ],
+                )
+              ]
+            )
           ),
         ));
   }
