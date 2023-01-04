@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:quizly_app/pages/between_page.dart';
 import 'package:quizly_app/widgets/header.dart';
 import 'package:quizly_app/pages/category_page.dart';
-import 'package:quizly_app/pages/question.dart';
 import 'package:quizly_app/pages/tag_page.dart';
 import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 
@@ -355,7 +355,7 @@ class _GameFormState extends State<GameForm> {
          */
         ElevatedButton(
             onPressed: () {
-              Get.to(Question(
+              Get.to(BetweenPage(
                 category: _category,
                 tags: const [],
                 maxPlayers: _currentSliderValue.toInt(),

@@ -8,15 +8,19 @@ import 'package:get/get.dart';
 import 'package:quizly_app/widgets/header.dart';
 import 'package:quizly_app/pages/score.dart';
 
+//ignore: must_be_immutable
 class Question extends StatefulWidget {
-  final IO.Socket socket = IO.io('http://10.0.2.2:8000/',
+  IO.Socket socket = IO.io('http://10.0.2.2:8000/',
       IO.OptionBuilder().setTransports(['websocket']).build());
+  /*
   final String category;
   final List<String> tags;
   final int maxPlayers;
-  final int numOfQuestions;
   final String difficulty;
-  Question({super.key, required this.category, required this.tags, required this.maxPlayers, required this.numOfQuestions, required this.difficulty,});
+   */
+  final int numOfQuestions;
+  //Question({super.key, required this.category, required this.tags, required this.maxPlayers, required this.numOfQuestions, required this.difficulty,});
+  Question({super.key, required this.socket, required this.numOfQuestions});
 
   @override
   State<Question> createState() => _QuestionState();
@@ -57,6 +61,7 @@ class _QuestionState extends State<Question> {
     super.initState();
     value = 1;
 
+    /*
     String cat = widget.category.replaceFirst(r' & ', '_and_').toLowerCase();
 
     var quizOptions = {};
@@ -74,7 +79,7 @@ class _QuestionState extends State<Question> {
     widget.socket.on('join', (data) {
       print(data["room"]);
     });
-
+     */
     widget.socket.on('question', (data) {
       ready = true;
       stopwatch.reset();
@@ -101,15 +106,14 @@ class _QuestionState extends State<Question> {
       }
     });
 
-    widget.socket.on('results', (data) {
-      totalScore = data['guest'];
-      widget.socket.disconnect();
-      Get.to(Score(score: totalScore));
-    });
-
     widget.socket.on("answer", (data) {
       correctAnswer = data;
       emittedProperAnswer = true;
+    });
+
+    widget.socket.on("results", (data) {
+      totalScore = data['guest'];
+      Get.to(Score(score: totalScore));
     });
 
     stopwatch.start();
