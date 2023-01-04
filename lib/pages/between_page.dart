@@ -56,20 +56,19 @@ class _BetweenPageState extends State<BetweenPage>{
         setState(() {
           room = data["room"];
           ready = data["number_of_players"];
+          if (widget.maxPlayers == ready) {
+            WidgetsBinding.instance
+                .addPostFrameCallback((_) =>
+                Get.to(Question(
+                  socket: widget.socket,
+                  numOfQuestions: widget.numOfQuestions,
+                )));
+          }
         });
       });
 
       WidgetsBinding.instance
           .addPostFrameCallback((_) => widget.socket.emit("ready"));
-
-      if (widget.maxPlayers == ready) {
-        WidgetsBinding.instance
-            .addPostFrameCallback((_) =>
-            Get.to(Question(
-              socket: widget.socket,
-              numOfQuestions: widget.numOfQuestions,
-            )));
-      }
     }
 
     if (widget.maxPlayers == 1) {
