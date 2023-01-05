@@ -9,7 +9,13 @@ class Score extends StatelessWidget {
   List<Widget> generateTable(double y){
     List<Widget> ans = [];
 
-    score.forEach((key, value) {
+    Map sortedScore;
+
+    sortedScore = Map.fromEntries(
+        score.entries.toList()..sort((e1, e2) => -e1.value.compareTo(e2.value))
+    );
+
+    sortedScore.forEach((key, value) {
       Text record = Text(
         '$key : $value',
         style: TextStyle(
@@ -41,6 +47,7 @@ class Score extends StatelessWidget {
             ),
             body: Center(
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: generateTable(y),
               ),
             ),
