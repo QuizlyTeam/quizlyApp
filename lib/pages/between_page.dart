@@ -7,23 +7,26 @@ import 'package:flutter/material.dart';
 import 'package:quizly_app/widgets/header.dart';
 import 'package:get/get.dart';
 
+// ignore: must_be_immutable
 class BetweenPage extends StatefulWidget {
   final IO.Socket socket = IO.io('http://10.0.2.2:8000/',
       IO.OptionBuilder().setTransports(['websocket']).build());
-  final String category;
-  final List<String> tags;
-  final int maxPlayers;
-  final int numOfQuestions;
-  final String difficulty;
+  String category;
+  List<String> tags;
+  int maxPlayers;
+  int numOfQuestions;
+  String difficulty;
+  String roomID;
   final String nick;
 
   BetweenPage({
         super.key,
-        required this.category,
-        required this.tags,
-        required this.maxPlayers,
-        required this.numOfQuestions,
-        required this.difficulty,
+        this.category = "",
+        this.tags = const [],
+        this.maxPlayers = 0,
+        this.numOfQuestions = 0,
+        this.difficulty = "",
+        this.roomID = "",
         required this.nick
       });
 
@@ -44,16 +47,17 @@ class _BetweenPageState extends State<BetweenPage>{
     var quizOptions = {};
 
     quizOptions["nickname"] = widget.nick;
-    cat.isEmpty ? 1+1:quizOptions["categories"] = cat;
-    quizOptions["difficulty"] = widget.difficulty;
-    quizOptions["limit"] = widget.numOfQuestions;
+    cat.isEmpty ? 1:quizOptions["categories"] = cat;
+    widget.difficulty.isEmpty ? 1:quizOptions["difficulty"] = widget.difficulty;
+    widget.numOfQuestions == 0 ? 1:quizOptions["limit"] = widget.numOfQuestions;
     widget.tags.isNotEmpty ? quizOptions["tags"]:1+1;
-    quizOptions["max_players"] = widget.maxPlayers;
+    widget.maxPlayers == 0 ? 1:quizOptions["max_players"] = widget.maxPlayers;
+    widget.roomID.isEmpty ? 1:quizOptions["room"] = widget.roomID;
 
 
     widget.socket.emit("join", quizOptions);
 
-    if (widget.maxPlayers > 1) {
+    if (widget.maxPlayers != 1) {
       widget.socket.on('join', (data) {
         setState(() {
           room = data["room"];

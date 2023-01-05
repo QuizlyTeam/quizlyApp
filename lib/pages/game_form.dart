@@ -25,6 +25,7 @@ class _GameFormState extends State<GameForm> {
   double _numberOfQuestions = 10;
   int _selectedDifficulty = 0;
   String name = 'Private';
+  String room = "";
 
   var arr = ["easy", "medium", "hard"];
 
@@ -426,6 +427,7 @@ class _GameFormState extends State<GameForm> {
                  SizedBox(
                    width: 390 * y,
                    child: TextField(
+                     onChanged: (value){room = value;},
                      obscureText: false,
                      decoration: const InputDecoration(
                        border: OutlineInputBorder(),
@@ -443,7 +445,7 @@ class _GameFormState extends State<GameForm> {
          ),
         ElevatedButton(
             onPressed: () {
-
+              Get.to(BetweenPage(nick: widget.nick, roomID: room,));
             },
             style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.cyan,
