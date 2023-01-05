@@ -388,13 +388,79 @@ class _GameFormState extends State<GameForm> {
 
   Column enterCode(double x, double y) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text('Enter room ID:')
+         Stack(
+           children: <Widget>[
+            Positioned(
+              left: 12 * x,
+              child:  Container(
+                width: 390 * x,
+                height: 208 * y,
+                decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                      topRight: Radius.circular(15),
+                      bottomLeft: Radius.circular(15),
+                      bottomRight: Radius.circular(15),
+                    ),
+                    color: Colors.white
+                ),
+              ),
+            ),
+             Column(
+               mainAxisAlignment: MainAxisAlignment.center,
+               children: [
+                 Container(
+                   height: 20 * y,
+                 ),
+                 Text(
+                   'Enter room ID:',
+                   style: TextStyle(
+                     fontSize: 36 * y,
+                   ),
+                 ),
+                 Container(
+                   height: 10 * y,
+                 ),
+                 SizedBox(
+                   width: 390 * y,
+                   child: TextField(
+                     obscureText: false,
+                     decoration: const InputDecoration(
+                       border: OutlineInputBorder(),
+                       labelText: 'ID',
+                     ),
+                     style: TextStyle(fontSize: 30 * y),
+                   ),
+                 ),
+                 Container(
+                   height: 80 * y,
+                 )
+               ],
+             ),
+           ],
+         ),
+        ElevatedButton(
+            onPressed: () {
+
+            },
+            style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.cyan,
+                fixedSize: Size(280 * x, 96 * y),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(32.0),
+                )),
+            child: Text(
+              'Play!',
+              style: TextStyle(fontSize: 30 * y, color: Colors.white),
+            )
+        )
       ],
     );
   }
 
-  Column userQuizes(double x, double y) {
+  Column userQuizzes(double x, double y) {
     return Column();
   }
 
@@ -437,7 +503,7 @@ class _GameFormState extends State<GameForm> {
                       children: [
                         customQuiz(x,y),
                         enterCode(x, y),
-                        userQuizes(x, y),
+                        userQuizzes(x, y),
                       ],
                     ),
                   ),
