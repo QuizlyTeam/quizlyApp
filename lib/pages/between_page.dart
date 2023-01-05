@@ -68,6 +68,7 @@ class _BetweenPageState extends State<BetweenPage>{
                 Get.to(Question(
                   socket: widget.socket,
                   numOfQuestions: widget.numOfQuestions,
+                  player: widget.nick,
                 )));
           }
         });
@@ -83,6 +84,7 @@ class _BetweenPageState extends State<BetweenPage>{
           Get.to(Question(
             socket: widget.socket,
             numOfQuestions: widget.numOfQuestions,
+            player: widget.nick,
           )));
     }
 

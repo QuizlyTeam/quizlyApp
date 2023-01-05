@@ -3,12 +3,22 @@ import 'package:quizly_app/widgets/header.dart';
 
 class Score extends StatelessWidget {
   final Map score;
-  const Score({super.key, required this.score});
+  final String player;
+  const Score({super.key, required this.score, required this.player});
 
-  String generateTable(){
-    String ans = "";
+  List<Widget> generateTable(double y){
+    List<Widget> ans = [];
 
-    score.forEach((key, value) {ans+="$key: $value\n";});
+    score.forEach((key, value) {
+      Text record = Text(
+        '$key : $value',
+        style: TextStyle(
+          fontWeight: key == player ? FontWeight.bold : FontWeight.normal,
+          fontSize: 46 * y
+        ),
+      );
+      ans.add(record);
+    });
 
     return ans;
   }
@@ -30,9 +40,8 @@ class Score extends StatelessWidget {
               ),
             ),
             body: Center(
-              child: Text(
-                generateTable(),
-                style: TextStyle(fontSize: 46 * y),
+              child: Column(
+                children: generateTable(y),
               ),
             ),
           )

@@ -12,15 +12,17 @@ import 'package:quizly_app/pages/score.dart';
 class Question extends StatefulWidget {
   IO.Socket socket = IO.io('http://10.0.2.2:8000/',
       IO.OptionBuilder().setTransports(['websocket']).build());
-  /*
-  final String category;
-  final List<String> tags;
-  final int maxPlayers;
-  final String difficulty;
-   */
+
   final int numOfQuestions;
+  final String player;
+
   //Question({super.key, required this.category, required this.tags, required this.maxPlayers, required this.numOfQuestions, required this.difficulty,});
-  Question({super.key, required this.socket, required this.numOfQuestions});
+  Question({
+    super.key,
+    required this.socket,
+    required this.numOfQuestions,
+    required this.player
+  });
 
   @override
   State<Question> createState() => _QuestionState();
@@ -113,7 +115,7 @@ class _QuestionState extends State<Question> {
 
     widget.socket.on("results", (data) {
       totalScore = data;
-      Get.to(Score(score: totalScore));
+      Get.to(Score(score: totalScore, player: widget.player,));
     });
 
     stopwatch.start();
