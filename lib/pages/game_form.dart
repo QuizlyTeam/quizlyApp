@@ -386,6 +386,18 @@ class _GameFormState extends State<GameForm> {
     );
   }
 
+  Column enterCode(double x, double y) {
+    return Column(
+      children: [
+        Text('Enter room ID:')
+      ],
+    );
+  }
+
+  Column userQuizes(double x, double y) {
+    return Column();
+  }
+
   @override
   Widget build(BuildContext context) {
     double x = MediaQuery.of(context).size.width / 411.42857142857144;
@@ -405,17 +417,18 @@ class _GameFormState extends State<GameForm> {
                   ),
             ),
             body: DefaultTabController(
-              length: 2,
+              length: 3,
               child: Column(
                 children: [
                   TabBar(
                     indicatorColor: Colors.cyan,
                     labelStyle: TextStyle(
-                      fontSize: 24 * y,
+                      fontSize: 20 * y,
                       fontWeight: FontWeight.bold,
                     ),
                     tabs: const [
-                      Tab(text: 'Custom game'),
+                      Tab(text: 'Custom'),
+                      Tab(text: 'Enter code'),
                       Tab(text: 'My quizzes'),
                     ],
                   ),
@@ -423,7 +436,8 @@ class _GameFormState extends State<GameForm> {
                     child: TabBarView(
                       children: [
                         customQuiz(x,y),
-                        const Text('Tab 2 content'),
+                        enterCode(x, y),
+                        userQuizes(x, y),
                       ],
                     ),
                   ),
