@@ -11,12 +11,14 @@ import 'package:get/get.dart';
 class BetweenPage extends StatefulWidget {
   final IO.Socket socket = IO.io('http://10.0.2.2:8000/',
       IO.OptionBuilder().setTransports(['websocket']).build());
-  String category;
-  List<String> tags;
-  int maxPlayers;
-  int numOfQuestions;
-  String difficulty;
-  String roomID;
+  final String category;
+  final List<String> tags;
+  final int maxPlayers;
+  final int numOfQuestions;
+  final String difficulty;
+  final String roomID;
+  final String quizID;
+  final String uID;
   final String nick;
 
   BetweenPage({
@@ -27,7 +29,9 @@ class BetweenPage extends StatefulWidget {
         this.numOfQuestions = 0,
         this.difficulty = "",
         this.roomID = "",
-        required this.nick
+        required this.nick,
+        this.quizID = "",
+        this.uID = ""
       });
 
   @override
@@ -53,7 +57,8 @@ class _BetweenPageState extends State<BetweenPage>{
     widget.tags.isNotEmpty ? quizOptions["tags"]:1+1;
     widget.maxPlayers == 0 ? 1:quizOptions["max_players"] = widget.maxPlayers;
     widget.roomID.isEmpty ? 1:quizOptions["room"] = widget.roomID;
-
+    widget.uID.isEmpty ? 1:quizOptions["uid"] = widget.uID;
+    widget.quizID.isEmpty ? 1:quizOptions["quiz_id"] = widget.quizID;
 
     widget.socket.emit("join", quizOptions);
 
