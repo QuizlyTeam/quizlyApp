@@ -1,4 +1,3 @@
-// ignore: library_prefixes
 import 'package:flutter/services.dart';
 import 'package:quizly_app/pages/question.dart';
 // ignore: library_prefixes
@@ -6,10 +5,10 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:flutter/material.dart';
 import 'package:quizly_app/widgets/header.dart';
 import 'package:get/get.dart';
+import 'package:quizly_app/services/socket_config.dart';
 
-// ignore: must_be_immutable
 class BetweenPage extends StatefulWidget {
-  final IO.Socket socket = IO.io('http://10.0.2.2:8000/',
+  late final IO.Socket socket = IO.io(ip,
       IO.OptionBuilder().setTransports(['websocket']).build());
   final String category;
   final List<String> tags;
