@@ -10,7 +10,7 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     double x = MediaQuery.of(context).size.width / 411.42857142857144;
     double y = MediaQuery.of(context).size.height / 866.2857142857143;
-    var _auth = AuthService();
+    var auth_ = AuthService();
     return Directionality(
       textDirection: TextDirection.ltr,
       //child: Container(
@@ -110,7 +110,7 @@ class SettingsPage extends StatelessWidget {
                       Center(
                         child: ElevatedButton(
                           onPressed: () async {
-                            _auth.signOutUser();
+                            auth_.signOutUser();
                           },
                           style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.cyan,
