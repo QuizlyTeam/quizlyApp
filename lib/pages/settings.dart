@@ -49,17 +49,17 @@ class SettingsPage extends StatelessWidget {
                         ),
                         child: Center(
                             child: DefaultTextStyle(
-                              style: TextStyle(
-                                  fontSize: 36 * y,
-                                  color: Colors.white,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.normal),
-                              textAlign: TextAlign.center,
-                              child: const Text(
-                                'Settings',
-                                textDirection: TextDirection.ltr,
-                              ),
-                            )),
+                          style: TextStyle(
+                              fontSize: 36 * y,
+                              color: Colors.white,
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.normal),
+                          textAlign: TextAlign.center,
+                          child: const Text(
+                            'Settings',
+                            textDirection: TextDirection.ltr,
+                          ),
+                        )),
                       ),
                       Column(
                         children: [
@@ -116,7 +116,6 @@ class SettingsPage extends StatelessWidget {
                     ],
                   ))),
         ),
-
       ),
 
       //)
