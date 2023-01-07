@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../widgets/slider.dart';
 import 'package:get/get.dart';
+import 'package:quizly_app/auth/auth.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -9,6 +10,7 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     double x = MediaQuery.of(context).size.width / 411.42857142857144;
     double y = MediaQuery.of(context).size.height / 866.2857142857143;
+    var _auth = AuthService();
     return Directionality(
       textDirection: TextDirection.ltr,
       //child: Container(
@@ -16,7 +18,7 @@ class SettingsPage extends StatelessWidget {
       child: Center(
           child: Container(
               width: 317 * x,
-              height: 420 * y,
+              height: 500 * y,
               decoration: const BoxDecoration(
                 color: Color(0xFFE2E2E2),
                 borderRadius: BorderRadius.only(
@@ -99,6 +101,25 @@ class SettingsPage extends StatelessWidget {
                               )),
                           child: Text(
                             'Back',
+                            style: TextStyle(
+                                fontSize: 36 * y, color: Colors.white),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 25 * y),
+                      Center(
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            _auth.signOutUser();
+                          },
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.cyan,
+                              fixedSize: Size(190 * x, 68 * y),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0),
+                              )),
+                          child: Text(
+                            'Sign out',
                             style: TextStyle(
                                 fontSize: 36 * y, color: Colors.white),
                           ),

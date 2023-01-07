@@ -96,43 +96,42 @@ class _GameFormState extends State<GameForm> {
                       ]),
                 ),
               )
-            ])
-        ),
+            ])),
         /*
         Game privacy options
          */
         SizedBox(
             width: 390 * x,
             height: 44 * y,
-            child: Stack(children: <Widget>[
-              Positioned(
-                left: 32 * x,
-                child: FlutterToggleTab(
-                  width: 83 * x,
-                  height: 44 * y,
-                  borderRadius: 15,
-                  selectedBackgroundColors: const [Colors.cyan],
-                  unSelectedBackgroundColors: const [Colors.white],
-                  selectedIndex: _selectedPrivacy,
-                  selectedTextStyle: TextStyle(
-                      color: Colors.black,
-                      fontSize: 30 * y,
-                      fontWeight: FontWeight.w600),
-                  unSelectedTextStyle: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 30 * y,
-                      fontWeight: FontWeight.normal),
-                  labels: const ["Public", "Private"],
-                  selectedLabelIndex: (index) {
-                    setState(() {
-                      _selectedPrivacy = index;
-                    });
-                  },
-                ),
-              )
-            ],)
-
-        ),
+            child: Stack(
+              children: <Widget>[
+                Positioned(
+                  left: 32 * x,
+                  child: FlutterToggleTab(
+                    width: 83 * x,
+                    height: 44 * y,
+                    borderRadius: 15,
+                    selectedBackgroundColors: const [Colors.cyan],
+                    unSelectedBackgroundColors: const [Colors.white],
+                    selectedIndex: _selectedPrivacy,
+                    selectedTextStyle: TextStyle(
+                        color: Colors.black,
+                        fontSize: 30 * y,
+                        fontWeight: FontWeight.w600),
+                    unSelectedTextStyle: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 30 * y,
+                        fontWeight: FontWeight.normal),
+                    labels: const ["Public", "Private"],
+                    selectedLabelIndex: (index) {
+                      setState(() {
+                        _selectedPrivacy = index;
+                      });
+                    },
+                  ),
+                )
+              ],
+            )),
         /*
         Maximum number of players
          */
@@ -160,8 +159,8 @@ class _GameFormState extends State<GameForm> {
                           height: 7 * y,
                         ),
                         Text('Max players: ${_currentSliderValue.toInt()}',
-                            style:
-                            TextStyle(fontSize: 20 * y, color: Colors.black)),
+                            style: TextStyle(
+                                fontSize: 20 * y, color: Colors.black)),
                         SliderTheme(
                             data: SliderThemeData(
                                 trackHeight: 24 * y,
@@ -230,8 +229,7 @@ class _GameFormState extends State<GameForm> {
                     _category,
                     style: TextStyle(fontSize: 25 * y, color: Colors.black),
                   )),
-            ])
-        ),
+            ])),
         /*
         Tags
          */
@@ -273,11 +271,12 @@ class _GameFormState extends State<GameForm> {
                   left: 48 * x,
                   top: 8 * y,
                   child: Text(
-                    (_tags.isEmpty?'0 tags selected':'${_tags.length} tags selected'),
+                    (_tags.isEmpty
+                        ? '0 tags selected'
+                        : '${_tags.length} tags selected'),
                     style: TextStyle(fontSize: 25 * y, color: Colors.black),
                   )),
-            ])
-        ),
+            ])),
         /*
         Number of questions
          */
@@ -305,7 +304,7 @@ class _GameFormState extends State<GameForm> {
                       ),
                       Text('Number of questions: ${_numberOfQuestions.toInt()}',
                           style:
-                          TextStyle(fontSize: 20 * y, color: Colors.black)),
+                              TextStyle(fontSize: 20 * y, color: Colors.black)),
                       SliderTheme(
                           data: SliderThemeData(
                               trackHeight: 24 * y,
@@ -335,57 +334,57 @@ class _GameFormState extends State<GameForm> {
         SizedBox(
             width: 390 * x,
             height: 72 * y,
-            child: Stack(children: <Widget>[
-              Positioned(
-                  left: 32 * x,
-                  child: Container(
-                    width: 324 * x,
-                    height: 72 * y,
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(15),
-                          topRight: Radius.circular(15),
-                          bottomLeft: Radius.circular(15),
-                          bottomRight: Radius.circular(15),
+            child: Stack(
+              children: <Widget>[
+                Positioned(
+                    left: 32 * x,
+                    child: Container(
+                      width: 324 * x,
+                      height: 72 * y,
+                      decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(15),
+                            topRight: Radius.circular(15),
+                            bottomLeft: Radius.circular(15),
+                            bottomRight: Radius.circular(15),
+                          ),
+                          color: Colors.white),
+                      child: Column(children: [
+                        Container(
+                          height: 7 * y,
                         ),
-                        color: Colors.white),
-                    child: Column(children: [
-                      Container(
-                        height: 7 * y,
-                      ),
-                      Text('Difficulty level:',
-                          style:
-                          TextStyle(fontSize: 20 * y, color: Colors.black)),
-                      FlutterToggleTab(
-                        width: 72 * x,
-                        height: 32 * y,
-                        borderRadius: 5,
-                        selectedBackgroundColors: const [Colors.cyan],
-                        unSelectedBackgroundColors: const [Colors.white],
-                        selectedIndex: _selectedDifficulty,
-                        selectedTextStyle: TextStyle(
-                            color: Colors.black,
-                            fontSize: 24 * y,
-                            fontWeight: FontWeight.w600),
-                        unSelectedTextStyle: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 24 * y,
-                            fontWeight: FontWeight.normal),
-                        labels: const ["Easy", "Medium", "Hard"],
-                        selectedLabelIndex: (index) {
-                          setState(() {
-                            _selectedDifficulty = index;
-                          });
-                        },
-                      ),
-                      Container(
-                        height: 7 * y,
-                      ),
-                    ]),
-                  )),
-            ],)
-
-        ),
+                        Text('Difficulty level:',
+                            style: TextStyle(
+                                fontSize: 20 * y, color: Colors.black)),
+                        FlutterToggleTab(
+                          width: 72 * x,
+                          height: 32 * y,
+                          borderRadius: 5,
+                          selectedBackgroundColors: const [Colors.cyan],
+                          unSelectedBackgroundColors: const [Colors.white],
+                          selectedIndex: _selectedDifficulty,
+                          selectedTextStyle: TextStyle(
+                              color: Colors.black,
+                              fontSize: 24 * y,
+                              fontWeight: FontWeight.w600),
+                          unSelectedTextStyle: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 24 * y,
+                              fontWeight: FontWeight.normal),
+                          labels: const ["Easy", "Medium", "Hard"],
+                          selectedLabelIndex: (index) {
+                            setState(() {
+                              _selectedDifficulty = index;
+                            });
+                          },
+                        ),
+                        Container(
+                          height: 7 * y,
+                        ),
+                      ]),
+                    )),
+              ],
+            )),
         /*
         Play button
          */
@@ -397,7 +396,7 @@ class _GameFormState extends State<GameForm> {
                 maxPlayers: _currentSliderValue.toInt(),
                 numOfQuestions: _numberOfQuestions.toInt(),
                 difficulty: arr[_selectedDifficulty],
-                private: _selectedPrivacy>0,
+                private: _selectedPrivacy > 0,
               ));
             },
             style: ElevatedButton.styleFrom(
@@ -409,8 +408,7 @@ class _GameFormState extends State<GameForm> {
             child: Text(
               'Play!',
               style: TextStyle(fontSize: 30 * y, color: Colors.white),
-            )
-        )
+            ))
       ],
     );
   }
@@ -424,42 +422,41 @@ class _GameFormState extends State<GameForm> {
       debugShowCheckedModeBanner: false,
       home: SafeArea(
           child: Scaffold(
-            backgroundColor: Colors.grey[300],
-            appBar: PreferredSize(
-              preferredSize: Size.fromHeight(80 * y),
-              child: Header(
-                    leftIcon: 'assets/images/profile.png',
-                    rightIcon: 'assets/images/settings.png',
-                    y: y,
-                  ),
-            ),
-            body: DefaultTabController(
-              length: 2,
-              child: Column(
-                children: [
-                  TabBar(
-                    indicatorColor: Colors.cyan,
-                    labelStyle: TextStyle(
-                      fontSize: 24 * y,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    tabs: const [
-                      Tab(text: 'Custom game'),
-                      Tab(text: 'My quizzes'),
-                    ],
-                  ),
-                  Expanded(
-                    child: TabBarView(
-                      children: [
-                        customQuiz(x,y),
-                        const Text('Tab 2 content'),
+              backgroundColor: Colors.grey[300],
+              appBar: PreferredSize(
+                preferredSize: Size.fromHeight(80 * y),
+                child: Header(
+                  leftIcon: 'assets/images/profile.png',
+                  rightIcon: 'assets/images/settings.png',
+                  y: y,
+                ),
+              ),
+              body: DefaultTabController(
+                length: 2,
+                child: Column(
+                  children: [
+                    TabBar(
+                      indicatorColor: Colors.cyan,
+                      labelStyle: TextStyle(
+                        fontSize: 24 * y,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      tabs: const [
+                        Tab(text: 'Custom game'),
+                        Tab(text: 'My quizzes'),
                       ],
                     ),
-                  ),
-                ],
-              ),
-            )
-      )),
+                    Expanded(
+                      child: TabBarView(
+                        children: [
+                          customQuiz(x, y),
+                          const Text('Tab 2 content'),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ))),
     );
   }
 }

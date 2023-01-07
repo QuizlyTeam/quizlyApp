@@ -1,28 +1,66 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:quizly_app/auth/register.dart';
 import 'package:quizly_app/pages/menu.dart';
+import 'package:quizly_app/auth/auth.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final AuthService _auth = AuthService();
+  final _formKey = GlobalKey<FormState>();
+  String email = "";
+  String password = "";
   Widget socialLogo(String asset, double x, double y) {
-    return Padding(
-        padding: EdgeInsets.all(5 * y),
-        child: SizedBox(
-          height: 50 * y,
-          width: 100 * x,
-          child: Container(
-            decoration: const BoxDecoration(
-                color: Colors.white,
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.all(Radius.circular(15))),
-            child: Center(
-              child: Image(
-                image: AssetImage(asset),
+    var _auth = AuthService();
+    return SizedBox(
+        width: 120*x,
+        child:  ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.cyan,
+          ),
+          onPressed: ()async {
+            var result;
+            if(asset == 'assets/images/Facebook (icon — Colour).png'){
+                result = await _auth.signInWithFacebook();
+                if(result!= null)Get.to(() => const MenuPage());
+            }
+            else if(asset =='assets/images/Google (icon — Colour).png' ){
+              result = await _auth.signInWithGoogle();
+              if(result!= null)Get.to(() => const MenuPage());
+
+            }
+            else if(asset == 'assets/images/Mask group.png'){
+              result = await _auth.signInWithApple();
+              if(result!= null)Get.to(() => const MenuPage());
+            }
+          },
+          child:
+          Padding(
+            padding: EdgeInsets.all(5 * y),
+            child: SizedBox(
+              height: 50 * y,
+              width: 100 * x,
+              child: Container(
+                decoration: const BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.all(Radius.circular(15))),
+                child: Center(
+                  child: Image(
+                    image: AssetImage(asset),
+                  ),
+                ),
               ),
             ),
           ),
-        ));
+        )
+    );
   }
 
   @override
@@ -34,19 +72,21 @@ class LoginPage extends StatelessWidget {
         child: Scaffold(
           backgroundColor: Colors.cyan,
           body: SingleChildScrollView(
-            child: Column(
+            child:  Form(
+              key: _formKey,
+              child:  Column(
               children: [
                 SizedBox(
-                  height: 30 * y,
+                  height: 20 * y,
                 ),
                 Center(
                   child: Image(
                     image: const AssetImage('assets/images/Group 5.png'),
-                    height: 220 * y,
+                    height: 160 * y,
                   ),
                 ),
                 SizedBox(
-                  height: 30 * y,
+                  height: 20 * y,
                 ),
                 Center(
                   child: Text(
@@ -72,27 +112,38 @@ class LoginPage extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.all(15 * y),
                   child: Center(
-                    child: TextField(
+                    child: TextFormField(
                       style: const TextStyle(
                         color: Colors.black,
                       ),
+                      onChanged: (val) {
+                        setState(() {
+                          email = val;
+                        });
+                      },
+
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: Colors.white,
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30 * y),
                             borderSide: BorderSide.none),
-                        hintText: "Username",
+                        hintText: "Email",
                       ),
                     ),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(15) * y,
-                  child: TextField(
+                  child: TextFormField(
                     style: const TextStyle(
                       color: Colors.black,
                     ),
+                    onChanged: (val) {
+                      setState(() {
+                        password = val;
+                      });
+                    },
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.white,
@@ -101,8 +152,15 @@ class LoginPage extends StatelessWidget {
                           borderSide: BorderSide.none),
                       hintText: "Password",
                       suffixIcon: IconButton(
-                        icon: Image.asset('assets/images/Arrow 1.png'),
-                        onPressed: () {},
+                        icon: Image.asset('assets/images/Arrow 1.png',color: Colors.grey.shade500),
+                        onPressed: () async {
+                          if (_formKey.currentState!.validate()) {
+                            var result = await _auth.loginUser(email, password);
+                            if (result != null) {
+                              Get.to(() => const MenuPage());
+                            }
+                          }
+                        },
                         iconSize: 20 * y,
                       ),
                     ),
@@ -133,6 +191,38 @@ class LoginPage extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () {
+                    Get.to(const Register(),
+                        transition: Transition.rightToLeftWithFade,
+                        duration: const Duration(milliseconds: 500));
+                  },
+                  style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25 * y),
+                      ),
+                      maximumSize: Size(320 * x, 70 * y),
+                      backgroundColor: Colors.white),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.rectangle,
+                        borderRadius:
+                        BorderRadius.all(Radius.circular(25 * y))),
+                    child: Center(
+                      child: Text(
+                        'Register',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 38 * y,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                ),
+
+                SizedBox(height: 20*y,),
+                ElevatedButton(
+                  onPressed: () {
+                    _auth.signInAnon();
                     Get.to(const MenuPage(),
                         transition: Transition.rightToLeftWithFade,
                         duration: const Duration(milliseconds: 500));
@@ -141,14 +231,14 @@ class LoginPage extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25 * y),
                       ),
-                      maximumSize: Size(320 * x, 80 * y),
+                      maximumSize: Size(320 * x, 70 * y),
                       backgroundColor: Colors.white),
                   child: Container(
                     decoration: BoxDecoration(
                         color: Colors.white,
                         shape: BoxShape.rectangle,
                         borderRadius:
-                            BorderRadius.all(Radius.circular(25 * y))),
+                        BorderRadius.all(Radius.circular(25 * y))),
                     child: Center(
                       child: Text(
                         'Play  as guest',
@@ -164,6 +254,7 @@ class LoginPage extends StatelessWidget {
             ),
           ),
         ),
+      ),
       ),
     );
   }
