@@ -133,9 +133,7 @@ class LoginPage extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    Get.to(const MenuPage(),
-                        transition: Transition.rightToLeftWithFade,
-                        duration: const Duration(milliseconds: 500));
+                    Get.to(const MenuPage());
                   },
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(

@@ -17,7 +17,14 @@ class Question extends StatefulWidget {
   final int numOfQuestions;
   final String difficulty;
   final bool private;
-  Question({super.key, required this.category, required this.tags, required this.maxPlayers, required this.numOfQuestions, required this.difficulty, required this.private});
+  Question(
+      {super.key,
+      required this.category,
+      required this.tags,
+      required this.maxPlayers,
+      required this.numOfQuestions,
+      required this.difficulty,
+      required this.private});
 
   @override
   State<Question> createState() => _QuestionState();
@@ -63,12 +70,11 @@ class _QuestionState extends State<Question> {
     var quizOptions = {};
 
     quizOptions["nickname"] = "guest";
-    cat.isEmpty ? 1+1:quizOptions["categories"] = cat;
+    cat.isEmpty ? 1 + 1 : quizOptions["categories"] = cat;
     quizOptions["difficulty"] = widget.difficulty;
     quizOptions["limit"] = widget.numOfQuestions;
-    widget.tags.isNotEmpty ? quizOptions["tags"]:1+1;
+    widget.tags.isNotEmpty ? quizOptions["tags"] : 1 + 1;
     quizOptions["max_players"] = widget.maxPlayers;
-
 
     widget.socket.emit("join", quizOptions);
 
@@ -122,7 +128,7 @@ class _QuestionState extends State<Question> {
       setState(() {
         normalColor = Colors.red;
       });
-    } else if (answer == correctAnswer && emittedProperAnswer){
+    } else if (answer == correctAnswer && emittedProperAnswer) {
       setState(() {
         normalColor = Colors.yellow;
       });
@@ -136,8 +142,8 @@ class _QuestionState extends State<Question> {
       onPressed: clickedAnything
           ? () {}
           : () {
-              double time = stopwatch.elapsedMilliseconds/1000;
-              time = time > 12 ? 12:time;
+              double time = stopwatch.elapsedMilliseconds / 1000;
+              time = time > 12 ? 12 : time;
               widget.socket.emit("answer", {"answer": answer, "time": time});
 
               if (answer == correctAnswer) {

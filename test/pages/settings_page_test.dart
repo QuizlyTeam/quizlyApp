@@ -9,5 +9,6 @@ void main() {
     expect(find.text('Music'), findsOneWidget);
     expect(find.text('Sound'), findsOneWidget);
     expect(find.text('Back'), findsOneWidget);
+    expect(find.byKey(const Key("Blur filter")), findsOneWidget);
   });
 }
