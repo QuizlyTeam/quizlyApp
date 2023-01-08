@@ -55,7 +55,7 @@ class Header extends StatelessWidget {
             iconSize: 58 * y,
             onPressed: () {
               if (rightIcon == 'assets/images/settings.png') {
-                Get.to(const SettingsPage());
+                Get.to(const SettingsPage(), opaque: false);
               }
             },
           ),

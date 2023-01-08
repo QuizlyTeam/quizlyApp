@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>935478523711-ra8t0gqkq49mtqhntr43atquqv2u3vtb.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.935478523711-ra8t0gqkq49mtqhntr43atquqv2u3vtb</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>935478523711-c27r541irur212vo2tm7ut9grchrj6dd.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAwK7_Pxa8wA_zzOLKaMgbK_pWgBouCeJ8</string>
+	<key>GCM_SENDER_ID</key>
+	<string>935478523711</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.quizlyApp</string>
+	<key>PROJECT_ID</key>
+	<string>quizly-70118</string>
+	<key>STORAGE_BUCKET</key>
+	<string>quizly-70118.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:935478523711:ios:0a0929e10d7d0334ed058a</string>
+	<key>DATABASE_URL</key>
+	<string>https://quizly-70118-default-rtdb.europe-west1.firebasedatabase.app</string>
+</dict>
+</plist>
