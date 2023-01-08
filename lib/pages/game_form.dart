@@ -504,7 +504,8 @@ class _GameFormState extends State<GameForm> {
                         enterCode(x, y),
                         userQuizzes(x, y),
                       ],
-                    ),
+                    )
+                  ),
                     Expanded(
                       child: TabBarView(
                         children: [
