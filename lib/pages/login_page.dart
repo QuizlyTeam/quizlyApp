@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quizly_app/auth/register.dart';
+import 'package:quizly_app/pages/choose_nick_page.dart';
 import 'package:quizly_app/pages/menu.dart';
 import 'package:quizly_app/auth/auth.dart';
 
@@ -30,13 +31,22 @@ class _LoginPageState extends State<LoginPage> {
 
             if (asset == 'assets/images/Facebook (icon — Colour).png') {
               result = await auth_.signInWithFacebook();
-              if (result != null) Get.to(() => const MenuPage());
+              if (result != null){
+                if(await getUser() == null){Get.to(() => const NicknamePage());}
+                else{Get.to(()=>const MenuPage());}
+              }
             } else if (asset == 'assets/images/Google (icon — Colour).png') {
               result = await auth_.signInWithGoogle();
-              if (result != null) Get.to(() => const MenuPage());
+              if (result != null) {
+                if(await getUser() == null){Get.to(() => const NicknamePage());}
+                else{Get.to(()=>const MenuPage());}
+              }
             } else if (asset == 'assets/images/Mask group.png') {
               result = await auth_.signInWithApple();
-              if (result != null) Get.to(() => const MenuPage());
+              if (result != null){
+                if(await getUser() == null){Get.to(() => const NicknamePage());}
+                else{Get.to(()=>const MenuPage());}
+              }
             }
           },
           child: Padding(
@@ -189,9 +199,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      Get.to(const Register(),
-                          transition: Transition.rightToLeftWithFade,
-                          duration: const Duration(milliseconds: 500));
+                      Get.to(const Register());
                     },
                     style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(

@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:quizly_app/auth/auth.dart';
 import 'package:get/get.dart';
-import 'package:quizly_app/pages/menu.dart';
+import 'package:quizly_app/pages/choose_nick_page.dart';
+
+
+
+
+
 
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
@@ -41,7 +46,7 @@ class _RegisterState extends State<Register> {
                             borderSide: BorderSide(
                                 width: 3, color: Colors.grey.shade500))),
                     validator: (value) =>
-                        RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                        RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                                 .hasMatch(value!)
                             ? null
                             : 'Enter a valid email',
@@ -82,7 +87,7 @@ class _RegisterState extends State<Register> {
                           var result =
                               await _auth.registerUser(email, password);
                           if (result != null) {
-                            Get.to(() => const MenuPage());
+                            Get.to(() => const NicknamePage());
                           }
                         }
                       },

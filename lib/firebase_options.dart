@@ -54,8 +54,7 @@ class DefaultFirebaseOptions {
     appId: '1:935478523711:android:c1a7b0261aebaa95ed058a',
     messagingSenderId: '935478523711',
     projectId: 'quizly-70118',
-    databaseURL:
-        'https://quizly-70118-default-rtdb.europe-west1.firebasedatabase.app',
+    databaseURL: 'https://quizly-70118-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'quizly-70118.appspot.com',
   );
 
@@ -64,13 +63,10 @@ class DefaultFirebaseOptions {
     appId: '1:935478523711:ios:0a0929e10d7d0334ed058a',
     messagingSenderId: '935478523711',
     projectId: 'quizly-70118',
-    databaseURL:
-        'https://quizly-70118-default-rtdb.europe-west1.firebasedatabase.app',
+    databaseURL: 'https://quizly-70118-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'quizly-70118.appspot.com',
-    androidClientId:
-        '935478523711-ojcms6sgv12e0h7ida8f733h9lbh38em.apps.googleusercontent.com',
-    iosClientId:
-        '935478523711-ra8t0gqkq49mtqhntr43atquqv2u3vtb.apps.googleusercontent.com',
+    androidClientId: '935478523711-ojcms6sgv12e0h7ida8f733h9lbh38em.apps.googleusercontent.com',
+    iosClientId: '935478523711-ra8t0gqkq49mtqhntr43atquqv2u3vtb.apps.googleusercontent.com',
     iosBundleId: 'com.example.quizlyApp',
   );
 }

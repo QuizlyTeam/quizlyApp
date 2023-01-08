@@ -1,9 +1,13 @@
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:quizly_app/pages/login_page.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:http/http.dart' as http;
+import '../classes/user.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -108,3 +112,51 @@ class AuthService {
     }
   }
 }
+
+createUser(String nickname) async {
+  String token = "";
+  await FirebaseAuth.instance.currentUser!.getIdToken(true).then((String result){
+    token = result;
+  });
+  final response =
+  await http.post(
+      Uri.parse('http://10.0.2.2:8000/v1/users/'),
+      headers:{ "Authorization": 'Bearer $token',
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String,dynamic>{
+        'nickname' : nickname,
+
+
+      })
+  );
+  if (response.statusCode == 201) {
+    return UserToApi.fromJson(jsonDecode(response.body));
+  }else {
+    //  print(response.body);
+    return null;
+  }
+}
+
+getUser() async {
+  String token = "";
+  await FirebaseAuth.instance.currentUser!.getIdToken(true).then((String result){
+    token = result;
+  });
+  final response =
+  await http.get(
+      Uri.parse('http://10.0.2.2:8000/v1/users/'),
+      headers:{ "Authorization": 'Bearer $token',
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+  );
+  if (response.statusCode == 200) {
+    return 1;
+
+  }else {
+    return null;
+  }
+}
+
+
+
