@@ -8,23 +8,22 @@ import 'package:get/get.dart';
 import 'package:quizly_app/widgets/header.dart';
 import 'package:quizly_app/pages/score.dart';
 
+import '../services/socket_config.dart';
+
+//ignore: must_be_immutable
 class Question extends StatefulWidget {
-  final IO.Socket socket = IO.io('http://10.0.2.2:8000/',
+  IO.Socket socket = IO.io(config["ip"],
       IO.OptionBuilder().setTransports(['websocket']).build());
-  final String category;
-  final List<String> tags;
-  final int maxPlayers;
+
   final int numOfQuestions;
-  final String difficulty;
-  final bool private;
-  Question(
-      {super.key,
-      required this.category,
-      required this.tags,
-      required this.maxPlayers,
-      required this.numOfQuestions,
-      required this.difficulty,
-      required this.private});
+  final String player;
+
+  Question({
+    super.key,
+    required this.socket,
+    required this.numOfQuestions,
+    required this.player
+  });
 
   @override
   State<Question> createState() => _QuestionState();
@@ -45,7 +44,7 @@ class _QuestionState extends State<Question> {
   String tempCorrectAnswer = "";
   bool first = true;
 
-  int totalScore = 0;
+  Map totalScore = {};
 
   double value = 1;
   int questionNumber = 1;
@@ -64,19 +63,6 @@ class _QuestionState extends State<Question> {
   void initState() {
     super.initState();
     value = 1;
-
-    String cat = widget.category.replaceFirst(r' & ', '_and_').toLowerCase();
-
-    var quizOptions = {};
-
-    quizOptions["nickname"] = "guest";
-    cat.isEmpty ? 1 + 1 : quizOptions["categories"] = cat;
-    quizOptions["difficulty"] = widget.difficulty;
-    quizOptions["limit"] = widget.numOfQuestions;
-    widget.tags.isNotEmpty ? quizOptions["tags"] : 1 + 1;
-    quizOptions["max_players"] = widget.maxPlayers;
-
-    widget.socket.emit("join", quizOptions);
 
     widget.socket.on('question', (data) {
       ready = true;
@@ -104,15 +90,15 @@ class _QuestionState extends State<Question> {
       }
     });
 
-    widget.socket.on('results', (data) {
-      totalScore = data['guest'];
-      widget.socket.disconnect();
-      Get.to(Score(score: totalScore));
-    });
-
     widget.socket.on("answer", (data) {
       correctAnswer = data;
       emittedProperAnswer = true;
+    });
+
+    widget.socket.on("results", (data) {
+      totalScore = data;
+      widget.socket.disconnect();
+      Get.to(Score(score: totalScore, player: widget.player,));
     });
 
     stopwatch.start();
@@ -263,26 +249,39 @@ class _QuestionState extends State<Question> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+
+    widget.socket.close();
+  }
+
+  @override
   Widget build(BuildContext context) {
     double x = MediaQuery.of(context).size.width / 411.42857142857144;
     double y = MediaQuery.of(context).size.height / 866.2857142857143;
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: SafeArea(
-          child: Scaffold(
-            backgroundColor: Colors.grey[300],
-            appBar: PreferredSize(
-              preferredSize: Size.fromHeight(70 * y),
-              child: Header(
-                leftIcon: 'assets/images/back.png',
-                rightIcon: 'assets/images/settings.png',
-                y: y,
+    return WillPopScope(
+        onWillPop: () async{
+          return false;
+        },
+        child:  MaterialApp(
+            debugShowCheckedModeBanner: false,
+            home: SafeArea(
+              child: Scaffold(
+                backgroundColor: Colors.grey[300],
+                appBar: PreferredSize(
+                  preferredSize: Size.fromHeight(70 * y),
+                  child: Header(
+                    leftIcon: 'assets/images/back.png',
+                    rightIcon: 'assets/images/settings.png',
+                    y: y,
+                  ),
+                ),
+                body: SingleChildScrollView(
+                  child: bodyOfQuestion(x, y),
+                ),
               ),
-            ),
-            body: SingleChildScrollView(
-              child: bodyOfQuestion(x, y),
-            ),
-          ),
-        ));
+            )
+        )
+    );
   }
 }

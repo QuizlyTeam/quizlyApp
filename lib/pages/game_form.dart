@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:quizly_app/pages/between_page.dart';
 import 'package:quizly_app/widgets/header.dart';
 import 'package:quizly_app/pages/category_page.dart';
-import 'package:quizly_app/pages/question.dart';
 import 'package:quizly_app/pages/tag_page.dart';
 import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
+import 'dart:math';
 
+// ignore: must_be_immutable
 class GameForm extends StatefulWidget {
-  const GameForm({super.key});
+  GameForm({super.key}) {
+    nick = "guest${rng.nextInt(10000)}";
+  }
+
+  var rng = Random();
+  late final String nick;
 
   @override
   State<GameForm> createState() => _GameFormState();
@@ -16,9 +23,9 @@ class GameForm extends StatefulWidget {
 class _GameFormState extends State<GameForm> {
   double _currentSliderValue = 4;
   double _numberOfQuestions = 10;
-  int _selectedPrivacy = 1;
   int _selectedDifficulty = 0;
   String name = 'Private';
+  String room = "";
 
   var arr = ["easy", "medium", "hard"];
 
@@ -26,14 +33,14 @@ class _GameFormState extends State<GameForm> {
   List<String> _tags = [];
 
   void _newCategory() async {
-    _category = await Get.to(const CategoryPage());
+    _category = await Get.to(() => const CategoryPage());
     setState(() {
       _category = _category;
     });
   }
 
   void _newTags() async {
-    _tags = await Get.to(const TagPage());
+    _tags = await Get.to(() => const TagPage());
     setState(() {
       _tags = _tags;
     });
@@ -97,41 +104,6 @@ class _GameFormState extends State<GameForm> {
                 ),
               )
             ])),
-        /*
-        Game privacy options
-         */
-        SizedBox(
-            width: 390 * x,
-            height: 44 * y,
-            child: Stack(
-              children: <Widget>[
-                Positioned(
-                  left: 32 * x,
-                  child: FlutterToggleTab(
-                    width: 83 * x,
-                    height: 44 * y,
-                    borderRadius: 15,
-                    selectedBackgroundColors: const [Colors.cyan],
-                    unSelectedBackgroundColors: const [Colors.white],
-                    selectedIndex: _selectedPrivacy,
-                    selectedTextStyle: TextStyle(
-                        color: Colors.black,
-                        fontSize: 30 * y,
-                        fontWeight: FontWeight.w600),
-                    unSelectedTextStyle: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 30 * y,
-                        fontWeight: FontWeight.normal),
-                    labels: const ["Public", "Private"],
-                    selectedLabelIndex: (index) {
-                      setState(() {
-                        _selectedPrivacy = index;
-                      });
-                    },
-                  ),
-                )
-              ],
-            )),
         /*
         Maximum number of players
          */
@@ -389,16 +361,16 @@ class _GameFormState extends State<GameForm> {
         Play button
          */
         ElevatedButton(
-            onPressed: () {
-              Get.to(Question(
+            onPressed: () =>
+              Get.to(BetweenPage(
                 category: _category,
                 tags: const [],
                 maxPlayers: _currentSliderValue.toInt(),
                 numOfQuestions: _numberOfQuestions.toInt(),
                 difficulty: arr[_selectedDifficulty],
-                private: _selectedPrivacy > 0,
-              ));
-            },
+                nick: widget.nick,
+              ))
+            ,
             style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.cyan,
                 fixedSize: Size(280 * x, 96 * y),
@@ -413,6 +385,84 @@ class _GameFormState extends State<GameForm> {
     );
   }
 
+  Column enterCode(double x, double y) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+         Stack(
+           children: <Widget>[
+            Positioned(
+              left: 12 * x,
+              child:  Container(
+                width: 390 * x,
+                height: 208 * y,
+                decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                      topRight: Radius.circular(15),
+                      bottomLeft: Radius.circular(15),
+                      bottomRight: Radius.circular(15),
+                    ),
+                    color: Colors.white
+                ),
+              ),
+            ),
+             Column(
+               mainAxisAlignment: MainAxisAlignment.center,
+               children: [
+                 Container(
+                   height: 20 * y,
+                 ),
+                 Text(
+                   'Enter room ID:',
+                   style: TextStyle(
+                     fontSize: 36 * y,
+                   ),
+                 ),
+                 Container(
+                   height: 10 * y,
+                 ),
+                 SizedBox(
+                   width: 390 * y,
+                   child: TextField(
+                     onChanged: (value){room = value;},
+                     obscureText: false,
+                     decoration: const InputDecoration(
+                       border: OutlineInputBorder(),
+                       labelText: 'ID',
+                     ),
+                     style: TextStyle(fontSize: 30 * y),
+                   ),
+                 ),
+                 Container(
+                   height: 80 * y,
+                 )
+               ],
+             ),
+           ],
+         ),
+        ElevatedButton(
+            onPressed: () =>
+              Get.to(BetweenPage(nick: widget.nick, roomID: room,)),
+            style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.cyan,
+                fixedSize: Size(280 * x, 96 * y),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(32.0),
+                )),
+            child: Text(
+              'Play!',
+              style: TextStyle(fontSize: 30 * y, color: Colors.white),
+            )
+        )
+      ],
+    );
+  }
+
+  Column userQuizzes(double x, double y) {
+    return Column();
+  }
+
   @override
   Widget build(BuildContext context) {
     double x = MediaQuery.of(context).size.width / 411.42857142857144;
@@ -422,38 +472,40 @@ class _GameFormState extends State<GameForm> {
       debugShowCheckedModeBanner: false,
       home: SafeArea(
           child: Scaffold(
-              backgroundColor: Colors.grey[300],
-              appBar: PreferredSize(
-                preferredSize: Size.fromHeight(80 * y),
-                child: Header(
-                  leftIcon: 'assets/images/profile.png',
-                  rightIcon: 'assets/images/settings.png',
-                  y: y,
-                ),
-              ),
-              body: DefaultTabController(
-                length: 2,
-                child: Column(
-                  children: [
-                    TabBar(
-                      indicatorColor: Colors.cyan,
-                      labelStyle: TextStyle(
-                        fontSize: 24 * y,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      tabs: const [
-                        Tab(text: 'Custom game'),
-                        Tab(text: 'My quizzes'),
+            backgroundColor: Colors.grey[300],
+            appBar: PreferredSize(
+              preferredSize: Size.fromHeight(80 * y),
+              child: Header(
+                    leftIcon: 'assets/images/profile.png',
+                    rightIcon: 'assets/images/settings.png',
+                    y: y,
+                  ),
+            ),
+            body: DefaultTabController(
+              length: 3,
+              child: Column(
+                children: [
+                  TabBar(
+                    indicatorColor: Colors.cyan,
+                    labelStyle: TextStyle(
+                      fontSize: 20 * y,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    tabs: const [
+                      Tab(text: 'Custom'),
+                      Tab(text: 'Enter code'),
+                      Tab(text: 'My quizzes'),
+                    ],
+                  ),
+                  Expanded(
+                    child: TabBarView(
+                      children: [
+                        customQuiz(x,y),
+                        enterCode(x, y),
+                        userQuizzes(x, y),
                       ],
-                    ),
-                    Expanded(
-                      child: TabBarView(
-                        children: [
-                          customQuiz(x, y),
-                          const Text('Tab 2 content'),
-                        ],
-                      ),
-                    ),
+                    )
+                  ),
                   ],
                 ),
               ))),
