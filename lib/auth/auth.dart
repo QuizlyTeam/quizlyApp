@@ -157,9 +157,8 @@ getUser() async {
 }
 
 // ignore: non_constant_identifier_names
-createQuiz(String title, String category,String difficulty, List<String> tags,String question, String correct_answer, List<String> incorrect_answers) async{
+createQuiz(String title, String category,String difficulty, List<String> tags,List<OwnQuestion> questions) async{
   String token = "";
-  var questions = OwnQuestion(question: question, correct_answer: correct_answer, inCorrectanswers: incorrect_answers);
 
   await FirebaseAuth.instance.currentUser!
       .getIdToken(true)

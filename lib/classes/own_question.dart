@@ -20,7 +20,7 @@ class OwnQuiz{
   final String category;
   final String difficulty;
   final List<String> tags;
-  final OwnQuestion questions;
+  final List<OwnQuestion> questions;
 
   OwnQuiz({required this.title,required this.category,required this.difficulty, required this.tags, required this.questions});
   factory OwnQuiz.fromJson(Map<String, dynamic> json) {
