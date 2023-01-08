@@ -55,6 +55,7 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
     var question = await Get.to(() => const CreateQuestionForm());
     setState(() {
       _questions.add(question);
+
     });
   }
 
