@@ -152,8 +152,8 @@ getUser() async {
       },
   );
   if (response.statusCode == 200) {
-    return 1;
-
+    var data = json.decode(response.body);
+    return data;
   }else {
     return null;
   }
