@@ -139,5 +139,25 @@ createUser(String nickname) async {
 }
 
 
+getUser() async {
+  String token = "";
+  await FirebaseAuth.instance.currentUser!.getIdToken(true).then((String result){
+    token = result;
+  });
+  final response =
+  await http.get(
+      Uri.parse('http://10.0.2.2:8000/v1/users/'),
+      headers:{ "Authorization": 'Bearer $token',
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+  );
+  if (response.statusCode == 200) {
+    return 1;
+
+  }else {
+    return null;
+  }
+}
+
 
 
