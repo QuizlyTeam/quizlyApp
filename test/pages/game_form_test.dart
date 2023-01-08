@@ -18,11 +18,9 @@ void main() {
           (WidgetTester tester) async {
         await tester.pumpWidget(MaterialApp(home: GameForm()));
 
-        expect(find.text('Public'), findsOneWidget);
-        expect(find.text('Private'), findsOneWidget);
         expect(find.text('Easy'), findsOneWidget);
         expect(find.text('Medium'), findsOneWidget);
-        expect(find.byType(FlutterToggleTab), findsNWidgets(2));
+        expect(find.byType(FlutterToggleTab), findsNWidgets(1));
       });
 
   testWidgets('Test tags and categories',

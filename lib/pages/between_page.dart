@@ -81,7 +81,11 @@ class _BetweenPageState extends State<BetweenPage>{
         });
       });
 
-      widget.socket.on('timeout', (_) => print("timeout"));
+      widget.socket.on('timeout', (_) => Get.to(Question(
+        socket: widget.socket,
+        numOfQuestions: widget.numOfQuestions,
+        player: widget.nick,
+      )));
 
       WidgetsBinding.instance
           .addPostFrameCallback((_) => widget.socket.emit("ready"));
@@ -121,7 +125,7 @@ class _BetweenPageState extends State<BetweenPage>{
               children: [
                 Center(
                   child: Text("Ready players:\n"
-                      " $ready/$maxPlayers\n"
+                      "$ready/$maxPlayers\n"
                       "Room id:\n"
                       "$room",
                   style: TextStyle(
