@@ -106,6 +106,13 @@ class _BetweenPageState extends State<BetweenPage>{
   }
 
   @override
+  void dispose(){
+    super.dispose();
+
+    widget.socket.close();
+  }
+
+  @override
   Widget build(BuildContext context) {
     double x = MediaQuery.of(context).size.width / 411.42857142857144;
     double y = MediaQuery.of(context).size.height / 866.2857142857143;

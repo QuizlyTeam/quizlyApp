@@ -8,9 +8,11 @@ import 'package:get/get.dart';
 import 'package:quizly_app/widgets/header.dart';
 import 'package:quizly_app/pages/score.dart';
 
+import '../services/socket_config.dart';
+
 //ignore: must_be_immutable
 class Question extends StatefulWidget {
-  IO.Socket socket = IO.io('http://10.0.2.2:8000/',
+  IO.Socket socket = IO.io(config["ip"],
       IO.OptionBuilder().setTransports(['websocket']).build());
 
   final int numOfQuestions;
@@ -245,6 +247,13 @@ class _QuestionState extends State<Question> {
         )
       ],
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    widget.socket.close();
   }
 
   @override
