@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'package:quizly_app/services/socket_config.dart';
 
 class BetweenPage extends StatefulWidget {
-  late final IO.Socket socket = IO.io(ip,
+  late final IO.Socket socket = IO.io(config["ip"],
       IO.OptionBuilder().setTransports(['websocket']).build());
   final String category;
   final List<String> tags;
@@ -40,6 +40,7 @@ class BetweenPage extends StatefulWidget {
 class _BetweenPageState extends State<BetweenPage>{
   int ready = 1;
   String room = "";
+  int maxPlayers = 0;
 
   @override
   void initState() {
@@ -66,7 +67,9 @@ class _BetweenPageState extends State<BetweenPage>{
         setState(() {
           room = data["room"];
           ready = data["number_of_players"];
-          if (widget.maxPlayers == ready) {
+          maxPlayers = data["max_number_of_players"];
+
+          if (maxPlayers == ready) {
             WidgetsBinding.instance
                 .addPostFrameCallback((_) =>
                 Get.to(Question(
@@ -116,7 +119,7 @@ class _BetweenPageState extends State<BetweenPage>{
               children: [
                 Center(
                   child: Text("Ready players:\n"
-                      " $ready/${widget.maxPlayers}\n"
+                      " $ready/${maxPlayers}\n"
                       "Room id:\n"
                       "$room",
                   style: TextStyle(
