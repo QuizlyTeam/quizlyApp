@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:quizly_app/classes/own_question.dart';
 import 'package:quizly_app/pages/login_page.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
@@ -149,8 +150,38 @@ getUser() async {
     },
   );
   if (response.statusCode == 200) {
-    return 1;
+    return response.body;
   } else {
+    return null;
+  }
+}
+
+// ignore: non_constant_identifier_names
+createQuiz(String title, String category,String difficulty, List<String> tags,String question, String correct_answer, List<String> incorrect_answers) async{
+  String token = "";
+  var questions = OwnQuestion(question: question, correct_answer: correct_answer, inCorrectanswers: incorrect_answers);
+
+  await FirebaseAuth.instance.currentUser!
+      .getIdToken(true)
+      .then((String result) {
+    token = result;
+  });
+  final response = await http.post(Uri.parse('http://10.0.2.2:8000/v1/users/'),
+      headers: {
+        "Authorization": 'Bearer $token',
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, dynamic>{
+          'title' : title,
+          'category' : category,
+          'difficulty' : difficulty,
+          'tags' : tags,
+          'questions' : questions
+      }));
+  if (response.statusCode == 201) {
+    return UserToApi.fromJson(jsonDecode(response.body));
+  } else {
+    //  print(response.body);
     return null;
   }
 }
