@@ -46,6 +46,8 @@ class _BetweenPageState extends State<BetweenPage>{
   void initState() {
     super.initState();
 
+    maxPlayers = widget.maxPlayers;
+
     String cat = widget.category.replaceFirst(r' & ', '_and_').toLowerCase();
 
     var quizOptions = {};
