@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'package:quizly_app/services/socket_config.dart';
 
 class BetweenPage extends StatefulWidget {
-  late final IO.Socket socket = IO.io(config["ip"],
+  final IO.Socket socket = IO.io(config["ip"],
       IO.OptionBuilder().setTransports(['websocket']).build());
   final String category;
   final List<String> tags;
@@ -30,7 +30,7 @@ class BetweenPage extends StatefulWidget {
         this.roomID = "",
         required this.nick,
         this.quizID = "",
-        this.uID = ""
+        this.uID = "",
       });
 
   @override
@@ -81,6 +81,8 @@ class _BetweenPageState extends State<BetweenPage>{
         });
       });
 
+      widget.socket.on('timeout', (_) => print("timeout"));
+
       WidgetsBinding.instance
           .addPostFrameCallback((_) => widget.socket.emit("ready"));
     }
@@ -119,7 +121,7 @@ class _BetweenPageState extends State<BetweenPage>{
               children: [
                 Center(
                   child: Text("Ready players:\n"
-                      " $ready/${maxPlayers}\n"
+                      " $ready/$maxPlayers\n"
                       "Room id:\n"
                       "$room",
                   style: TextStyle(
