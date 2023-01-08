@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:quizly_app/auth/auth.dart';
 import 'package:quizly_app/widgets/header.dart';
 import 'package:quizly_app/pages/category_page.dart';
 import 'package:quizly_app/pages/tag_page.dart';
@@ -7,9 +8,15 @@ import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 import 'package:quizly_app/widgets/list_item_bar.dart';
 import 'package:quizly_app/pages/create_question_page.dart';
 
+import '../classes/own_question.dart';
+
+List<OwnQuestion> _questions = [];
+
 class QuestionListItemBar extends ListItemBar {
+  final OwnQuestion question;
+
   const QuestionListItemBar(
-      {super.key, required super.x, required super.y, required super.title});
+      {super.key, required super.x, required super.y, required super.title, required this.question});
   @override
   edit() {
     print("edit2");
@@ -17,7 +24,7 @@ class QuestionListItemBar extends ListItemBar {
 
   @override
   delete() {
-    print("delete2");
+      _questions.remove(question);
   }
 }
 
@@ -32,7 +39,7 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
   late String _title = "";
   int _selectedDifficulty = 0;
   var arr = ["easy", "medium", "hard"];
-  List<Question> _questions = [];
+  //List<Question> _questions = [];
 
   String _category = "Category";
   List<String> _tags = [];
@@ -52,7 +59,7 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
   }
 
   void _newQuestion() async {
-    var question = await Get.to(() => const CreateQuestionForm());
+    OwnQuestion question = await Get.to(() => const CreateQuestionForm());
     setState(() {
       _questions.add(question);
 
@@ -312,16 +319,7 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
          */
         ElevatedButton(
             onPressed: () {
-              /*
-              Get.to(Question(
-                category: _category,
-                tags: const [],
-                maxPlayers: _currentSliderValue.toInt(),
-                numOfQuestions: _numberOfQuestions.toInt(),
-                difficulty: arr[_selectedDifficulty],
-                private: _selectedPrivacy > 0,
-              ));
-               */
+              createQuiz(_title, _category, arr[_selectedDifficulty], _tags, _questions);
             },
             style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.cyan,
@@ -338,20 +336,18 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
   }
 
   createdQuestions(double x, double y) {
+    var childrenQuestions = <Widget>[];
+    for(int i = 0; i < _questions.length; i++){
+      childrenQuestions.add(QuestionListItemBar(x: x, y: y, title: "Example question ${i+1}", question: _questions[i]));
+    }
+
     return Column(
       children: [
         SizedBox(
             height: 600 * y,
             child: SingleChildScrollView(
-                child: Column(children: [
-              QuestionListItemBar(x: x, y: y, title: "Example question 1"),
-              QuestionListItemBar(x: x, y: y, title: "Example question 2"),
-              QuestionListItemBar(x: x, y: y, title: "Example question 3"),
-              QuestionListItemBar(x: x, y: y, title: "Example question 4"),
-              QuestionListItemBar(x: x, y: y, title: "Example question 5"),
-              QuestionListItemBar(x: x, y: y, title: "Example question 6"),
-              QuestionListItemBar(x: x, y: y, title: "Example question 7"),
-            ]))),
+                child: Column(children: childrenQuestions
+            ))),
         ElevatedButton(
             onPressed: () {
               _newQuestion();

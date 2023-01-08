@@ -1,19 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../classes/own_question.dart';
 import '../widgets/header.dart';
-
-class Question{
-  late String question;
-  late String correctAnswer;
-  late List<String> incorrectAnswers;
-  
-  Question({
-    required this.question,
-    required this.correctAnswer,
-    required this.incorrectAnswers
-  });
-}
 
 class CreateQuestionForm extends StatefulWidget {
   const CreateQuestionForm({Key? key}) : super(key: key);
@@ -117,7 +106,7 @@ class _CreateQuestionForm extends State<CreateQuestionForm> {
           ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: Colors.cyan),
               onPressed: () {
-                Get.back(result: Question(question: question, correctAnswer: correctAnswer, incorrectAnswers: incorrectAnswers));
+                Get.back(result: OwnQuestion(question: question, correct_answer: correctAnswer, inCorrectanswers: incorrectAnswers,));
               },
               child: const Text(
                 "Confirm",
