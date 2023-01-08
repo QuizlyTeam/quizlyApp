@@ -19,6 +19,8 @@ class _CreateQuestionForm extends State<CreateQuestionForm> {
   Widget build(BuildContext context) {
     double x = MediaQuery.of(context).size.width / 411.42857142857144;
     double y = MediaQuery.of(context).size.height / 866.2857142857143;
+    
+    final formKey = GlobalKey<FormState>();
 
     return Scaffold(
       appBar: AppBar(
@@ -26,12 +28,16 @@ class _CreateQuestionForm extends State<CreateQuestionForm> {
       ),
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 20 * x, horizontal: 50 * y),
-        child: SingleChildScrollView(
+        child: Form(
+    key: formKey,
+    child: SingleChildScrollView(
           child: Column(children: [
             SizedBox(
               height: 20 * y,
             ),
             TextFormField(
+              validator: (value) => RegExp(r'(.|\s)*\S(.|\s)*').hasMatch(value!) ? null : "Enter a valid question",
+
               decoration: InputDecoration(
                   hintText: "Question",
                   enabledBorder: UnderlineInputBorder(
@@ -47,6 +53,7 @@ class _CreateQuestionForm extends State<CreateQuestionForm> {
               height: 20 * y,
             ),
             TextFormField(
+              validator: (value) => RegExp(r'(.|\s)*\S(.|\s)*').hasMatch(value!) ? null : "Enter a valid answer",
               decoration: InputDecoration(
                   hintText: "correctAnswer",
                   enabledBorder: UnderlineInputBorder(
@@ -62,6 +69,8 @@ class _CreateQuestionForm extends State<CreateQuestionForm> {
               height: 20 * y,
             ),
             TextFormField(
+              validator: (value) => RegExp(r'(.|\s)*\S(.|\s)*').hasMatch(value!) ? null : "Enter a valid answer",
+
               decoration: InputDecoration(
                   hintText: "incorrectAnswer 1",
                   enabledBorder: UnderlineInputBorder(
@@ -77,6 +86,8 @@ class _CreateQuestionForm extends State<CreateQuestionForm> {
               height: 20 * y,
             ),
             TextFormField(
+              validator: (value) => RegExp(r'(.|\s)*\S(.|\s)*').hasMatch(value!) ? null : "Enter a valid answer",
+
               decoration: InputDecoration(
                   hintText: "incorrectAnswer 2",
                   enabledBorder: UnderlineInputBorder(
@@ -92,6 +103,8 @@ class _CreateQuestionForm extends State<CreateQuestionForm> {
               height: 20 * y,
             ),
             TextFormField(
+              validator: (value) => RegExp(r'(.|\s)*\S(.|\s)*').hasMatch(value!) ? null : "Enter a valid answer",
+
               decoration: InputDecoration(
                   hintText: "incorrectAnswer 3",
                   enabledBorder: UnderlineInputBorder(
@@ -106,12 +119,14 @@ class _CreateQuestionForm extends State<CreateQuestionForm> {
             ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.cyan),
                 onPressed: () {
-                  Get.back(
-                      result: OwnQuestion(
-                    question: question,
-                    correct_answer: correctAnswer,
-                    inCorrectanswers: incorrectAnswers,
-                  ));
+                  if(formKey.currentState!.validate()) {
+                    Get.back(
+                        result: OwnQuestion(
+                          question: question,
+                          correct_answer: correctAnswer,
+                          inCorrectanswers: incorrectAnswers,
+                        ));
+                  }
                 },
                 child: const Text(
                   "Confirm",
@@ -119,6 +134,7 @@ class _CreateQuestionForm extends State<CreateQuestionForm> {
                 ))
           ]),
         ),
+      ),
       ),
     );
   }
