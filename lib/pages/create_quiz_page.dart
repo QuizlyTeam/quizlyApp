@@ -5,6 +5,7 @@ import 'package:quizly_app/pages/category_page.dart';
 import 'package:quizly_app/pages/tag_page.dart';
 import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 import 'package:quizly_app/widgets/list_item_bar.dart';
+import 'package:quizly_app/pages/create_question_page.dart';
 
 class QuestionListItemBar extends ListItemBar {
   const QuestionListItemBar(
@@ -30,9 +31,8 @@ class CreateQuizForm extends StatefulWidget {
 class _CreateQuizFormState extends State<CreateQuizForm> {
   late String _title = "";
   int _selectedDifficulty = 0;
-  String name = 'Private';
-
   var arr = ["easy", "medium", "hard"];
+  List<Question> _questions = [];
 
   String _category = "Category";
   List<String> _tags = [];
@@ -48,6 +48,13 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
     _tags = await Get.to(const TagPage());
     setState(() {
       _tags = _tags;
+    });
+  }
+
+  void _newQuestion() async {
+    var question = await Get.to(() => const CreateQuestionForm());
+    setState(() {
+      _questions.add(question);
     });
   }
 
@@ -345,7 +352,10 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
               QuestionListItemBar(x: x, y: y, title: "Example question 7"),
             ]))),
         ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              _newQuestion();
+              print(_questions);
+            },
             style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.cyan,
                 fixedSize: Size(280 * x, 96 * y),
