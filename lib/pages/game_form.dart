@@ -33,14 +33,14 @@ class _GameFormState extends State<GameForm> {
   List<String> _tags = [];
 
   void _newCategory() async {
-    _category = await Get.to(const CategoryPage());
+    _category = await Get.to(() => const CategoryPage());
     setState(() {
       _category = _category;
     });
   }
 
   void _newTags() async {
-    _tags = await Get.to(const TagPage());
+    _tags = await Get.to(() => const TagPage());
     setState(() {
       _tags = _tags;
     });
