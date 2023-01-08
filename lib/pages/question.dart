@@ -63,25 +63,6 @@ class _QuestionState extends State<Question> {
     super.initState();
     value = 1;
 
-    /*
-    String cat = widget.category.replaceFirst(r' & ', '_and_').toLowerCase();
-
-    var quizOptions = {};
-
-    quizOptions["nickname"] = "guest";
-    cat.isEmpty ? 1+1:quizOptions["categories"] = cat;
-    quizOptions["difficulty"] = widget.difficulty;
-    quizOptions["limit"] = widget.numOfQuestions;
-    widget.tags.isNotEmpty ? quizOptions["tags"]:1+1;
-    quizOptions["max_players"] = widget.maxPlayers;
-
-
-    widget.socket.emit("join", quizOptions);
-
-    widget.socket.on('join', (data) {
-      print(data["room"]);
-    });
-     */
     widget.socket.on('question', (data) {
       ready = true;
       stopwatch.reset();
@@ -115,6 +96,7 @@ class _QuestionState extends State<Question> {
 
     widget.socket.on("results", (data) {
       totalScore = data;
+      widget.socket.disconnect();
       Get.to(Score(score: totalScore, player: widget.player,));
     });
 

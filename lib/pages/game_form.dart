@@ -362,7 +362,7 @@ class _GameFormState extends State<GameForm> {
         Play button
          */
         ElevatedButton(
-            onPressed: () {
+            onPressed: () =>
               Get.to(BetweenPage(
                 category: _category,
                 tags: const [],
@@ -370,8 +370,8 @@ class _GameFormState extends State<GameForm> {
                 numOfQuestions: _numberOfQuestions.toInt(),
                 difficulty: arr[_selectedDifficulty],
                 nick: widget.nick,
-              ));
-            },
+              ))
+            ,
             style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.cyan,
                 fixedSize: Size(280 * x, 96 * y),
@@ -444,9 +444,8 @@ class _GameFormState extends State<GameForm> {
            ],
          ),
         ElevatedButton(
-            onPressed: () {
-              Get.to(BetweenPage(nick: widget.nick, roomID: room,));
-            },
+            onPressed: () =>
+              Get.to(BetweenPage(nick: widget.nick, roomID: room,)),
             style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.cyan,
                 fixedSize: Size(280 * x, 96 * y),
