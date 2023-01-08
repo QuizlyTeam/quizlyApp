@@ -157,30 +157,31 @@ getUser() async {
 }
 
 // ignore: non_constant_identifier_names
-createQuiz(String title, String category,String difficulty, List<String> tags,List<OwnQuestion> questions) async{
+createQuiz(String title, String category, String difficulty, List<String> tags,
+    List<OwnQuestion> questions) async {
   String token = "";
-
+  // ignore: non_constant_identifier_names
+  String OwnQuizToJson(OwnQuiz data) => json.encode(data.toJson());
   await FirebaseAuth.instance.currentUser!
       .getIdToken(true)
       .then((String result) {
     token = result;
   });
-  final response = await http.post(Uri.parse('http://10.0.2.2:8000/v1/quizzes/'),
+  final response = await http.post(
+      Uri.parse('http://10.0.2.2:8000/v1/quizzes/'),
       headers: {
         "Authorization": 'Bearer $token',
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonEncode(<String, dynamic>{
-          'title' : title,
-          'category' : category,
-          'difficulty' : difficulty,
-          'tags' : tags,
-          'questions' : questions
-      }));
+      body: OwnQuizToJson(OwnQuiz(
+          title: title,
+          category: category,
+          difficulty: difficulty,
+          tags: tags,
+          questions: questions)));
   if (response.statusCode == 201) {
-    return UserToApi.fromJson(jsonDecode(response.body));
+    return OwnQuiz.fromJson(jsonDecode(response.body));
   } else {
-    //  print(response.body);
     return null;
   }
 }

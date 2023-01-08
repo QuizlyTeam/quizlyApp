@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../classes/own_question.dart';
-import '../widgets/header.dart';
 
 class CreateQuestionForm extends StatefulWidget {
   const CreateQuestionForm({Key? key}) : super(key: key);
@@ -14,7 +13,7 @@ class CreateQuestionForm extends StatefulWidget {
 class _CreateQuestionForm extends State<CreateQuestionForm> {
   String question = "";
   String correctAnswer = "";
-  List<String> incorrectAnswers = ['','',''];
+  List<String> incorrectAnswers = ['', '', ''];
 
   @override
   Widget build(BuildContext context) {
@@ -27,92 +26,99 @@ class _CreateQuestionForm extends State<CreateQuestionForm> {
       ),
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 20 * x, horizontal: 50 * y),
-        child: Column(children: [
-          SizedBox(
-            height: 20 * y,
-          ),
-          TextFormField(
-            decoration: InputDecoration(
-                hintText: "Question",
-                enabledBorder: UnderlineInputBorder(
-                    borderSide:
-                    BorderSide(width: 3, color: Colors.grey.shade500))),
-            onChanged: (val) {
-              setState(() {
-                question = val;
-              });
-            },
-          ),
-          SizedBox(
-            height: 20 * y,
-          ),
-          TextFormField(
-            decoration: InputDecoration(
-                hintText: "correctAnswer",
-                enabledBorder: UnderlineInputBorder(
-                    borderSide:
-                    BorderSide(width: 3, color: Colors.grey.shade500))),
-            onChanged: (val) {
-              setState(() {
-                correctAnswer = val;
-              });
-            },
-          ),
-          SizedBox(
-            height: 20 * y,
-          ),
-          TextFormField(
-            decoration: InputDecoration(
-                hintText: "incorrectAnswer 1",
-                enabledBorder: UnderlineInputBorder(
-                    borderSide:
-                    BorderSide(width: 3, color: Colors.grey.shade500))),
-            onChanged: (val) {
-              setState(() {
-                incorrectAnswers[0] = val;
-              });
-            },
-          ),
-          SizedBox(
-            height: 20 * y,
-          ),
-          TextFormField(
-            decoration: InputDecoration(
-                hintText: "incorrectAnswer 2",
-                enabledBorder: UnderlineInputBorder(
-                    borderSide:
-                    BorderSide(width: 3, color: Colors.grey.shade500))),
-            onChanged: (val) {
-              setState(() {
-                incorrectAnswers[1] = val;
-              });
-            },
-          ),
-          SizedBox(
-            height: 20 * y,
-          ),
-          TextFormField(
-            decoration: InputDecoration(
-                hintText: "incorrectAnswer 3",
-                enabledBorder: UnderlineInputBorder(
-                    borderSide:
-                    BorderSide(width: 3, color: Colors.grey.shade500))),
-            onChanged: (val) {
-              setState(() {
-                incorrectAnswers[2] = val;
-              });
-            },
-          ),
-          ElevatedButton(
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.cyan),
-              onPressed: () {
-                Get.back(result: OwnQuestion(question: question, correct_answer: correctAnswer, inCorrectanswers: incorrectAnswers,));
+        child: SingleChildScrollView(
+          child: Column(children: [
+            SizedBox(
+              height: 20 * y,
+            ),
+            TextFormField(
+              decoration: InputDecoration(
+                  hintText: "Question",
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide:
+                          BorderSide(width: 3, color: Colors.grey.shade500))),
+              onChanged: (val) {
+                setState(() {
+                  question = val;
+                });
               },
-              child: const Text(
-                "Confirm",
-                style: TextStyle(color: Colors.white),
-              ))
-        ]),
+            ),
+            SizedBox(
+              height: 20 * y,
+            ),
+            TextFormField(
+              decoration: InputDecoration(
+                  hintText: "correctAnswer",
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide:
+                          BorderSide(width: 3, color: Colors.grey.shade500))),
+              onChanged: (val) {
+                setState(() {
+                  correctAnswer = val;
+                });
+              },
+            ),
+            SizedBox(
+              height: 20 * y,
+            ),
+            TextFormField(
+              decoration: InputDecoration(
+                  hintText: "incorrectAnswer 1",
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide:
+                          BorderSide(width: 3, color: Colors.grey.shade500))),
+              onChanged: (val) {
+                setState(() {
+                  incorrectAnswers[0] = val;
+                });
+              },
+            ),
+            SizedBox(
+              height: 20 * y,
+            ),
+            TextFormField(
+              decoration: InputDecoration(
+                  hintText: "incorrectAnswer 2",
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide:
+                          BorderSide(width: 3, color: Colors.grey.shade500))),
+              onChanged: (val) {
+                setState(() {
+                  incorrectAnswers[1] = val;
+                });
+              },
+            ),
+            SizedBox(
+              height: 20 * y,
+            ),
+            TextFormField(
+              decoration: InputDecoration(
+                  hintText: "incorrectAnswer 3",
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide:
+                          BorderSide(width: 3, color: Colors.grey.shade500))),
+              onChanged: (val) {
+                setState(() {
+                  incorrectAnswers[2] = val;
+                });
+              },
+            ),
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.cyan),
+                onPressed: () {
+                  Get.back(
+                      result: OwnQuestion(
+                    question: question,
+                    correct_answer: correctAnswer,
+                    inCorrectanswers: incorrectAnswers,
+                  ));
+                },
+                child: const Text(
+                  "Confirm",
+                  style: TextStyle(color: Colors.white),
+                ))
+          ]),
+        ),
       ),
     );
   }

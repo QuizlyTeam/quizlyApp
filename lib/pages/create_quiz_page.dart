@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quizly_app/auth/auth.dart';
@@ -19,7 +20,6 @@ class QuestionListItemBar extends ListItemBar {
       {super.key, required super.x, required super.y, required super.title, required this.question});
   @override
   edit() {
-    print("edit2");
   }
 
   @override
@@ -319,11 +319,12 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
          */
         ElevatedButton(
             onPressed: () {
-              createQuiz(_title, _category, arr[_selectedDifficulty], _tags, _questions);
+
+                createQuiz(_title, _category, arr[_selectedDifficulty], _tags, _questions);
             },
             style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.cyan,
-                fixedSize: Size(280 * x, 96 * y),
+                fixedSize: Size(280 * x, 80 * y),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(32.0),
                 )),
@@ -344,14 +345,13 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
     return Column(
       children: [
         SizedBox(
-            height: 600 * y,
+            height: 550 * y,
             child: SingleChildScrollView(
                 child: Column(children: childrenQuestions
             ))),
         ElevatedButton(
             onPressed: () {
               _newQuestion();
-              print(_questions);
             },
             style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.cyan,
@@ -386,7 +386,8 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
                   y: y,
                 ),
               ),
-              body: DefaultTabController(
+              body:
+              DefaultTabController(
                 length: 2,
                 child: Column(
                   children: [
