@@ -10,10 +10,13 @@ void main() {
   testWidgets("Check if text is shown properly", (widgetTester) async {
     await widgetTester.pumpWidget(MaterialApp(home: BetweenPage(nick: "user",)));
 
-    expect(find.text("Ready players:\n"
+    expect(
+        find.text("Ready players:\n"
         "1/0\n"
         "Room id:\n"
-        ""), findsOneWidget);
+        ""),
+        findsOneWidget
+    );
     expect(find.text("Copy to clipboard"), findsOneWidget);
   });
 
