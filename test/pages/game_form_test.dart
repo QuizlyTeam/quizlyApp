@@ -8,11 +8,11 @@ void main() {
           (WidgetTester tester) async {
         await tester.pumpWidget(MaterialApp(home: GameForm()));
 
-        expect(find.text('Play!'), findsOneWidget);
-        expect(find.text('Difficulty level:'), findsOneWidget);
-        expect(find.text('Pick'), findsNWidgets(2));
-        expect(find.byType(ElevatedButton), findsNWidgets(3));
-      });
+    expect(find.text('Play!'), findsOneWidget);
+    expect(find.text('Difficulty level:'), findsOneWidget);
+    expect(find.text('Pick'), findsNWidgets(2));
+    expect(find.byType(ElevatedButton), findsNWidgets(3));
+  });
 
   testWidgets('Test toggle tabs',
           (WidgetTester tester) async {
@@ -27,7 +27,7 @@ void main() {
           (WidgetTester tester) async {
         await tester.pumpWidget(MaterialApp(home: GameForm()));
 
-        expect(find.text('Category'), findsOneWidget);
-        expect(find.text('0 tags selected'), findsOneWidget);
-      });
+    expect(find.text('Category'), findsOneWidget);
+    expect(find.text('0 tags selected'), findsOneWidget);
+  });
 }

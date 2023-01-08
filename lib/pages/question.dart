@@ -18,7 +18,6 @@ class Question extends StatefulWidget {
   final int numOfQuestions;
   final String player;
 
-  //Question({super.key, required this.category, required this.tags, required this.maxPlayers, required this.numOfQuestions, required this.difficulty,});
   Question({
     super.key,
     required this.socket,
@@ -115,7 +114,7 @@ class _QuestionState extends State<Question> {
       setState(() {
         normalColor = Colors.red;
       });
-    } else if (answer == correctAnswer && emittedProperAnswer){
+    } else if (answer == correctAnswer && emittedProperAnswer) {
       setState(() {
         normalColor = Colors.yellow;
       });
@@ -129,8 +128,8 @@ class _QuestionState extends State<Question> {
       onPressed: clickedAnything
           ? () {}
           : () {
-              double time = stopwatch.elapsedMilliseconds/1000;
-              time = time > 12 ? 12:time;
+              double time = stopwatch.elapsedMilliseconds / 1000;
+              time = time > 12 ? 12 : time;
               widget.socket.emit("answer", {"answer": answer, "time": time});
 
               if (answer == correctAnswer) {
