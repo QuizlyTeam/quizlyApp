@@ -137,74 +137,7 @@ createUser(String nickname) async {
     return null;
   }
 }
-Future<void> refreshSession() async {
-  final url =
-      'https://securetoken.googleapis.com/v1/token?key=AIzaSyD2k2kDXIgGIi8OkZIwAujmoYgHOnvCNpA';
-  //$WEB_API_KEY=> You should write your web api key on your firebase project.
 
-  try {
-    final response = await http.post(
-      url,
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: json.encode({
-        'grant_type': 'refresh_token',
-        'refresh_token': '[REFRESH_TOKEN]', // Your refresh token.
-      }),
-      // Or try without json.encode.
-      // Like this:
-      // body: {
-      //   'grant_type': 'refresh_token',
-      //   'refresh_token': '[REFRESH_TOKEN]',
-      // },
-    );
-    final responseData = json.decode(response.body);
-    if (responseData['error'] != null) {
-      throw HttpException(responseData['error']['message']);
-    }
-    _token = responseData['id_token'];
-    _refresh_token = responseData['refresh_token']; // Also save your refresh token
-    _userId = responseData['user_id'];
-    _expiryDate = DateTime.now()
-        .add(Duration(seconds: int.parse(responseData['expires_in'])));
-    _autoLogout();
-
-    notifyListeners();
-
-    final prefs = await SharedPreferences.getInstance();
-    final userData = json.encode({
-      'token': _token,
-      'refresh_token': _refresh_token,
-      'userId': _userId,
-      'expiryDate': _expiryDate.toIso8601String(),
-    });
-    prefs.setString('userData', userData);
-  } catch (error) {
-    throw error;
-  }
-}
-
-getUser() async {
-  String token = "";
-  await FirebaseAuth.instance.currentUser!.getIdToken(true).then((String result){
-    token = result;
-  });
-  final response =
-  await http.get(
-      Uri.parse('http://10.0.2.2:8000/v1/users/'),
-      headers:{ "Authorization": 'Bearer $token',
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-  );
-  if (response.statusCode == 200) {
-    return 1;
-
-  }else {
-    return null;
-  }
-}
 
 
 
