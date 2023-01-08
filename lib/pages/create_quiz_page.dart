@@ -6,6 +6,20 @@ import 'package:quizly_app/pages/tag_page.dart';
 import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 import 'package:quizly_app/widgets/list_item_bar.dart';
 
+class QuestionListItemBar extends ListItemBar {
+  const QuestionListItemBar(
+      {super.key, required super.x, required super.y, required super.title});
+  @override
+  edit() {
+    print("edit2");
+  }
+
+  @override
+  delete() {
+    print("delete2");
+  }
+}
+
 class CreateQuizForm extends StatefulWidget {
   const CreateQuizForm({super.key});
 
@@ -101,41 +115,40 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
             child: Stack(children: [
               Positioned(
                   child: Container(
-                    width: 324 * x,
-                    height: 100 * y,
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(15),
-                          topRight: Radius.circular(15),
-                          bottomLeft: Radius.circular(15),
-                          bottomRight: Radius.circular(15),
-                        ),
-                        color: Colors.white),
-                    child: Column(children: [
-                      Container(
-                        height: 7 * y,
-                      ),
-                      Text('Title:',
-                          style:
-                              TextStyle(fontSize: 20 * y, color: Colors.black)),
-                      TextField(
-                        onChanged: (value) {
-                          _title = value;
-                        },
-                        style: const TextStyle(
-                          color: Colors.black,
-                        ),
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(36.84 * y),
-                              borderSide: BorderSide.none),
-                          hintText: "Title",
-                        ),
-                      ),
-                    ]),
-                  )),
+                width: 324 * x,
+                height: 100 * y,
+                decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                      topRight: Radius.circular(15),
+                      bottomLeft: Radius.circular(15),
+                      bottomRight: Radius.circular(15),
+                    ),
+                    color: Colors.white),
+                child: Column(children: [
+                  Container(
+                    height: 7 * y,
+                  ),
+                  Text('Title:',
+                      style: TextStyle(fontSize: 20 * y, color: Colors.black)),
+                  TextField(
+                    onChanged: (value) {
+                      _title = value;
+                    },
+                    style: const TextStyle(
+                      color: Colors.black,
+                    ),
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(36.84 * y),
+                          borderSide: BorderSide.none),
+                      hintText: "Title",
+                    ),
+                  ),
+                ]),
+              )),
             ])),
         /*
         Category
@@ -318,7 +331,32 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
 
   createdQuestions(double x, double y) {
     return Column(
-      children: [ListItemBar(x: x, y: y, title: "Example question")],
+      children: [
+        SizedBox(
+            height: 600 * y,
+            child: SingleChildScrollView(
+                child: Column(children: [
+              QuestionListItemBar(x: x, y: y, title: "Example question 1"),
+              QuestionListItemBar(x: x, y: y, title: "Example question 2"),
+              QuestionListItemBar(x: x, y: y, title: "Example question 3"),
+              QuestionListItemBar(x: x, y: y, title: "Example question 4"),
+              QuestionListItemBar(x: x, y: y, title: "Example question 5"),
+              QuestionListItemBar(x: x, y: y, title: "Example question 6"),
+              QuestionListItemBar(x: x, y: y, title: "Example question 7"),
+            ]))),
+        ElevatedButton(
+            onPressed: () {},
+            style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.cyan,
+                fixedSize: Size(280 * x, 96 * y),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(32.0),
+                )),
+            child: Text(
+              'Add a question',
+              style: TextStyle(fontSize: 30 * y, color: Colors.white),
+            ))
+      ],
     );
   }
 

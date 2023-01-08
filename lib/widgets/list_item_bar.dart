@@ -12,6 +12,10 @@ class ListItemBar extends StatelessWidget {
     required this.title,
   });
 
+  edit() {}
+
+  delete() {}
+
   Widget listItemBar(double x, double y, String title) {
     return SizedBox(
       width: 390 * x,
@@ -57,12 +61,12 @@ class ListItemBar extends StatelessWidget {
                   ),
                   SizedBox(width: 10 * x),
                   IconButton(
-                      onPressed: () => {print("edit")},
+                      onPressed: () => {edit()},
                       icon: const Icon(Icons.edit_outlined),
                       iconSize: 45,
                       color: Colors.white),
                   IconButton(
-                      onPressed: () => {print("delete")},
+                      onPressed: () => {delete()},
                       icon: const Icon(Icons.delete_forever_outlined),
                       iconSize: 45,
                       color: Colors.white)
