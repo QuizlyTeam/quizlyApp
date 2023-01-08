@@ -1,27 +1,26 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
 import 'package:quizly_app/pages/question.dart';
+// ignore: library_prefixes
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
+@GenerateMocks([IO.Socket])
 void main() {
-  test('Question test', () {
-    // Create an instance of the Question class
-    final question = Question(
-      category: 'some category',
-      tags: const ['1700\'s'],
-      maxPlayers: 1,
-      numOfQuestions: 10,
-      difficulty: 'hard',
-      private: true,
+  test("Check if text is shown properly", () {
+    IO.Socket socket = IO.io("x",
+        IO.OptionBuilder().setTransports(['websocket']).build());
+
+    int number = 5;
+    String nick = "Michał";
+
+    Question question = Question(
+        socket: socket,
+        numOfQuestions: number,
+        player: nick
     );
 
-    // Verify that the category field is set correctly
-    expect(question.category, equals('some category'));
-    expect(question.tags, equals(['1700\'s']));
-    expect(question.maxPlayers, equals(1));
-    expect(question.numOfQuestions, equals(10));
-    expect(question.difficulty, equals('hard'));
-    expect(question.private, equals(true));
-
-    // Verify that the socket field is set correctly
-    expect(question.socket, isNotNull);
+    expect(question.socket, socket);
+    expect(question.numOfQuestions, number);
+    expect(question.player, nick);
   });
 }
