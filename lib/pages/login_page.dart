@@ -28,24 +28,32 @@ class _LoginPageState extends State<LoginPage> {
             backgroundColor: Colors.cyan,
           ),
           onPressed: () async {
-
             if (asset == 'assets/images/Facebook (icon — Colour).png') {
               result = await auth_.signInWithFacebook();
-              if (result != null){
-                if(await getUser() == null){Get.to(() => const NicknamePage());}
-                else{Get.to(()=>const MenuPage());}
+              if (result != null) {
+                if (await getUser() == null) {
+                  Get.to(() => const NicknamePage());
+                } else {
+                  Get.to(() => const MenuPage());
+                }
               }
             } else if (asset == 'assets/images/Google (icon — Colour).png') {
               result = await auth_.signInWithGoogle();
               if (result != null) {
-                if(await getUser() == null){Get.to(() => const NicknamePage());}
-                else{Get.to(()=>const MenuPage());}
+                if (await getUser() == null) {
+                  Get.to(() => const NicknamePage());
+                } else {
+                  Get.to(() => const MenuPage());
+                }
               }
             } else if (asset == 'assets/images/Mask group.png') {
               result = await auth_.signInWithApple();
-              if (result != null){
-                if(await getUser() == null){Get.to(() => const NicknamePage());}
-                else{Get.to(()=>const MenuPage());}
+              if (result != null) {
+                if (await getUser() == null) {
+                  Get.to(() => const NicknamePage());
+                } else {
+                  Get.to(() => const MenuPage());
+                }
               }
             }
           },
@@ -230,7 +238,7 @@ class _LoginPageState extends State<LoginPage> {
                   ElevatedButton(
                     onPressed: () {
                       var result = auth_.signInAnon();
-                      if(result != null)Get.to(const MenuPage());
+                      if (result != null) Get.to(const MenuPage());
                     },
                     style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(

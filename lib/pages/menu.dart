@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quizly_app/pages/create_quiz_page.dart';
 import 'package:quizly_app/pages/game_form.dart';
 import 'package:quizly_app/widgets/header.dart';
 import 'package:get/get.dart';
@@ -9,7 +10,11 @@ class MenuPage extends StatelessWidget {
   Widget answerButton(String text, double x, double y) {
     return ElevatedButton(
       onPressed: () {
-        if (text == 'Play!') Get.to(const GameForm());
+        if (text == 'Play!') {
+          Get.to(const GameForm());
+        } else {
+          Get.to(const CreateQuizForm());
+        }
       },
       style: ElevatedButton.styleFrom(
           backgroundColor: Colors.cyan,

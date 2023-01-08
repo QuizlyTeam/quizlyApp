@@ -64,8 +64,7 @@ class AuthService {
       return credential;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-      } else if (e.code == 'email-already-in-use') {
-      }
+      } else if (e.code == 'email-already-in-use') {}
     }
     return null;
   }
@@ -77,8 +76,7 @@ class AuthService {
       return credential;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-      } else if (e.code == 'wrong-password') {
-      }
+      } else if (e.code == 'wrong-password') {}
     }
     return null;
   }
@@ -115,49 +113,44 @@ class AuthService {
 
 createUser(String nickname) async {
   String token = "";
-  await FirebaseAuth.instance.currentUser!.getIdToken(true).then((String result){
+  await FirebaseAuth.instance.currentUser!
+      .getIdToken(true)
+      .then((String result) {
     token = result;
   });
-  final response =
-  await http.post(
-      Uri.parse('http://10.0.2.2:8000/v1/users/'),
-      headers:{ "Authorization": 'Bearer $token',
+  final response = await http.post(Uri.parse('http://10.0.2.2:8000/v1/users/'),
+      headers: {
+        "Authorization": 'Bearer $token',
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonEncode(<String,dynamic>{
-        'nickname' : nickname,
-
-
-      })
-  );
+      body: jsonEncode(<String, dynamic>{
+        'nickname': nickname,
+      }));
   if (response.statusCode == 201) {
     return UserToApi.fromJson(jsonDecode(response.body));
-  }else {
+  } else {
     //  print(response.body);
     return null;
   }
 }
 
-
 getUser() async {
   String token = "";
-  await FirebaseAuth.instance.currentUser!.getIdToken(true).then((String result){
+  await FirebaseAuth.instance.currentUser!
+      .getIdToken(true)
+      .then((String result) {
     token = result;
   });
-  final response =
-  await http.get(
-      Uri.parse('http://10.0.2.2:8000/v1/users/'),
-      headers:{ "Authorization": 'Bearer $token',
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
+  final response = await http.get(
+    Uri.parse('http://10.0.2.2:8000/v1/users/'),
+    headers: {
+      "Authorization": 'Bearer $token',
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
   );
   if (response.statusCode == 200) {
     return 1;
-
-  }else {
+  } else {
     return null;
   }
 }
-
-
-
