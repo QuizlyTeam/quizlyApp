@@ -165,7 +165,7 @@ createQuiz(String title, String category,String difficulty, List<String> tags,Li
       .then((String result) {
     token = result;
   });
-  final response = await http.post(Uri.parse('http://10.0.2.2:8000/v1/users/'),
+  final response = await http.post(Uri.parse('http://10.0.2.2:8000/v1/quizzes/'),
       headers: {
         "Authorization": 'Bearer $token',
         'Content-Type': 'application/json; charset=UTF-8',
