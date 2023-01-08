@@ -506,14 +506,6 @@ class _GameFormState extends State<GameForm> {
                       ],
                     )
                   ),
-                    Expanded(
-                      child: TabBarView(
-                        children: [
-                          customQuiz(x, y),
-                          const Text('Tab 2 content'),
-                        ],
-                      ),
-                    ),
                   ],
                 ),
               ))),
