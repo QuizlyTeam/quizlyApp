@@ -14,13 +14,13 @@ class _CreateQuestionForm extends State<CreateQuestionForm> {
   String question = "";
   String correctAnswer = "";
   List<String> incorrectAnswers = ['', '', ''];
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     double x = MediaQuery.of(context).size.width / 411.42857142857144;
     double y = MediaQuery.of(context).size.height / 866.2857142857143;
-    
-    final formKey = GlobalKey<FormState>();
+
 
     return Scaffold(
       appBar: AppBar(
@@ -29,7 +29,7 @@ class _CreateQuestionForm extends State<CreateQuestionForm> {
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 20 * x, horizontal: 50 * y),
         child: Form(
-    key: formKey,
+    key: _formKey,
     child: SingleChildScrollView(
           child: Column(children: [
             SizedBox(
@@ -119,13 +119,13 @@ class _CreateQuestionForm extends State<CreateQuestionForm> {
             ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.cyan),
                 onPressed: () {
-                  if(formKey.currentState!.validate()) {
+                  if(_formKey.currentState!.validate()) {
                     Get.back(
-                        result: OwnQuestion(
-                          question: question,
-                          correct_answer: correctAnswer,
-                          inCorrectanswers: incorrectAnswers,
-                        ));
+                      result: OwnQuestion(
+                    question: question,
+                    correct_answer: correctAnswer,
+                    inCorrectanswers: incorrectAnswers,
+                  ));
                   }
                 },
                 child: const Text(

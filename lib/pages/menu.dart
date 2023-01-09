@@ -11,7 +11,7 @@ class MenuPage extends StatelessWidget {
     return ElevatedButton(
       onPressed: () {
         if (text == 'Play!') {
-          Get.to(const GameForm());
+          Get.to(GameForm());
         } else {
           Get.to(const CreateQuizForm());
         }
