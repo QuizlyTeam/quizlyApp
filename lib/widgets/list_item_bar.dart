@@ -62,12 +62,12 @@ class ListItemBar extends StatelessWidget {
                   IconButton(
                       onPressed: () => {edit()},
                       icon: const Icon(Icons.edit_outlined),
-                      iconSize: 45,
+                      iconSize: 45*y,
                       color: Colors.white),
                   IconButton(
                       onPressed: () => {delete()},
                       icon: const Icon(Icons.delete_forever_outlined),
-                      iconSize: 45,
+                      iconSize: 45*y,
                       color: Colors.white)
                 ],
               ))),

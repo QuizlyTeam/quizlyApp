@@ -195,7 +195,7 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
                         backgroundColor: Colors.cyan,
                         fixedSize: Size(100 * x, 50 * y),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0),
+                          borderRadius: BorderRadius.circular(15.0*x),
                         )),
                     child: Text(
                       'Pick',
@@ -240,7 +240,7 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
                         backgroundColor: Colors.cyan,
                         fixedSize: Size(100 * x, 50 * y),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0),
+                          borderRadius: BorderRadius.circular(15.0*x),
                         )),
                     child: Text(
                       'Pick',
@@ -326,7 +326,7 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
                 backgroundColor: Colors.cyan,
                 fixedSize: Size(280 * x, 80 * y),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(32.0),
+                  borderRadius: BorderRadius.circular(32.0*y),
                 )),
             child: Text(
               'Create!',
@@ -357,7 +357,7 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
                 backgroundColor: Colors.cyan,
                 fixedSize: Size(280 * x, 96 * y),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(32.0),
+                  borderRadius: BorderRadius.circular(32.0*y),
                 )),
             child: Text(
               'Add a question',
