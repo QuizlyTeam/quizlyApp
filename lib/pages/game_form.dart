@@ -9,12 +9,10 @@ import 'dart:math';
 
 // ignore: must_be_immutable
 class GameForm extends StatefulWidget {
-  GameForm({super.key, this.nick = "", required this.uID}) {
-    if(nick.isEmpty) nick = "guest${rng.nextInt(10000)}";
-  }
+  GameForm({super.key, required this.nick, required this.uID});
 
   var rng = Random();
-  late final String nick;
+  final String nick;
   final String uID;
 
   @override

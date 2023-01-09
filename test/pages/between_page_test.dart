@@ -8,7 +8,7 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 @GenerateMocks([IO.Socket])
 void main() {
   testWidgets("Check if text is shown properly", (widgetTester) async {
-    await widgetTester.pumpWidget(MaterialApp(home: BetweenPage(nick: "user",)));
+    await widgetTester.pumpWidget(MaterialApp(home: BetweenPage(nick: "user", uID: "xxxix",)));
 
     expect(
         find.text("Ready players:\n"
@@ -21,7 +21,7 @@ void main() {
   });
 
   test("BetweenPage has correct default values", () {
-    final BetweenPage page = BetweenPage(nick: "user");
+    final BetweenPage page = BetweenPage(nick: "user", uID: "xxxix",);
     expect(page.nick, "user");
   });
 }
