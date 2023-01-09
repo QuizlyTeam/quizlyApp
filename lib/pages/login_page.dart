@@ -45,13 +45,13 @@ class _LoginPageState extends State<LoginPage> {
                   Get.to(() => const NicknamePage());
                 } else {
                   var data = await getUser();
-                  Get.to(() => enuPage(nick: data['nickname'],));
+                  Get.to(() => MenuPage(nick: data['nickname'],));
                 }
               }
             } else if (asset == 'assets/images/Mask group.png') {
               result = await auth_.signInWithApple();
               if (result != null){
-                if(await getUser() == null){et.to(() => const NicknamePage());}
+                if(await getUser() == null){Get.to(() => const NicknamePage());}
                 else {
                   var data = await getUser();
                   Get.to(()=>MenuPage(nick: data['nickname'],));
