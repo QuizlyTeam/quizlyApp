@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quizly_app/pages/settings.dart';
 import 'package:quizly_app/pages/user_account.dart';
+import 'package:quizly_app/auth/auth.dart';
 
 //leftIcon - path ( String ) do lewej ikonki, pamietac zeby byla
 //tez zadeklarowana w pubspec.yaml
@@ -33,9 +34,10 @@ class Header extends StatelessWidget {
               image: AssetImage(leftIcon),
               height: 90 * y,
             ),
-            onPressed: () {
+            onPressed: () async {
               if (leftIcon == 'assets/images/profile.png') {
-                Get.to(UserAccount());
+                var data = await getUser();
+                Get.to(UserAccount(values: data,));
               } else if (leftIcon == 'assets/images/back.png') {
                 Get.back();
               }
