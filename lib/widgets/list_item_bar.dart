@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ListItemBar extends StatelessWidget {
+class ListItemBar extends StatefulWidget {
   final String title;
   final double x;
   final double y;
@@ -11,10 +11,11 @@ class ListItemBar extends StatelessWidget {
     required this.title,
   });
 
-  edit() {}
+  @override
+  State<ListItemBar> createState() => _ListItemBarState();
+}
 
-  delete() {}
-
+class _ListItemBarState extends State<ListItemBar> {
   Widget listItemBar(double x, double y, String title) {
     return SizedBox(
       width: 390 * x,
@@ -60,12 +61,12 @@ class ListItemBar extends StatelessWidget {
                   ),
                   SizedBox(width: 10 * x),
                   IconButton(
-                      onPressed: () => {edit()},
+                      onPressed: () => {},
                       icon: const Icon(Icons.edit_outlined),
                       iconSize: 45*y,
                       color: Colors.white),
                   IconButton(
-                      onPressed: () => {delete()},
+                      onPressed: () => {},
                       icon: const Icon(Icons.delete_forever_outlined),
                       iconSize: 45*y,
                       color: Colors.white)
@@ -76,6 +77,6 @@ class ListItemBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return listItemBar(x, y, title);
+    return listItemBar(widget.x, widget.y, widget.title);
   }
 }

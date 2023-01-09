@@ -11,10 +11,19 @@ class CreateQuestionForm extends StatefulWidget {
 }
 
 class _CreateQuestionForm extends State<CreateQuestionForm> {
+  var argumentData = Get.arguments;
   String question = "";
   String correctAnswer = "";
   List<String> incorrectAnswers = ['', '', ''];
   final _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    question = argumentData[0];
+    correctAnswer = argumentData[1];
+    incorrectAnswers = argumentData[2];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +46,7 @@ class _CreateQuestionForm extends State<CreateQuestionForm> {
             ),
             TextFormField(
               validator: (value) => RegExp(r'(.|\s)*\S(.|\s)*').hasMatch(value!) ? null : "Enter a valid question",
-
+              initialValue: question,
               decoration: InputDecoration(
                   hintText: "Question",
                   enabledBorder: UnderlineInputBorder(
@@ -54,6 +63,7 @@ class _CreateQuestionForm extends State<CreateQuestionForm> {
             ),
             TextFormField(
               validator: (value) => RegExp(r'(.|\s)*\S(.|\s)*').hasMatch(value!) ? null : "Enter a valid answer",
+              initialValue: correctAnswer,
               decoration: InputDecoration(
                   hintText: "correctAnswer",
                   enabledBorder: UnderlineInputBorder(
@@ -70,7 +80,7 @@ class _CreateQuestionForm extends State<CreateQuestionForm> {
             ),
             TextFormField(
               validator: (value) => RegExp(r'(.|\s)*\S(.|\s)*').hasMatch(value!) ? null : "Enter a valid answer",
-
+              initialValue: incorrectAnswers[0],
               decoration: InputDecoration(
                   hintText: "incorrectAnswer 1",
                   enabledBorder: UnderlineInputBorder(
@@ -87,7 +97,7 @@ class _CreateQuestionForm extends State<CreateQuestionForm> {
             ),
             TextFormField(
               validator: (value) => RegExp(r'(.|\s)*\S(.|\s)*').hasMatch(value!) ? null : "Enter a valid answer",
-
+              initialValue: incorrectAnswers[1],
               decoration: InputDecoration(
                   hintText: "incorrectAnswer 2",
                   enabledBorder: UnderlineInputBorder(
@@ -104,7 +114,7 @@ class _CreateQuestionForm extends State<CreateQuestionForm> {
             ),
             TextFormField(
               validator: (value) => RegExp(r'(.|\s)*\S(.|\s)*').hasMatch(value!) ? null : "Enter a valid answer",
-
+              initialValue: incorrectAnswers[2],
               decoration: InputDecoration(
                   hintText: "incorrectAnswer 3",
                   enabledBorder: UnderlineInputBorder(

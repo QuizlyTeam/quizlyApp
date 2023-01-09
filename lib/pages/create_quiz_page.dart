@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quizly_app/auth/auth.dart';
@@ -12,21 +11,6 @@ import 'package:quizly_app/pages/create_question_page.dart';
 import '../classes/own_question.dart';
 
 List<OwnQuestion> _questions = [];
-
-class QuestionListItemBar extends ListItemBar {
-  final OwnQuestion question;
-
-  const QuestionListItemBar(
-      {super.key, required super.x, required super.y, required super.title, required this.question});
-  @override
-  edit() {
-  }
-
-  @override
-  delete() {
-      _questions.remove(question);
-  }
-}
 
 class CreateQuizForm extends StatefulWidget {
   const CreateQuizForm({super.key});
@@ -44,6 +28,12 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
   String _category = "Category";
   List<String> _tags = [];
 
+  @override
+  void initState() {
+    super.initState();
+  }
+
+
   void _newCategory() async {
     _category = await Get.to(const CategoryPage());
     setState(() {
@@ -59,11 +49,85 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
   }
 
   void _newQuestion() async {
-    OwnQuestion question = await Get.to(() => const CreateQuestionForm());
+    OwnQuestion question = await Get.to(() => const CreateQuestionForm(), arguments: ["","",["","",""]]);
     setState(() {
       _questions.add(question);
-
     });
+  }
+
+  void _editQuestion(OwnQuestion questionData) async {
+    OwnQuestion question = await Get.to(() => const CreateQuestionForm(), arguments: [questionData.question,questionData.correct_answer,questionData.inCorrectanswers]);
+    setState(() {
+      int indeks = _questions.indexOf(questionData);
+      _questions[indeks] = question;
+    });
+  }
+
+  Widget questionListItemBar({required double x, required double y, required OwnQuestion question}) {
+    return SizedBox(
+      width: 390 * x,
+      height: 100 * y,
+      child: Center(
+          child: Container(
+              width: 370 * x,
+              height: 80 * y,
+              decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(15),
+                    topRight: Radius.circular(15),
+                    bottomLeft: Radius.circular(15),
+                    bottomRight: Radius.circular(15),
+                  ),
+                  color: Colors.cyan),
+              child: Row(
+                children: [
+                  SizedBox(width: 10 * x),
+                  Container(
+                    width: 220 * x,
+                    height: 60 * y,
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(15),
+                          topRight: Radius.circular(15),
+                          bottomLeft: Radius.circular(15),
+                          bottomRight: Radius.circular(15),
+                        ),
+                        color: Colors.white),
+                    child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Row(children: [
+                          SizedBox(
+                            width: 10 * x,
+                          ),
+                          Text(
+                            (question.question?.length ?? 0)  < 20 ? "${question.question}" : "${question.question?.substring(0,17)}...",
+                            style: TextStyle(
+                                fontSize: 20 * y, color: Colors.black),
+                          ),
+                        ])),
+                  ),
+                  SizedBox(width: 10 * x),
+                  IconButton(
+                      onPressed: () => {
+                        setState((){
+                          _editQuestion(question);
+                        })
+                      },
+                      icon: const Icon(Icons.edit_outlined),
+                      iconSize: 45*y,
+                      color: Colors.white),
+                  IconButton(
+                      onPressed: () => {
+                        setState((){
+                          _questions.remove(question);
+                        })
+                      },
+                      icon: const Icon(Icons.delete_forever_outlined),
+                      iconSize: 45*y,
+                      color: Colors.white)
+                ],
+              ))),
+    );
   }
 
   Column customQuiz(double x, double y) {
@@ -339,7 +403,7 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
   createdQuestions(double x, double y) {
     var childrenQuestions = <Widget>[];
     for(int i = 0; i < _questions.length; i++){
-      childrenQuestions.add(QuestionListItemBar(x: x, y: y, title: "Example question ${i+1}", question: _questions[i]));
+      childrenQuestions.add(questionListItemBar(x: x, y: y, question: _questions[i]));
     }
 
     return Column(
