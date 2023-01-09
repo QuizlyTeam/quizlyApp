@@ -28,12 +28,12 @@ class _LoginPageState extends State<LoginPage> {
             backgroundColor: Colors.cyan,
           ),
           onPressed: () async {
-
             if (asset == 'assets/images/Facebook (icon — Colour).png') {
               result = await auth_.signInWithFacebook();
               if (result != null){
-                if(await getUser() == null){Get.to(() => const NicknamePage());}
-                else{
+                if(await getUser() == null) {
+                  Get.to(() => const NicknamePage());
+                } else {
                   var data = await getUser();
                   Get.to(()=>MenuPage(nick: data['nickname'],));
                 }
@@ -41,17 +41,18 @@ class _LoginPageState extends State<LoginPage> {
             } else if (asset == 'assets/images/Google (icon — Colour).png') {
               result = await auth_.signInWithGoogle();
               if (result != null) {
-                if(await getUser() == null){Get.to(() => const NicknamePage());}
-                else {
+                if(await getUser() == null) {
+                  Get.to(() => const NicknamePage());
+                } else {
                   var data = await getUser();
-                  Get.to(()=>MenuPage(nick: data['nickname'],));
+                  Get.to(() => enuPage(nick: data['nickname'],));
                 }
               }
             } else if (asset == 'assets/images/Mask group.png') {
               result = await auth_.signInWithApple();
               if (result != null){
-                if(await getUser() == null){Get.to(() => const NicknamePage());}
-                else{
+                if(await getUser() == null){et.to(() => const NicknamePage());}
+                else {
                   var data = await getUser();
                   Get.to(()=>MenuPage(nick: data['nickname'],));
                 }

@@ -53,7 +53,6 @@ class _NicknamePageState extends State<NicknamePage> {
             ))
         ]
       ),
-    ),
     );
   }
 }
