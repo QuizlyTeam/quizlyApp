@@ -3,11 +3,6 @@ import 'package:quizly_app/auth/auth.dart';
 import 'package:get/get.dart';
 import 'package:quizly_app/pages/choose_nick_page.dart';
 
-
-
-
-
-
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
 

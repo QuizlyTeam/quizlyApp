@@ -21,39 +21,34 @@ class _NicknamePageState extends State<NicknamePage> {
         backgroundColor: Colors.cyan,
       ),
       body: Container(
-      padding: EdgeInsets.symmetric(vertical: 20 * x, horizontal: 50 * y),
-
-      child: Column(
-      children: [
-      SizedBox(
-      height: 20 * y,
+        padding: EdgeInsets.symmetric(vertical: 20 * x, horizontal: 50 * y),
+        child: Column(children: [
+          SizedBox(
+            height: 20 * y,
+          ),
+          TextFormField(
+            decoration: InputDecoration(
+                enabledBorder: UnderlineInputBorder(
+                    borderSide:
+                        BorderSide(width: 3, color: Colors.grey.shade500))),
+            onChanged: (val) {
+              setState(() {
+                nickname = val;
+              });
+            },
+          ),
+          ElevatedButton(
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.cyan),
+              onPressed: () {
+                var a = createUser(nickname);
+                if (a != null) Get.to(() => const MenuPage());
+              },
+              child: const Text(
+                "Confirm nickname",
+                style: TextStyle(color: Colors.white),
+              ))
+        ]),
       ),
-      TextFormField(
-      decoration: InputDecoration(
-      enabledBorder: UnderlineInputBorder(
-      borderSide: BorderSide(
-      width: 3, color: Colors.grey.shade500))),
-
-    onChanged: (val) {
-    setState(() {
-      nickname = val;
-    });
-    },
-      ),
-        ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.cyan),
-            onPressed: ()  {
-               var a = createUser(nickname);
-               if(a != null)Get.to(()=>const MenuPage());
-                },
-            child: const Text(
-              "Confirm nickname",
-              style: TextStyle(color: Colors.white),
-            ))
-        ]
-      ),
-    ),
     );
   }
 }

@@ -1,5 +1,4 @@
-
-class UserToApi{
+class UserToApi {
   late String uid;
   final String nickname;
   late String picture;
@@ -9,11 +8,10 @@ class UserToApi{
   late String favourite_categoryy;
   // ignore: non_constant_identifier_names
   late String max_points;
-   UserToApi({required this.nickname});
-   factory UserToApi.fromJson(Map<String,dynamic> json) {
-      return UserToApi(
-       nickname: json['nickname'],
-     );
+  UserToApi({required this.nickname});
+  factory UserToApi.fromJson(Map<String, dynamic> json) {
+    return UserToApi(
+      nickname: json['nickname'],
+    );
   }
-
 }
