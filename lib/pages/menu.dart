@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:quizly_app/auth/auth.dart';
 import 'package:quizly_app/pages/game_form.dart';
 import 'package:quizly_app/widgets/header.dart';
 import 'package:get/get.dart';
 
 class MenuPage extends StatelessWidget {
-  const MenuPage({super.key});
+  final String nick;
+
+  const MenuPage({super.key, required this.nick});
 
   Widget answerButton(String text, double x, double y) {
     return ElevatedButton(
-      onPressed: () {
-        if (text == 'Play!') Get.to(GameForm());
+      onPressed: () async {
+        var data = await getUser();
+        if (text == 'Play!') {
+          Get.to(GameForm(nick: nick, uID: data['uid'],));
+        }
       },
       style: ElevatedButton.styleFrom(
           backgroundColor: Colors.cyan,
@@ -113,17 +119,18 @@ class MenuPage extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: SafeArea(
           child: Scaffold(
-        backgroundColor: Colors.grey[300],
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(70 * y),
-          child: Header(
-            leftIcon: 'assets/images/profile.png',
-            rightIcon: 'assets/images/settings.png',
-            y: y,
-          ),
-        ),
-        body: bodyOfQuestion('Guest314159', x, y),
-      )),
+            backgroundColor: Colors.grey[300],
+            appBar: PreferredSize(
+              preferredSize: Size.fromHeight(70 * y),
+              child: Header(
+                leftIcon: 'assets/images/profile.png',
+                rightIcon: 'assets/images/settings.png',
+                y: y,
+              ),
+            ),
+            body: bodyOfQuestion(nick, x, y),
+        )
+      ),
     );
   }
 }

@@ -45,7 +45,7 @@ class _NicknamePageState extends State<NicknamePage> {
                 backgroundColor: Colors.cyan),
             onPressed: ()  {
                var a = createUser(nickname);
-               if(a != null)Get.to(()=>const MenuPage());
+               if(a != null)Get.to(()=> MenuPage(nick: nickname,));
                 },
             child: const Text(
               "Confirm nickname",

@@ -9,12 +9,13 @@ import 'dart:math';
 
 // ignore: must_be_immutable
 class GameForm extends StatefulWidget {
-  GameForm({super.key}) {
-    nick = "guest${rng.nextInt(10000)}";
+  GameForm({super.key, this.nick = "", required this.uID}) {
+    if(nick.isEmpty) nick = "guest${rng.nextInt(10000)}";
   }
 
   var rng = Random();
   late final String nick;
+  final String uID;
 
   @override
   State<GameForm> createState() => _GameFormState();
@@ -369,6 +370,7 @@ class _GameFormState extends State<GameForm> {
                 numOfQuestions: _numberOfQuestions.toInt(),
                 difficulty: arr[_selectedDifficulty],
                 nick: widget.nick,
+                uID: widget.uID,
               ))
             ,
             style: ElevatedButton.styleFrom(
@@ -443,7 +445,7 @@ class _GameFormState extends State<GameForm> {
          ),
         ElevatedButton(
             onPressed: () =>
-              Get.to(BetweenPage(nick: widget.nick, roomID: room,)),
+              Get.to(BetweenPage(nick: widget.nick, roomID: room, uID: widget.uID,)),
             style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.cyan,
                 fixedSize: Size(280 * x, 96 * y),

@@ -30,7 +30,7 @@ class BetweenPage extends StatefulWidget {
         this.roomID = "",
         required this.nick,
         this.quizID = "",
-        this.uID = "",
+        required this.uID,
       });
 
   @override
