@@ -13,7 +13,6 @@ import '../classes/user.dart';
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  //sign in anon
   signInAnon() async {
     try {
       final userCredential = await FirebaseAuth.instance.signInAnonymously();
@@ -34,21 +33,17 @@ class AuthService {
   }
 
   signInWithGoogle() async {
-    // Trigger the authentication flow
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
-      // Obtain the auth details from the request
       final GoogleSignInAuthentication? googleAuth =
           await googleUser?.authentication;
 
-      // Create a new credential
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth?.accessToken,
         idToken: googleAuth?.idToken,
       );
 
-      // Once signed in, return the UserCredential
       return await FirebaseAuth.instance.signInWithCredential(credential);
     } catch (e) {
       return null;
@@ -97,19 +92,25 @@ class AuthService {
 
   signInWithFacebook() async {
     try {
-      // Trigger the sign-in flow
       final LoginResult loginResult = await FacebookAuth.instance.login();
 
-      // Create a credential from the access token
       final OAuthCredential facebookAuthCredential =
           FacebookAuthProvider.credential(loginResult.accessToken!.token);
 
-      // Once signed in, return the UserCredential
       return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
     } catch (e) {
       return null;
     }
   }
+  refreshSession() async{
+    User currentUser = _auth.currentUser!;
+    String? refreshToken = currentUser.refreshToken;
+    var credential = GoogleAuthProvider.credential(accessToken: refreshToken);
+    _auth.signInWithCredential(credential).then((user){
+
+    });
+  }
+
 }
 
 createUser(String nickname) async {
@@ -130,7 +131,6 @@ createUser(String nickname) async {
   if (response.statusCode == 201) {
     return UserToApi.fromJson(jsonDecode(response.body));
   } else {
-    //  print(response.body);
     return null;
   }
 }
@@ -185,3 +185,66 @@ createQuiz(String title, String category, String difficulty, List<String> tags,
     return null;
   }
 }
+
+getQuizzesID()async {
+  String token = "";
+  await FirebaseAuth.instance.currentUser!
+      .getIdToken(true)
+      .then((String result) {
+    token = result;
+  });
+  final response = await http.get(
+    Uri.parse('http://10.0.2.2:8000/v1/quizzes/'),
+    headers: {
+      "Authorization": 'Bearer $token',
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+  );
+    if(response.statusCode == 200){
+    //  print(response.body);
+      var json = jsonDecode(response.body);
+      Map myMap = json;
+      List quizzesID = myMap.keys.toList();
+      return quizzesID;
+    }
+}
+getQuizById(String quizID) async{
+  String token = "";
+  await FirebaseAuth.instance.currentUser!
+      .getIdToken(true)
+      .then((String result) {
+    token = result;
+  });
+  final response = await http.get(
+    Uri.parse('http://10.0.2.2:8000/v1/quizzes/$quizID'),
+    headers: {
+      "Authorization": 'Bearer $token',
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+  );
+  if(response.statusCode == 200) {
+    var json = jsonDecode(response.body);
+    return json;
+  }
+}
+deleteQuizByID(String quizID)async {
+  String token = "";
+  await FirebaseAuth.instance.currentUser!
+      .getIdToken(true)
+      .then((String result) {
+    token = result;
+  });
+  final response = await http.delete(
+    Uri.parse('http://10.0.2.2:8000/v1/quizzes/$quizID'),
+    headers: {
+      "Authorization": 'Bearer $token',
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+  );
+  if(response.statusCode == 204) {
+    return true;
+  }else{
+    return false;
+  }
+}
+

@@ -173,7 +173,11 @@ class _LoginPageState extends State<LoginPage> {
                               var result =
                                   await auth_.loginUser(email, password);
                               if (result != null) {
-                                Get.to(() => const MenuPage());
+                                      if (await getUser() == null) {
+                                      Get.to(() => const NicknamePage());
+                                      } else {
+                                        Get.to(() => const MenuPage());
+                                      }
                               }
                             }
                           },

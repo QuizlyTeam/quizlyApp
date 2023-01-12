@@ -12,6 +12,8 @@ class NicknamePage extends StatefulWidget {
 
 class _NicknamePageState extends State<NicknamePage> {
   String nickname = "";
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     double x = MediaQuery.of(context).size.width / 411.42857142857144;
@@ -22,12 +24,16 @@ class _NicknamePageState extends State<NicknamePage> {
       ),
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 20 * x, horizontal: 50 * y),
-        child: Column(children: [
+        child:Form(
+    key: _formKey,
+    child: Column(children: [
           SizedBox(
             height: 20 * y,
           ),
           TextFormField(
+            validator: (value) => RegExp(r'^[a-zA-Z0-9_]+$').hasMatch(value!) ? null : "Enter a valid nickname",
             decoration: InputDecoration(
+              hintText: "Nickname",
                 enabledBorder: UnderlineInputBorder(
                     borderSide:
                         BorderSide(width: 3, color: Colors.grey.shade500))),
@@ -40,15 +46,18 @@ class _NicknamePageState extends State<NicknamePage> {
           ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: Colors.cyan),
               onPressed: () {
-                var a = createUser(nickname);
-                if (a != null) Get.to(() => const MenuPage());
+                if(_formKey.currentState!.validate()){
+                  var a = createUser(nickname);
+                  if (a != null) Get.to(() => const MenuPage());
+                }
+
               },
               child: const Text(
                 "Confirm nickname",
                 style: TextStyle(color: Colors.white),
               ))
         ]),
-      ),
+      )),
     );
   }
 }
