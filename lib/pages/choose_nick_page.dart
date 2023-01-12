@@ -45,10 +45,13 @@ class _NicknamePageState extends State<NicknamePage> {
           ),
           ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: Colors.cyan),
-              onPressed: () {
+              onPressed: () async {
                 if(_formKey.currentState!.validate()){
                   var a = createUser(nickname);
-                  if (a != null) Get.to(() => const MenuPage());
+                  if (a != null){
+                    var data = await getUser();
+                    Get.to(() =>  MenuPage(nick: data["nickname"]));
+                  }
                 }
 
               },
