@@ -30,7 +30,7 @@ class Score extends StatelessWidget {
 
     ElevatedButton returnToMenu = ElevatedButton(
         onPressed: () {
-          Get.to(const MenuPage());
+          Get.to(MenuPage(nick: player,));
         },
         style: ElevatedButton.styleFrom(
             backgroundColor: Colors.cyan,
