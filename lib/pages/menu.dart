@@ -14,10 +14,16 @@ class MenuPage extends StatelessWidget {
     return ElevatedButton(
       onPressed: () async {
         var data = await getUser();
-        if (text == 'Play!') {
-          Get.to(GameForm(nick: nick, uID: data['uid'],));
+        if (data != null) {
+          if (text == 'Play!') {
+            Get.to(GameForm(nick: nick, uID: data['uid'],));
+          } else {
+            Get.to(const CreateQuizForm());
+          }
         } else {
-          Get.to(const CreateQuizForm());
+          if (text == 'Play!') {
+            Get.to(GameForm(nick: nick,));
+          }
         }
       },
       style: ElevatedButton.styleFrom(

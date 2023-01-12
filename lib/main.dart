@@ -11,7 +11,13 @@ Future<void> main() async {
   await Firebase.initializeApp();
   if (FirebaseAuth.instance.currentUser != null) {
     var data = await getUser();
-    runApp(GetMaterialApp(home: MenuPage(nick: data['nickname'],)));
+    if (data != null) {
+      runApp(GetMaterialApp(home: MenuPage(nick: data['nickname'],)));
+    } else {
+      int end = (DateTime.now().millisecondsSinceEpoch/1000).round();
+      String nickname = "guest$end";
+      runApp(GetMaterialApp(home: MenuPage(nick: nickname,)));
+    }
   } else {
     runApp(const GetMaterialApp(home: LoginPage()));
   }
