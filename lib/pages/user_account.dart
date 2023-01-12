@@ -9,7 +9,7 @@ class UserAccount extends StatelessWidget {
       this.x = 1,
       this.y = 1})
       : super(key: key) {
-      if (values["lose"] != 0) {
+      if (values["lose"] != 0 || values['win'] != 0) {
         _progress = values["win"] / (values["win"] + values["lose"]);
       } else {
         _progress = 0.5;
