@@ -18,7 +18,7 @@ class Header extends StatelessWidget {
     required this.y,
   });
 
-  Widget header() {
+  Widget header(context) {
     return Material(
       color: Colors.cyan,
       shape: const RoundedRectangleBorder(
@@ -37,9 +37,23 @@ class Header extends StatelessWidget {
             onPressed: () async {
               if (leftIcon == 'assets/images/profile.png') {
                 var data = await getUser();
-                Get.to(UserAccount(
-                  values: data,
-                ));
+                if (data != null) {
+                  Get.to(UserAccount(values: data,));
+                } else {
+                  showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                      title: const Text('Guest detected'),
+                      content: const Text('Log in first to see your stats!'),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () => Navigator.pop(context, 'OK'),
+                          child: const Text('OK'),
+                        ),
+                      ],
+                    ),
+                  );
+                }
               } else if (leftIcon == 'assets/images/back.png') {
                 Get.back();
               }
@@ -70,6 +84,6 @@ class Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return header();
+    return header(context);
   }
 }
