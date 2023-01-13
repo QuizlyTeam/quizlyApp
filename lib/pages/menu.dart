@@ -5,6 +5,8 @@ import 'package:quizly_app/pages/game_form.dart';
 import 'package:quizly_app/widgets/header.dart';
 import 'package:get/get.dart';
 
+import '../classes/own_question.dart';
+
 class MenuPage extends StatelessWidget {
   final String nick;
 
@@ -18,7 +20,7 @@ class MenuPage extends StatelessWidget {
           if (text == 'Play!') {
             Get.to(GameForm(nick: nick, uID: data['uid'],));
           } else {
-            Get.to(const CreateQuizForm());
+            Get.to(const CreateQuizForm(), arguments: ["", "Category", "easy", <String>[], <OwnQuestion>[]]);
           }
         } else {
           if (text == 'Play!') {
