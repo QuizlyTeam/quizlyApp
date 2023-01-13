@@ -8,29 +8,29 @@ class Score extends StatelessWidget {
   final String player;
   const Score({super.key, required this.score, required this.player});
 
-  List<Widget> generateTable(double y, double x){
+  List<Widget> generateTable(double y, double x) {
     List<Widget> ans = [];
 
     Map sortedScore;
 
-    sortedScore = Map.fromEntries(
-        score.entries.toList()..sort((e1, e2) => -e1.value.compareTo(e2.value))
-    );
+    sortedScore = Map.fromEntries(score.entries.toList()
+      ..sort((e1, e2) => -e1.value.compareTo(e2.value)));
 
     sortedScore.forEach((key, value) {
       Text record = Text(
         '$key : $value',
         style: TextStyle(
-          fontWeight: key == player ? FontWeight.bold : FontWeight.normal,
-          fontSize: 46 * y
-        ),
+            fontWeight: key == player ? FontWeight.bold : FontWeight.normal,
+            fontSize: 46 * y),
       );
       ans.add(record);
     });
 
     ElevatedButton returnToMenu = ElevatedButton(
         onPressed: () {
-          Get.to(MenuPage(nick: player,));
+          Get.to(MenuPage(
+            nick: player,
+          ));
         },
         style: ElevatedButton.styleFrom(
             backgroundColor: Colors.cyan,
@@ -41,8 +41,7 @@ class Score extends StatelessWidget {
         child: Text(
           'Return to menu',
           style: TextStyle(fontSize: 30 * y, color: Colors.white),
-        )
-    );
+        ));
 
     ans.add(returnToMenu);
 
@@ -58,27 +57,26 @@ class Score extends StatelessWidget {
         onWillPop: () async {
           return false;
         },
-        child:MaterialApp(
+        child: MaterialApp(
           debugShowCheckedModeBanner: false,
           home: SafeArea(
               child: Scaffold(
-                backgroundColor: Colors.grey[300],
-                appBar: PreferredSize(
-                  preferredSize: const Size.fromHeight(70),
-                  child: Header(
-                    leftIcon: 'assets/images/profile.png',
-                    rightIcon: 'assets/images/settings.png',
-                    y: y,
-                  ),
-                ),
-                body: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: generateTable(y, x),
-                  ),
-                ),
-              )
-          ),
+            backgroundColor: Colors.grey[300],
+            appBar: PreferredSize(
+              preferredSize: const Size.fromHeight(70),
+              child: Header(
+                leftIcon: 'assets/images/profile.png',
+                rightIcon: 'assets/images/settings.png',
+                y: y,
+              ),
+            ),
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: generateTable(y, x),
+              ),
+            ),
+          )),
         ));
   }
 }

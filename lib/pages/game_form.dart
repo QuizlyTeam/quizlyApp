@@ -37,9 +37,9 @@ class _GameFormState extends State<GameForm> {
   List<OwnQuiz> _quizzes = [];
   late Future<List<String>> _futureQuizzesID;
   List<String> _quizzesID = [];
-  
+
   @override
-  void initState(){
+  void initState() {
     _futureQuizzesID = getQuizzesID();
     super.initState();
   }
@@ -59,14 +59,21 @@ class _GameFormState extends State<GameForm> {
   }
 
   void _newQuiz() async {
-    OwnQuiz quiz = await Get.to(() => const CreateQuizForm(), arguments: ["","Category","easy",<String> [], <OwnQuestion>[]]);
+    OwnQuiz quiz = await Get.to(() => const CreateQuizForm(),
+        arguments: ["", "Category", "easy", <String>[], <OwnQuestion>[]]);
     setState(() {
       _quizzes.add(quiz);
     });
   }
 
   void _editQuiz(OwnQuiz quizData) async {
-    OwnQuiz quiz = await Get.to(() => const CreateQuizForm(), arguments: [quizData.title,quizData.category,quizData.difficulty,quizData.tags,quizData.questions]);
+    OwnQuiz quiz = await Get.to(() => const CreateQuizForm(), arguments: [
+      quizData.title,
+      quizData.category,
+      quizData.difficulty,
+      quizData.tags,
+      quizData.questions
+    ]);
     setState(() {
       int indeks = _quizzes.indexOf(quizData);
       _quizzes[indeks] = quiz;
@@ -388,17 +395,15 @@ class _GameFormState extends State<GameForm> {
         Play button
          */
         ElevatedButton(
-            onPressed: () =>
-              Get.to(BetweenPage(
-                category: _category,
-                tags: const [],
-                maxPlayers: _currentSliderValue.toInt(),
-                numOfQuestions: _numberOfQuestions.toInt(),
-                difficulty: arr[_selectedDifficulty],
-                nick: widget.nick,
-                uID: widget.uID,
-              ))
-            ,
+            onPressed: () => Get.to(BetweenPage(
+                  category: _category,
+                  tags: const [],
+                  maxPlayers: _currentSliderValue.toInt(),
+                  numOfQuestions: _numberOfQuestions.toInt(),
+                  difficulty: arr[_selectedDifficulty],
+                  nick: widget.nick,
+                  uID: widget.uID,
+                )),
             style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.cyan,
                 fixedSize: Size(280 * x, 96 * y),
@@ -417,11 +422,11 @@ class _GameFormState extends State<GameForm> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-         Stack(
-           children: <Widget>[
+        Stack(
+          children: <Widget>[
             Positioned(
               left: 12 * x,
-              child:  Container(
+              child: Container(
                 width: 390 * x,
                 height: 208 * y,
                 decoration: const BoxDecoration(
@@ -431,47 +436,51 @@ class _GameFormState extends State<GameForm> {
                       bottomLeft: Radius.circular(15),
                       bottomRight: Radius.circular(15),
                     ),
-                    color: Colors.white
-                ),
+                    color: Colors.white),
               ),
             ),
-             Column(
-               mainAxisAlignment: MainAxisAlignment.center,
-               children: [
-                 Container(
-                   height: 20 * y,
-                 ),
-                 Text(
-                   'Enter room ID:',
-                   style: TextStyle(
-                     fontSize: 36 * y,
-                   ),
-                 ),
-                 Container(
-                   height: 10 * y,
-                 ),
-                 SizedBox(
-                   width: 390 * y,
-                   child: TextField(
-                     onChanged: (value){room = value;},
-                     obscureText: false,
-                     decoration: const InputDecoration(
-                       border: OutlineInputBorder(),
-                       labelText: 'ID',
-                     ),
-                     style: TextStyle(fontSize: 30 * y),
-                   ),
-                 ),
-                 Container(
-                   height: 80 * y,
-                 )
-               ],
-             ),
-           ],
-         ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  height: 20 * y,
+                ),
+                Text(
+                  'Enter room ID:',
+                  style: TextStyle(
+                    fontSize: 36 * y,
+                  ),
+                ),
+                Container(
+                  height: 10 * y,
+                ),
+                SizedBox(
+                  width: 390 * y,
+                  child: TextField(
+                    onChanged: (value) {
+                      room = value;
+                    },
+                    obscureText: false,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'ID',
+                    ),
+                    style: TextStyle(fontSize: 30 * y),
+                  ),
+                ),
+                Container(
+                  height: 80 * y,
+                )
+              ],
+            ),
+          ],
+        ),
         ElevatedButton(
-            onPressed: () =>
-              Get.to(BetweenPage(nick: widget.nick, roomID: room, uID: widget.uID,)),
+            onPressed: () => Get.to(BetweenPage(
+                  nick: widget.nick,
+                  roomID: room,
+                  uID: widget.uID,
+                )),
             style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.cyan,
                 fixedSize: Size(280 * x, 96 * y),
@@ -481,19 +490,25 @@ class _GameFormState extends State<GameForm> {
             child: Text(
               'Play!',
               style: TextStyle(fontSize: 30 * y, color: Colors.white),
-            )
-        )
+            ))
       ],
     );
   }
 
-  Widget quizListItemBar({required double x, required double y, required String id}) {
+  Widget quizListItemBar(
+      {required double x, required double y, required String id}) {
     Future<OwnQuiz> futureQuiz = getQuizById(id);
-    OwnQuiz quiz = OwnQuiz(title:'', category: '', difficulty: '', tags: [], questions: [], );
+    OwnQuiz quiz = OwnQuiz(
+      title: '',
+      category: '',
+      difficulty: '',
+      tags: [],
+      questions: [],
+    );
     return FutureBuilder<OwnQuiz>(
       future: futureQuiz,
-      builder: (context,snapshot){
-        if(snapshot.hasData){
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
           quiz = snapshot.data!;
         }
 
@@ -533,7 +548,9 @@ class _GameFormState extends State<GameForm> {
                                 width: 10 * x,
                               ),
                               Text(
-                                quiz.title.length < 20 ? quiz.title : "${quiz.title.substring(0,17)}...",
+                                quiz.title.length < 20
+                                    ? quiz.title
+                                    : "${quiz.title.substring(0, 17)}...",
                                 style: TextStyle(
                                     fontSize: 20 * y, color: Colors.black),
                               ),
@@ -542,72 +559,66 @@ class _GameFormState extends State<GameForm> {
                       SizedBox(width: 10 * x),
                       IconButton(
                           onPressed: () => {
-                            setState((){
-                              _editQuiz(quiz);
-                            })
-                          },
+                                setState(() {
+                                  _editQuiz(quiz);
+                                })
+                              },
                           icon: const Icon(Icons.edit_outlined),
-                          iconSize: 45*y,
+                          iconSize: 45 * y,
                           color: Colors.white),
                       IconButton(
                           onPressed: () => {
-                            setState((){
-                              _quizzesID.remove(id);
-                              deleteQuizByID(id);
-                            })
-                          },
+                                setState(() {
+                                  _quizzesID.remove(id);
+                                  deleteQuizByID(id);
+                                })
+                              },
                           icon: const Icon(Icons.delete_forever_outlined),
-                          iconSize: 45*y,
+                          iconSize: 45 * y,
                           color: Colors.white)
                     ],
                   ))),
         );
       },
     );
-
   }
 
   createdQuizzes(double x, double y) {
-
-
     return FutureBuilder<List<String>>(
-      future: _futureQuizzesID,
-      builder: (context,snapshot){
-        var childrenQuestions = <Widget>[];
-        if (snapshot.hasData) {
-          _quizzesID = snapshot.data!;
-          for (int i = 0; i < _quizzesID.length; i++) {
-            childrenQuestions.add(
-                quizListItemBar(x: x, y: y, id:_quizzesID[i]));
+        future: _futureQuizzesID,
+        builder: (context, snapshot) {
+          var childrenQuestions = <Widget>[];
+          if (snapshot.hasData) {
+            _quizzesID = snapshot.data!;
+            for (int i = 0; i < _quizzesID.length; i++) {
+              childrenQuestions
+                  .add(quizListItemBar(x: x, y: y, id: _quizzesID[i]));
+            }
           }
-        }
 
-        return Column(
-          children: [
-            SizedBox(
-                height: 550 * y,
-                child: SingleChildScrollView(
-                    child: Column(children: childrenQuestions
-                    ))),
-            ElevatedButton(
-                onPressed: () {
-                  _newQuiz();
-                },
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.cyan,
-                    fixedSize: Size(280 * x, 96 * y),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(32.0*y),
-                    )),
-                child: Text(
-                  'Add a quiz',
-                  style: TextStyle(fontSize: 30 * y, color: Colors.white),
-                ))
-          ],
-        );
-      }
-    );
-
+          return Column(
+            children: [
+              SizedBox(
+                  height: 550 * y,
+                  child: SingleChildScrollView(
+                      child: Column(children: childrenQuestions))),
+              ElevatedButton(
+                  onPressed: () {
+                    _newQuiz();
+                  },
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.cyan,
+                      fixedSize: Size(280 * x, 96 * y),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(32.0 * y),
+                      )),
+                  child: Text(
+                    'Add a quiz',
+                    style: TextStyle(fontSize: 30 * y, color: Colors.white),
+                  ))
+            ],
+          );
+        });
   }
 
   @override
@@ -619,40 +630,39 @@ class _GameFormState extends State<GameForm> {
       debugShowCheckedModeBanner: false,
       home: SafeArea(
           child: Scaffold(
-            backgroundColor: Colors.grey[300],
-            appBar: PreferredSize(
-              preferredSize: Size.fromHeight(80 * y),
-              child: Header(
-                    leftIcon: 'assets/images/profile.png',
-                    rightIcon: 'assets/images/settings.png',
-                    y: y,
-                  ),
-            ),
-            body: DefaultTabController(
-              length: 3,
-              child: Column(
-                children: [
-                  TabBar(
-                    indicatorColor: Colors.cyan,
-                    labelStyle: TextStyle(
-                      fontSize: 20 * y,
-                      fontWeight: FontWeight.bold,
+              backgroundColor: Colors.grey[300],
+              appBar: PreferredSize(
+                preferredSize: Size.fromHeight(80 * y),
+                child: Header(
+                  leftIcon: 'assets/images/profile.png',
+                  rightIcon: 'assets/images/settings.png',
+                  y: y,
+                ),
+              ),
+              body: DefaultTabController(
+                length: 3,
+                child: Column(
+                  children: [
+                    TabBar(
+                      indicatorColor: Colors.cyan,
+                      labelStyle: TextStyle(
+                        fontSize: 20 * y,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      tabs: const [
+                        Tab(text: 'Custom'),
+                        Tab(text: 'Enter code'),
+                        Tab(text: 'My quizzes'),
+                      ],
                     ),
-                    tabs: const [
-                      Tab(text: 'Custom'),
-                      Tab(text: 'Enter code'),
-                      Tab(text: 'My quizzes'),
-                    ],
-                  ),
-                  Expanded(
-                    child: TabBarView(
+                    Expanded(
+                        child: TabBarView(
                       children: [
-                        customQuiz(x,y),
+                        customQuiz(x, y),
                         enterCode(x, y),
                         createdQuizzes(x, y),
                       ],
-                    )
-                  ),
+                    )),
                   ],
                 ),
               ))),

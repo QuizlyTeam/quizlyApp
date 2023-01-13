@@ -5,12 +5,9 @@ import 'package:quizly_app/widgets/header.dart';
 import 'package:quizly_app/pages/category_page.dart';
 import 'package:quizly_app/pages/tag_page.dart';
 import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
-import 'package:quizly_app/widgets/list_item_bar.dart';
 import 'package:quizly_app/pages/create_question_page.dart';
 
 import '../classes/own_question.dart';
-
-
 
 class CreateQuizForm extends StatefulWidget {
   const CreateQuizForm({super.key});
@@ -38,7 +35,6 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
     super.initState();
   }
 
-
   void _newCategory() async {
     _category = await Get.to(const CategoryPage());
     setState(() {
@@ -54,21 +50,32 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
   }
 
   void _newQuestion() async {
-    OwnQuestion question = await Get.to(() => const CreateQuestionForm(), arguments: ["","",["","",""]]);
+    OwnQuestion question =
+        await Get.to(() => const CreateQuestionForm(), arguments: [
+      "",
+      "",
+      ["", "", ""]
+    ]);
     setState(() {
       _questions.add(question);
     });
   }
 
   void _editQuestion(OwnQuestion questionData) async {
-    OwnQuestion question = await Get.to(() => const CreateQuestionForm(), arguments: [questionData.question,questionData.correct_answer,questionData.inCorrectanswers]);
+    OwnQuestion question =
+        await Get.to(() => const CreateQuestionForm(), arguments: [
+      questionData.question,
+      questionData.correct_answer,
+      questionData.inCorrectanswers
+    ]);
     setState(() {
       int indeks = _questions.indexOf(questionData);
       _questions[indeks] = question;
     });
   }
 
-  Widget questionListItemBar({required double x, required double y, required OwnQuestion question}) {
+  Widget questionListItemBar(
+      {required double x, required double y, required OwnQuestion question}) {
     return SizedBox(
       width: 390 * x,
       height: 100 * y,
@@ -105,7 +112,9 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
                             width: 10 * x,
                           ),
                           Text(
-                            (question.question?.length ?? 0)  < 20 ? "${question.question}" : "${question.question?.substring(0,17)}...",
+                            (question.question?.length ?? 0) < 20
+                                ? "${question.question}"
+                                : "${question.question?.substring(0, 17)}...",
                             style: TextStyle(
                                 fontSize: 20 * y, color: Colors.black),
                           ),
@@ -114,21 +123,21 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
                   SizedBox(width: 10 * x),
                   IconButton(
                       onPressed: () => {
-                        setState((){
-                          _editQuestion(question);
-                        })
-                      },
+                            setState(() {
+                              _editQuestion(question);
+                            })
+                          },
                       icon: const Icon(Icons.edit_outlined),
-                      iconSize: 45*y,
+                      iconSize: 45 * y,
                       color: Colors.white),
                   IconButton(
                       onPressed: () => {
-                        setState((){
-                          _questions.remove(question);
-                        })
-                      },
+                            setState(() {
+                              _questions.remove(question);
+                            })
+                          },
                       icon: const Icon(Icons.delete_forever_outlined),
-                      iconSize: 45*y,
+                      iconSize: 45 * y,
                       color: Colors.white)
                 ],
               ))),
@@ -264,7 +273,7 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
                         backgroundColor: Colors.cyan,
                         fixedSize: Size(100 * x, 50 * y),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0*x),
+                          borderRadius: BorderRadius.circular(15.0 * x),
                         )),
                     child: Text(
                       'Pick',
@@ -309,7 +318,7 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
                         backgroundColor: Colors.cyan,
                         fixedSize: Size(100 * x, 50 * y),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0*x),
+                          borderRadius: BorderRadius.circular(15.0 * x),
                         )),
                     child: Text(
                       'Pick',
@@ -388,14 +397,16 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
          */
         ElevatedButton(
             onPressed: () {
-                createQuiz(_title, _category, arr[_selectedDifficulty], _tags, _questions);
-                Get.back(/*result: [_title,_category,arr[_selectedDifficulty],_tags,_questions]*/);
+              createQuiz(_title, _category, arr[_selectedDifficulty], _tags,
+                  _questions);
+              Get.back(
+                  /*result: [_title,_category,arr[_selectedDifficulty],_tags,_questions]*/);
             },
             style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.cyan,
                 fixedSize: Size(280 * x, 80 * y),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(32.0*y),
+                  borderRadius: BorderRadius.circular(32.0 * y),
                 )),
             child: Text(
               'Create!',
@@ -407,8 +418,9 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
 
   createdQuestions(double x, double y) {
     var childrenQuestions = <Widget>[];
-    for(int i = 0; i < _questions.length; i++){
-      childrenQuestions.add(questionListItemBar(x: x, y: y, question: _questions[i]));
+    for (int i = 0; i < _questions.length; i++) {
+      childrenQuestions
+          .add(questionListItemBar(x: x, y: y, question: _questions[i]));
     }
 
     return Column(
@@ -416,8 +428,7 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
         SizedBox(
             height: 550 * y,
             child: SingleChildScrollView(
-                child: Column(children: childrenQuestions
-            ))),
+                child: Column(children: childrenQuestions))),
         ElevatedButton(
             onPressed: () {
               _newQuestion();
@@ -426,7 +437,7 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
                 backgroundColor: Colors.cyan,
                 fixedSize: Size(280 * x, 96 * y),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(32.0*y),
+                  borderRadius: BorderRadius.circular(32.0 * y),
                 )),
             child: Text(
               'Add a question',
@@ -455,8 +466,7 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
                   y: y,
                 ),
               ),
-              body:
-              DefaultTabController(
+              body: DefaultTabController(
                 length: 2,
                 child: Column(
                   children: [

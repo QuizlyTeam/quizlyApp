@@ -102,15 +102,13 @@ class AuthService {
       return null;
     }
   }
-  refreshSession() async{
+
+  refreshSession() async {
     User currentUser = _auth.currentUser!;
     String? refreshToken = currentUser.refreshToken;
     var credential = GoogleAuthProvider.credential(accessToken: refreshToken);
-    _auth.signInWithCredential(credential).then((user){
-
-    });
+    _auth.signInWithCredential(credential).then((user) {});
   }
-
 }
 
 createUser(String nickname) async {
@@ -187,7 +185,7 @@ createQuiz(String title, String category, String difficulty, List<String> tags,
   }
 }
 
-Future<List<String>> getQuizzesID()async {
+Future<List<String>> getQuizzesID() async {
   String token = "";
   await FirebaseAuth.instance.currentUser!
       .getIdToken(true)
@@ -201,21 +199,21 @@ Future<List<String>> getQuizzesID()async {
       'Content-Type': 'application/json; charset=UTF-8',
     },
   );
-    if(response.statusCode == 200){
+  if (response.statusCode == 200) {
     //  print(response.body);
-      var json = jsonDecode(response.body);
-      Map myMap = json;
-      List<String> quizzesID = [];
-      for(int i = 0; i < myMap.keys.length; i++){
-        quizzesID.add(myMap.keys.elementAt(i).toString());
-      }
-      return quizzesID;
+    var json = jsonDecode(response.body);
+    Map myMap = json;
+    List<String> quizzesID = [];
+    for (int i = 0; i < myMap.keys.length; i++) {
+      quizzesID.add(myMap.keys.elementAt(i).toString());
     }
-    else{
-      throw Exception("Failed to fetch quizid's");
-    }
+    return quizzesID;
+  } else {
+    throw Exception("Failed to fetch quizid's");
+  }
 }
-Future<OwnQuiz> getQuizById(String quizID) async{
+
+Future<OwnQuiz> getQuizById(String quizID) async {
   String token = "";
   await FirebaseAuth.instance.currentUser!
       .getIdToken(true)
@@ -229,35 +227,43 @@ Future<OwnQuiz> getQuizById(String quizID) async{
       'Content-Type': 'application/json; charset=UTF-8',
     },
   );
-  if(response.statusCode == 200) {
+  if (response.statusCode == 200) {
     var json = jsonDecode(response.body);
-    
+
     List tagsjson = json['tags'];
     List<String> tags2 = [];
 
     List questionsjson = json['questions'];
     List<OwnQuestion> questions = [];
 
-    for(int i = 0; i < tagsjson.length; i++) {
+    for (int i = 0; i < tagsjson.length; i++) {
       tags2.add(tagsjson[i]);
     }
-    
-    for(int i = 0; i < questionsjson.length; i++){
+
+    for (int i = 0; i < questionsjson.length; i++) {
       List incorrectjson = questionsjson[i]['incorrect_answers'];
       List<String> incorrect = [];
-      for(int j = 0; j < incorrectjson.length;j++){
+      for (int j = 0; j < incorrectjson.length; j++) {
         incorrect.add(incorrectjson[i]);
       }
-      questions.add(OwnQuestion(question: questionsjson[i]['question'],correct_answer: questionsjson[i]['correct_answer'],inCorrectanswers: incorrect));
+      questions.add(OwnQuestion(
+          question: questionsjson[i]['question'],
+          correct_answer: questionsjson[i]['correct_answer'],
+          inCorrectanswers: incorrect));
     }
 
-    return OwnQuiz(title: json['title'], category: json['category'], difficulty: json['difficulty'], tags: tags2, questions: questions);
-  }
-  else{
+    return OwnQuiz(
+        title: json['title'],
+        category: json['category'],
+        difficulty: json['difficulty'],
+        tags: tags2,
+        questions: questions);
+  } else {
     throw Exception("Faild to fetch quiz from id");
   }
 }
-deleteQuizByID(String quizID)async {
+
+deleteQuizByID(String quizID) async {
   String token = "";
   await FirebaseAuth.instance.currentUser!
       .getIdToken(true)
@@ -271,10 +277,9 @@ deleteQuizByID(String quizID)async {
       'Content-Type': 'application/json; charset=UTF-8',
     },
   );
-  if(response.statusCode == 204) {
+  if (response.statusCode == 204) {
     return true;
-  }else{
+  } else {
     return false;
   }
 }
-

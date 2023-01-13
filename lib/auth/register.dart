@@ -37,7 +37,7 @@ class _RegisterState extends State<Register> {
                   ),
                   TextFormField(
                     decoration: InputDecoration(
-                      hintText: "Email",
+                        hintText: "Email",
                         enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
                                 width: 3, color: Colors.grey.shade500))),
@@ -58,7 +58,7 @@ class _RegisterState extends State<Register> {
                   TextFormField(
                     obscureText: true,
                     decoration: InputDecoration(
-                      hintText: "Password",
+                        hintText: "Password",
                         enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
                                 width: 3, color: Colors.grey.shade500))),

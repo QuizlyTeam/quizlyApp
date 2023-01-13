@@ -4,9 +4,12 @@ import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 import 'package:quizly_app/pages/game_form.dart';
 
 void main() {
-  testWidgets('Test buttons',
-          (WidgetTester tester) async {
-        await tester.pumpWidget(MaterialApp(home: GameForm(uID: 'xxix', nick: 'user',)));
+  testWidgets('Test buttons', (WidgetTester tester) async {
+    await tester.pumpWidget(MaterialApp(
+        home: GameForm(
+      uID: 'xxix',
+      nick: 'user',
+    )));
 
     expect(find.text('Play!'), findsOneWidget);
     expect(find.text('Difficulty level:'), findsOneWidget);
@@ -14,18 +17,24 @@ void main() {
     expect(find.byType(ElevatedButton), findsNWidgets(3));
   });
 
-  testWidgets('Test toggle tabs',
-          (WidgetTester tester) async {
-        await tester.pumpWidget(MaterialApp(home: GameForm(uID: 'xxix', nick: 'user',)));
+  testWidgets('Test toggle tabs', (WidgetTester tester) async {
+    await tester.pumpWidget(MaterialApp(
+        home: GameForm(
+      uID: 'xxix',
+      nick: 'user',
+    )));
 
-        expect(find.text('Easy'), findsOneWidget);
-        expect(find.text('Medium'), findsOneWidget);
-        expect(find.byType(FlutterToggleTab), findsNWidgets(1));
-      });
+    expect(find.text('Easy'), findsOneWidget);
+    expect(find.text('Medium'), findsOneWidget);
+    expect(find.byType(FlutterToggleTab), findsNWidgets(1));
+  });
 
-  testWidgets('Test tags and categories',
-          (WidgetTester tester) async {
-        await tester.pumpWidget(MaterialApp(home: GameForm(uID: 'xxix', nick: 'user',)));
+  testWidgets('Test tags and categories', (WidgetTester tester) async {
+    await tester.pumpWidget(MaterialApp(
+        home: GameForm(
+      uID: 'xxix',
+      nick: 'user',
+    )));
 
     expect(find.text('Category'), findsOneWidget);
     expect(find.text('0 tags selected'), findsOneWidget);
