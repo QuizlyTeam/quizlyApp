@@ -187,11 +187,13 @@ createQuiz(String title, String category, String difficulty, List<String> tags,
 
 Future<List<String>> getQuizzesID() async {
   String token = "";
-  await FirebaseAuth.instance.currentUser!
-      .getIdToken(true)
-      .then((String result) {
-    token = result;
-  });
+  if(FirebaseAuth.instance.currentUser != null){
+    await FirebaseAuth.instance.currentUser!
+        .getIdToken(true)
+        .then((String result) {
+      token = result;
+    });
+  }
   final response = await http.get(
     Uri.parse('http://10.0.2.2:8000/v1/quizzes/'),
     headers: {
