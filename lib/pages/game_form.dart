@@ -34,7 +34,6 @@ class _GameFormState extends State<GameForm> {
 
   String _category = "Category";
   List<String> _tags = [];
-  List<OwnQuiz> _quizzes = [];
   late Future<List<String>> _futureQuizzesID;
   List<String> _quizzesID = [];
 
@@ -67,17 +66,13 @@ class _GameFormState extends State<GameForm> {
   }
 
   void _editQuiz(OwnQuiz quizData) async {
-    OwnQuiz quiz = await Get.to(() => const CreateQuizForm(), arguments: [
+    /*OwnQuiz quiz = await Get.to(() => const CreateQuizForm(), arguments: [
       quizData.title,
       quizData.category,
       quizData.difficulty,
       quizData.tags,
       quizData.questions
-    ]);
-    setState(() {
-      int indeks = _quizzes.indexOf(quizData);
-      _quizzes[indeks] = quiz;
-    });
+    ]);*/
   }
 
   Column customQuiz(double x, double y) {
