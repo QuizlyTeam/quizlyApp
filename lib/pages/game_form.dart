@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:quizly_app/auth/auth.dart';
 import 'package:quizly_app/pages/between_page.dart';
 import 'package:quizly_app/widgets/header.dart';
 import 'package:quizly_app/pages/category_page.dart';
 import 'package:quizly_app/pages/tag_page.dart';
 import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 import 'dart:math';
+
+import '../classes/own_question.dart';
+import 'create_quiz_page.dart';
 
 // ignore: must_be_immutable
 class GameForm extends StatefulWidget {
@@ -30,6 +34,15 @@ class _GameFormState extends State<GameForm> {
 
   String _category = "Category";
   List<String> _tags = [];
+  List<OwnQuiz> _quizzes = [];
+  late Future<List<String>> _futureQuizzesID;
+  List<String> _quizzesID = [];
+  
+  @override
+  void initState(){
+    _futureQuizzesID = getQuizzesID();
+    super.initState();
+  }
 
   void _newCategory() async {
     _category = await Get.to(() => const CategoryPage());
@@ -42,6 +55,21 @@ class _GameFormState extends State<GameForm> {
     _tags = await Get.to(() => const TagPage());
     setState(() {
       _tags = _tags;
+    });
+  }
+
+  void _newQuiz() async {
+    OwnQuiz quiz = await Get.to(() => const CreateQuizForm(), arguments: ["","Category","easy",<String> [], <OwnQuestion>[]]);
+    setState(() {
+      _quizzes.add(quiz);
+    });
+  }
+
+  void _editQuiz(OwnQuiz quizData) async {
+    OwnQuiz quiz = await Get.to(() => const CreateQuizForm(), arguments: [quizData.title,quizData.category,quizData.difficulty,quizData.tags,quizData.questions]);
+    setState(() {
+      int indeks = _quizzes.indexOf(quizData);
+      _quizzes[indeks] = quiz;
     });
   }
 
@@ -459,8 +487,126 @@ class _GameFormState extends State<GameForm> {
     );
   }
 
-  Column userQuizzes(double x, double y) {
-    return Column();
+  Widget quizListItemBar({required double x, required double y, required String id}) {
+    Future<OwnQuiz> futureQuiz = getQuizById(id);
+    OwnQuiz quiz = OwnQuiz(title:'', category: '', difficulty: '', tags: [], questions: [], );
+    return FutureBuilder<OwnQuiz>(
+      future: futureQuiz,
+      builder: (context,snapshot){
+        if(snapshot.hasData){
+          quiz = snapshot.data!;
+        }
+
+        return SizedBox(
+          width: 390 * x,
+          height: 100 * y,
+          child: Center(
+              child: Container(
+                  width: 370 * x,
+                  height: 80 * y,
+                  decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(15),
+                        topRight: Radius.circular(15),
+                        bottomLeft: Radius.circular(15),
+                        bottomRight: Radius.circular(15),
+                      ),
+                      color: Colors.cyan),
+                  child: Row(
+                    children: [
+                      SizedBox(width: 10 * x),
+                      Container(
+                        width: 220 * x,
+                        height: 60 * y,
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(15),
+                              topRight: Radius.circular(15),
+                              bottomLeft: Radius.circular(15),
+                              bottomRight: Radius.circular(15),
+                            ),
+                            color: Colors.white),
+                        child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Row(children: [
+                              SizedBox(
+                                width: 10 * x,
+                              ),
+                              Text(
+                                quiz.title.length < 20 ? quiz.title : "${quiz.title.substring(0,17)}...",
+                                style: TextStyle(
+                                    fontSize: 20 * y, color: Colors.black),
+                              ),
+                            ])),
+                      ),
+                      SizedBox(width: 10 * x),
+                      IconButton(
+                          onPressed: () => {
+                            setState((){
+                              _editQuiz(quiz);
+                            })
+                          },
+                          icon: const Icon(Icons.edit_outlined),
+                          iconSize: 45*y,
+                          color: Colors.white),
+                      IconButton(
+                          onPressed: () => {
+                            setState((){
+                              _quizzes.remove(quiz);
+                            })
+                          },
+                          icon: const Icon(Icons.delete_forever_outlined),
+                          iconSize: 45*y,
+                          color: Colors.white)
+                    ],
+                  ))),
+        );
+      },
+    );
+
+  }
+
+  createdQuizzes(double x, double y) {
+
+
+    return FutureBuilder<List<String>>(
+      future: _futureQuizzesID,
+      builder: (context,snapshot){
+        var childrenQuestions = <Widget>[];
+        if (snapshot.hasData) {
+          _quizzesID = snapshot.data!;
+          for (int i = 0; i < _quizzesID.length; i++) {
+            childrenQuestions.add(
+                quizListItemBar(x: x, y: y, id:_quizzesID[i]));
+          }
+        }
+
+        return Column(
+          children: [
+            SizedBox(
+                height: 550 * y,
+                child: SingleChildScrollView(
+                    child: Column(children: childrenQuestions
+                    ))),
+            ElevatedButton(
+                onPressed: () {
+                  _newQuiz();
+                },
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.cyan,
+                    fixedSize: Size(280 * x, 96 * y),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(32.0*y),
+                    )),
+                child: Text(
+                  'Add a quiz',
+                  style: TextStyle(fontSize: 30 * y, color: Colors.white),
+                ))
+          ],
+        );
+      }
+    );
+
   }
 
   @override
@@ -502,7 +648,7 @@ class _GameFormState extends State<GameForm> {
                       children: [
                         customQuiz(x,y),
                         enterCode(x, y),
-                        userQuizzes(x, y),
+                        createdQuizzes(x, y),
                       ],
                     )
                   ),

@@ -10,7 +10,7 @@ import 'package:quizly_app/pages/create_question_page.dart';
 
 import '../classes/own_question.dart';
 
-List<OwnQuestion> _questions = [];
+
 
 class CreateQuizForm extends StatefulWidget {
   const CreateQuizForm({super.key});
@@ -20,16 +20,21 @@ class CreateQuizForm extends StatefulWidget {
 }
 
 class _CreateQuizFormState extends State<CreateQuizForm> {
+  var argumentData = Get.arguments;
   late String _title = "";
   int _selectedDifficulty = 0;
   var arr = ["easy", "medium", "hard"];
-  //List<Question> _questions = [];
-
+  List<OwnQuestion> _questions = [];
   String _category = "Category";
   List<String> _tags = [];
 
   @override
   void initState() {
+    _title = argumentData[0];
+    _selectedDifficulty = arr.indexOf(argumentData[2]);
+    _questions = argumentData[4];
+    _category = argumentData[1];
+    _tags = argumentData[3];
     super.initState();
   }
 
@@ -383,8 +388,8 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
          */
         ElevatedButton(
             onPressed: () {
-
                 createQuiz(_title, _category, arr[_selectedDifficulty], _tags, _questions);
+                Get.back(/*result: [_title,_category,arr[_selectedDifficulty],_tags,_questions]*/);
             },
             style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.cyan,
