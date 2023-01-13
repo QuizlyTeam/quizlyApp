@@ -187,7 +187,7 @@ createQuiz(String title, String category, String difficulty, List<String> tags,
 
 Future<List<String>> getQuizzesID() async {
   String token = "";
-  if(FirebaseAuth.instance.currentUser != null){
+  if (FirebaseAuth.instance.currentUser != null) {
     await FirebaseAuth.instance.currentUser!
         .getIdToken(true)
         .then((String result) {
