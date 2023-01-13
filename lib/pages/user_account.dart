@@ -3,24 +3,19 @@ import 'package:quizly_app/widgets/header.dart';
 
 // ignore: must_be_immutable
 class UserAccount extends StatelessWidget {
-  UserAccount(
-      {Key? key,
-      required this.values,
-      this.x = 1,
-      this.y = 1})
+  UserAccount({Key? key, required this.values, this.x = 1, this.y = 1})
       : super(key: key) {
-      if (values["lose"] != 0 || values['win'] != 0) {
-        _progress = values["win"] / (values["win"] + values["lose"]);
-      } else {
-        _progress = 0.5;
-      }
+    if (values["lose"] != 0 || values['win'] != 0) {
+      _progress = values["win"] / (values["win"] + values["lose"]);
+    } else {
+      _progress = 0.5;
+    }
 
-      avatarPicture = NetworkImage(values["picture"]);
-      avatar = CircleAvatar(
-          minRadius: 110 * y,
-          backgroundColor: Colors.white,
-          backgroundImage: avatarPicture
-      );
+    avatarPicture = NetworkImage(values["picture"]);
+    avatar = CircleAvatar(
+        minRadius: 110 * y,
+        backgroundColor: Colors.white,
+        backgroundImage: avatarPicture);
   }
 
   late final Map values;
@@ -43,7 +38,8 @@ class UserAccount extends StatelessWidget {
       fontWeight: FontWeight.bold, color: Colors.white, fontSize: 25 * y);
 
   late Text ratio = Text('Ratio: ', style: title);
-  late Text ratioStat = Text('${values["win"]}:${values["lose"]}', style: regular);
+  late Text ratioStat =
+      Text('${values["win"]}:${values["lose"]}', style: regular);
   late Text favQuiz = Text('Favourite quiz: ', style: title);
   late Text favQuizStat = Text(values["favourite_category"], style: regular);
   late Text mostPoints = Text('Most points: ', style: title);

@@ -14,16 +14,13 @@ class MenuPage extends StatelessWidget {
     return ElevatedButton(
       onPressed: () async {
         var data = await getUser();
-        if (data != null) {
-          if (text == 'Play!') {
-            Get.to(GameForm(nick: nick, uID: data['uid'],));
-          } else {
-            Get.to(const CreateQuizForm());
-          }
+        if (text == 'Play!') {
+          Get.to(GameForm(
+            nick: nick,
+            uID: data['uid'],
+          ));
         } else {
-          if (text == 'Play!') {
-            Get.to(GameForm(nick: nick,));
-          }
+          Get.to(const CreateQuizForm());
         }
       },
       style: ElevatedButton.styleFrom(
@@ -128,18 +125,17 @@ class MenuPage extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: SafeArea(
           child: Scaffold(
-            backgroundColor: Colors.grey[300],
-            appBar: PreferredSize(
-              preferredSize: Size.fromHeight(70 * y),
-              child: Header(
-                leftIcon: 'assets/images/profile.png',
-                rightIcon: 'assets/images/settings.png',
-                y: y,
-              ),
-            ),
-            body: bodyOfQuestion(nick, x, y),
-        )
-      ),
+        backgroundColor: Colors.grey[300],
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(70 * y),
+          child: Header(
+            leftIcon: 'assets/images/profile.png',
+            rightIcon: 'assets/images/settings.png',
+            y: y,
+          ),
+        ),
+        body: bodyOfQuestion(nick, x, y),
+      )),
     );
   }
 }

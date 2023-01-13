@@ -12,18 +12,17 @@ import '../services/socket_config.dart';
 
 //ignore: must_be_immutable
 class Question extends StatefulWidget {
-  IO.Socket socket = IO.io(config["ip"],
-      IO.OptionBuilder().setTransports(['websocket']).build());
+  IO.Socket socket = IO.io(
+      config["ip"], IO.OptionBuilder().setTransports(['websocket']).build());
 
   final int numOfQuestions;
   final String player;
 
-  Question({
-    super.key,
-    required this.socket,
-    required this.numOfQuestions,
-    required this.player
-  });
+  Question(
+      {super.key,
+      required this.socket,
+      required this.numOfQuestions,
+      required this.player});
 
   @override
   State<Question> createState() => _QuestionState();
@@ -98,7 +97,10 @@ class _QuestionState extends State<Question> {
     widget.socket.on("results", (data) {
       totalScore = data;
       widget.socket.disconnect();
-      Get.to(Score(score: totalScore, player: widget.player,));
+      Get.to(Score(
+        score: totalScore,
+        player: widget.player,
+      ));
     });
 
     stopwatch.start();
@@ -260,10 +262,10 @@ class _QuestionState extends State<Question> {
     double x = MediaQuery.of(context).size.width / 411.42857142857144;
     double y = MediaQuery.of(context).size.height / 866.2857142857143;
     return WillPopScope(
-        onWillPop: () async{
+        onWillPop: () async {
           return false;
         },
-        child:  MaterialApp(
+        child: MaterialApp(
             debugShowCheckedModeBanner: false,
             home: SafeArea(
               child: Scaffold(
@@ -280,8 +282,6 @@ class _QuestionState extends State<Question> {
                   child: bodyOfQuestion(x, y),
                 ),
               ),
-            )
-        )
-    );
+            )));
   }
 }

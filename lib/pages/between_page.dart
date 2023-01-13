@@ -8,8 +8,8 @@ import 'package:get/get.dart';
 import 'package:quizly_app/services/socket_config.dart';
 
 class BetweenPage extends StatefulWidget {
-  final IO.Socket socket = IO.io(config["ip"],
-      IO.OptionBuilder().setTransports(['websocket']).build());
+  final IO.Socket socket = IO.io(
+      config["ip"], IO.OptionBuilder().setTransports(['websocket']).build());
   final String category;
   final List<String> tags;
   final int maxPlayers;
@@ -21,23 +21,23 @@ class BetweenPage extends StatefulWidget {
   final String nick;
 
   BetweenPage({
-        super.key,
-        this.category = "",
-        this.tags = const [],
-        this.maxPlayers = 0,
-        this.numOfQuestions = 0,
-        this.difficulty = "",
-        this.roomID = "",
-        required this.nick,
-        this.quizID = "",
-        this.uID = "",
-      });
+    super.key,
+    this.category = "",
+    this.tags = const [],
+    this.maxPlayers = 0,
+    this.numOfQuestions = 0,
+    this.difficulty = "",
+    this.roomID = "",
+    required this.nick,
+    this.quizID = "",
+    required this.uID,
+  });
 
   @override
   State<BetweenPage> createState() => _BetweenPageState();
 }
 
-class _BetweenPageState extends State<BetweenPage>{
+class _BetweenPageState extends State<BetweenPage> {
   int ready = 1;
   String room = "";
   int maxPlayers = 0;
@@ -53,14 +53,18 @@ class _BetweenPageState extends State<BetweenPage>{
     var quizOptions = {};
 
     quizOptions["nickname"] = widget.nick;
-    cat.isEmpty ? 1:quizOptions["categories"] = cat;
-    widget.difficulty.isEmpty ? 1:quizOptions["difficulty"] = widget.difficulty;
-    widget.numOfQuestions == 0 ? 1:quizOptions["limit"] = widget.numOfQuestions;
-    widget.tags.isNotEmpty ? quizOptions["tags"]:1+1;
-    widget.maxPlayers == 0 ? 1:quizOptions["max_players"] = widget.maxPlayers;
-    widget.roomID.isEmpty ? 1:quizOptions["room"] = widget.roomID;
-    widget.uID.isEmpty ? 1:quizOptions["uid"] = widget.uID;
-    widget.quizID.isEmpty ? 1:quizOptions["quiz_id"] = widget.quizID;
+    cat.isEmpty ? 1 : quizOptions["categories"] = cat;
+    widget.difficulty.isEmpty
+        ? 1
+        : quizOptions["difficulty"] = widget.difficulty;
+    widget.numOfQuestions == 0
+        ? 1
+        : quizOptions["limit"] = widget.numOfQuestions;
+    widget.tags.isNotEmpty ? quizOptions["tags"] : 1 + 1;
+    widget.maxPlayers == 0 ? 1 : quizOptions["max_players"] = widget.maxPlayers;
+    widget.roomID.isEmpty ? 1 : quizOptions["room"] = widget.roomID;
+    widget.uID.isEmpty ? 1 : quizOptions["uid"] = widget.uID;
+    widget.quizID.isEmpty ? 1 : quizOptions["quiz_id"] = widget.quizID;
 
     widget.socket.emit("join", quizOptions);
 
@@ -72,9 +76,7 @@ class _BetweenPageState extends State<BetweenPage>{
           maxPlayers = data["max_number_of_players"];
 
           if (maxPlayers == ready) {
-            WidgetsBinding.instance
-                .addPostFrameCallback((_) =>
-                Get.to(Question(
+            WidgetsBinding.instance.addPostFrameCallback((_) => Get.to(Question(
                   socket: widget.socket,
                   numOfQuestions: widget.numOfQuestions,
                   player: widget.nick,
@@ -83,30 +85,29 @@ class _BetweenPageState extends State<BetweenPage>{
         });
       });
 
-      widget.socket.on('timeout', (_) => Get.to(Question(
-        socket: widget.socket,
-        numOfQuestions: widget.numOfQuestions,
-        player: widget.nick,
-      )));
+      widget.socket.on(
+          'timeout',
+          (_) => Get.to(Question(
+                socket: widget.socket,
+                numOfQuestions: widget.numOfQuestions,
+                player: widget.nick,
+              )));
 
       WidgetsBinding.instance
           .addPostFrameCallback((_) => widget.socket.emit("ready"));
     }
 
     if (widget.maxPlayers == 1) {
-      WidgetsBinding.instance
-          .addPostFrameCallback((_) =>
-          Get.to(Question(
+      WidgetsBinding.instance.addPostFrameCallback((_) => Get.to(Question(
             socket: widget.socket,
             numOfQuestions: widget.numOfQuestions,
             player: widget.nick,
           )));
     }
-
   }
 
   @override
-  void dispose(){
+  void dispose() {
     super.dispose();
 
     widget.socket.close();
@@ -120,46 +121,43 @@ class _BetweenPageState extends State<BetweenPage>{
         debugShowCheckedModeBanner: false,
         home: SafeArea(
           child: Scaffold(
-            backgroundColor: Colors.grey[300],
-            appBar: PreferredSize(
-              preferredSize: Size.fromHeight(70 * y),
-              child: Header(
-                leftIcon: 'assets/images/back.png',
-                rightIcon: 'assets/images/settings.png',
-                y: y,
-              ),
-            ),
-            body: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Center(
-                  child: Text("Ready players:\n"
-                      "$ready/$maxPlayers\n"
-                      "Room id:\n"
-                      "$room",
-                  style: TextStyle(
-                    fontSize: 35 * x,
-                  ),
-                    textAlign: TextAlign.center,
-                  ),
+              backgroundColor: Colors.grey[300],
+              appBar: PreferredSize(
+                preferredSize: Size.fromHeight(70 * y),
+                child: Header(
+                  leftIcon: 'assets/images/back.png',
+                  rightIcon: 'assets/images/settings.png',
+                  y: y,
                 ),
-                Row(
+              ),
+              body: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    IconButton(
-                        onPressed: () async {
-                          await Clipboard.setData(ClipboardData(text: room));
-                        },
-                        icon: const Icon(Icons.content_copy_outlined)
+                  children: [
+                    Center(
+                      child: Text(
+                        "Ready players:\n"
+                        "$ready/$maxPlayers\n"
+                        "Room id:\n"
+                        "$room",
+                        style: TextStyle(
+                          fontSize: 35 * x,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
-                    const Text("Copy to clipboard"),
-                  ],
-                )
-              ]
-            )
-          ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        IconButton(
+                            onPressed: () async {
+                              await Clipboard.setData(
+                                  ClipboardData(text: room));
+                            },
+                            icon: const Icon(Icons.content_copy_outlined)),
+                        const Text("Copy to clipboard"),
+                      ],
+                    )
+                  ])),
         ));
   }
-
 }
-

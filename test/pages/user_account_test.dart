@@ -8,7 +8,8 @@ void main() {
     "uid": "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
     "name": "Alan Turing",
     "nickname": "turingComplete",
-    "picture": "https://firebasestorage.googleapis.com/v0/b/quizly-70118.appspot.com/o/unknown_user.png?alt=media&token=082b6b49-2ad6-4d57-a93f-47f5a82041e4",
+    "picture":
+        "https://firebasestorage.googleapis.com/v0/b/quizly-70118.appspot.com/o/unknown_user.png?alt=media&token=082b6b49-2ad6-4d57-a93f-47f5a82041e4",
     "win": 0,
     "lose": 0,
     "favourite_category": "-",
@@ -21,8 +22,9 @@ void main() {
       Widget testWidget = MediaQuery(
           data: const MediaQueryData(),
           child: MaterialApp(
-              home: UserAccount(values: data,)
-          ));
+              home: UserAccount(
+            values: data,
+          )));
       await tester.pumpWidget(testWidget);
       expect(find.text(data['nickname']), findsOneWidget);
     });
@@ -34,9 +36,9 @@ void main() {
       Widget testWidget = MediaQuery(
           data: const MediaQueryData(),
           child: MaterialApp(
-              home: UserAccount(values: data,)
-          )
-      );
+              home: UserAccount(
+            values: data,
+          )));
       await tester.pumpWidget(testWidget);
       expect(find.text('Ratio: '), findsOneWidget);
       expect(find.text('${data['win']}:${data['lose']}'), findsOneWidget);
