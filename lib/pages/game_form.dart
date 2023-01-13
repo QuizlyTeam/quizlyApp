@@ -59,10 +59,10 @@ class _GameFormState extends State<GameForm> {
   }
 
   void _newQuiz() async {
-    OwnQuiz quiz = await Get.to(() => const CreateQuizForm(),
+    await Get.to(() => const CreateQuizForm(),
         arguments: ["", "Category", "easy", <String>[], <OwnQuestion>[]]);
     setState(() {
-      _quizzes.add(quiz);
+      _futureQuizzesID = getQuizzesID();
     });
   }
 
@@ -588,13 +588,19 @@ class _GameFormState extends State<GameForm> {
         future: _futureQuizzesID,
         builder: (context, snapshot) {
           var childrenQuestions = <Widget>[];
-          if (snapshot.hasData) {
-            _quizzesID = snapshot.data!;
-            for (int i = 0; i < _quizzesID.length; i++) {
-              childrenQuestions
-                  .add(quizListItemBar(x: x, y: y, id: _quizzesID[i]));
+
+          void setup() {
+            childrenQuestions = [];
+            if (snapshot.hasData) {
+              _quizzesID = snapshot.data!;
+              for (int i = 0; i < _quizzesID.length; i++) {
+                childrenQuestions
+                    .add(quizListItemBar(x: x, y: y, id: _quizzesID[i]));
+              }
             }
           }
+
+          setup();
 
           return Column(
             children: [
@@ -604,7 +610,11 @@ class _GameFormState extends State<GameForm> {
                       child: Column(children: childrenQuestions))),
               ElevatedButton(
                   onPressed: () {
-                    _newQuiz();
+                    setState(() {
+                      _newQuiz();
+                      //_futureQuizzesID = getQuizzesID();
+                      setup();
+                    });
                   },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.cyan,

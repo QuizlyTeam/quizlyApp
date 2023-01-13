@@ -30,31 +30,38 @@ class _LoginPageState extends State<LoginPage> {
           onPressed: () async {
             if (asset == 'assets/images/Facebook (icon — Colour).png') {
               result = await auth_.signInWithFacebook();
-              if (result != null){
-                if(await getUser() == null) {
+              if (result != null) {
+                if (await getUser() == null) {
                   Get.to(() => const NicknamePage());
                 } else {
                   var data = await getUser();
-                  Get.to(()=>MenuPage(nick: data['nickname'],));
+                  Get.to(() => MenuPage(
+                        nick: data['nickname'],
+                      ));
                 }
               }
             } else if (asset == 'assets/images/Google (icon — Colour).png') {
               result = await auth_.signInWithGoogle();
               if (result != null) {
-                if(await getUser() == null) {
+                if (await getUser() == null) {
                   Get.to(() => const NicknamePage());
                 } else {
                   var data = await getUser();
-                  Get.to(() => MenuPage(nick: data['nickname'],));
+                  Get.to(() => MenuPage(
+                        nick: data['nickname'],
+                      ));
                 }
               }
             } else if (asset == 'assets/images/Mask group.png') {
               result = await auth_.signInWithApple();
-              if (result != null){
-                if(await getUser() == null){Get.to(() => const NicknamePage());}
-                else {
+              if (result != null) {
+                if (await getUser() == null) {
+                  Get.to(() => const NicknamePage());
+                } else {
                   var data = await getUser();
-                  Get.to(()=>MenuPage(nick: data['nickname'],));
+                  Get.to(() => MenuPage(
+                        nick: data['nickname'],
+                      ));
                 }
               }
             }
@@ -176,7 +183,9 @@ class _LoginPageState extends State<LoginPage> {
                                   await auth_.loginUser(email, password);
                               if (result != null) {
                                 var data = await getUser();
-                                Get.to(() => MenuPage(nick: data['nickname'],));
+                                Get.to(() => MenuPage(
+                                      nick: data['nickname'],
+                                    ));
                               }
                             }
                           },
@@ -241,9 +250,11 @@ class _LoginPageState extends State<LoginPage> {
                   ElevatedButton(
                     onPressed: () async {
                       var result = auth_.signInAnon();
-                      if(result != null) {
+                      if (result != null) {
                         var data = await getUser();
-                        Get.to(MenuPage(nick: data['nickname'],));
+                        Get.to(MenuPage(
+                          nick: data['nickname'],
+                        ));
                       }
                     },
                     style: ElevatedButton.styleFrom(

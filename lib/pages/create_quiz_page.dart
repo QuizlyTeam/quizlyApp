@@ -400,7 +400,12 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
               createQuiz(_title, _category, arr[_selectedDifficulty], _tags,
                   _questions);
               Get.back(
-                  /*result: [_title,_category,arr[_selectedDifficulty],_tags,_questions]*/);
+                  result: OwnQuiz(
+                      title: _title,
+                      category: _category,
+                      difficulty: arr[_selectedDifficulty],
+                      tags: _tags,
+                      questions: _questions));
             },
             style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.cyan,
