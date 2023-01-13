@@ -37,9 +37,7 @@ class Header extends StatelessWidget {
             onPressed: () async {
               if (leftIcon == 'assets/images/profile.png') {
                 var data = await getUser();
-                Get.to(UserAccount(
-                  values: data,
-                ));
+                Get.to(UserAccount(values: data,));
               } else if (leftIcon == 'assets/images/back.png') {
                 Get.back();
               }

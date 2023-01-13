@@ -13,7 +13,7 @@ import 'create_quiz_page.dart';
 
 // ignore: must_be_immutable
 class GameForm extends StatefulWidget {
-  GameForm({super.key, required this.nick, required this.uID});
+  GameForm({super.key, required this.nick, this.uID = ""});
 
   var rng = Random();
   final String nick;

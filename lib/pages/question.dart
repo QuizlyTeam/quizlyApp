@@ -273,7 +273,7 @@ class _QuestionState extends State<Question> {
                 appBar: PreferredSize(
                   preferredSize: Size.fromHeight(70 * y),
                   child: Header(
-                    leftIcon: 'assets/images/back.png',
+                    leftIcon: 'assets/images/profile.png',
                     rightIcon: 'assets/images/settings.png',
                     y: y,
                   ),

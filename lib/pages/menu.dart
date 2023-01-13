@@ -5,8 +5,6 @@ import 'package:quizly_app/pages/game_form.dart';
 import 'package:quizly_app/widgets/header.dart';
 import 'package:get/get.dart';
 
-import '../classes/own_question.dart';
-
 class MenuPage extends StatelessWidget {
   final String nick;
 
@@ -17,14 +15,9 @@ class MenuPage extends StatelessWidget {
       onPressed: () async {
         var data = await getUser();
         if (text == 'Play!') {
-          Get.to(GameForm(
-            nick: nick,
-            uID: data['uid'],
-          ));
+          Get.to(GameForm(nick: nick, uID: data['uid'],));
         } else {
-          getQuizzesID();
-          Get.to(const CreateQuizForm(),
-              arguments: ["", "Category", "easy", <String>[], <OwnQuestion>[]]);
+          Get.to(const CreateQuizForm());
         }
       },
       style: ElevatedButton.styleFrom(
@@ -129,17 +122,18 @@ class MenuPage extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: SafeArea(
           child: Scaffold(
-        backgroundColor: Colors.grey[300],
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(70 * y),
-          child: Header(
-            leftIcon: 'assets/images/profile.png',
-            rightIcon: 'assets/images/settings.png',
-            y: y,
-          ),
-        ),
-        body: bodyOfQuestion(nick, x, y),
-      )),
+            backgroundColor: Colors.grey[300],
+            appBar: PreferredSize(
+              preferredSize: Size.fromHeight(70 * y),
+              child: Header(
+                leftIcon: 'assets/images/profile.png',
+                rightIcon: 'assets/images/settings.png',
+                y: y,
+              ),
+            ),
+            body: bodyOfQuestion(nick, x, y),
+        )
+      ),
     );
   }
 }
