@@ -250,11 +250,10 @@ class _LoginPageState extends State<LoginPage> {
                   ElevatedButton(
                     onPressed: () async {
                       var result = auth_.signInAnon();
-                      if (result != null) {
-                        var data = await getUser();
-                        Get.to(MenuPage(
-                          nick: data['nickname'],
-                        ));
+                      if(result != null) {
+                        int end = (DateTime.now().millisecondsSinceEpoch/1000).round();
+                        String nickname = "guest$end";
+                        Get.to(MenuPage(nick: nickname,));
                       }
                     },
                     style: ElevatedButton.styleFrom(
