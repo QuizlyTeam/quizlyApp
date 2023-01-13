@@ -552,7 +552,8 @@ class _GameFormState extends State<GameForm> {
                       IconButton(
                           onPressed: () => {
                             setState((){
-                              _quizzes.remove(quiz);
+                              _quizzesID.remove(id);
+                              deleteQuizByID(id);
                             })
                           },
                           icon: const Icon(Icons.delete_forever_outlined),
