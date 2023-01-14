@@ -495,9 +495,9 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
                         fontSize: 24 * y,
                         fontWeight: FontWeight.bold,
                       ),
-                      tabs: const [
-                        Tab(text: 'Quiz'),
-                        Tab(text: 'Questions'),
+                      tabs:  [
+                        Tab(child: Text("Quiz",style: TextStyle(fontSize: 20*y,color: Colors.black)),),
+                        Tab(child: Text("Questions",style: TextStyle(fontSize: 20*y,color: Colors.black)),),
                       ],
                     ),
                     Expanded(
