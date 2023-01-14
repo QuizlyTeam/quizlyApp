@@ -18,13 +18,24 @@ class MenuPage extends StatelessWidget {
         var data = await getUser();
         if (data != null) {
           if (text == 'Play!') {
-            Get.to(GameForm(nick: nick, uID: data['uid'],));
+            Get.to(GameForm(
+              nick: nick,
+              uID: data['uid'],
+            ));
           } else {
-            Get.to(const CreateQuizForm(), arguments: ["", "Category", "easy", <String>[], <OwnQuestion>[]]);
+            Get.to(const CreateQuizForm(), arguments: [
+              "",
+              "Category",
+              "easy",
+              <String>[],
+              <OwnQuestion>[]
+            ]);
           }
         } else {
           if (text == 'Play!') {
-            Get.to(GameForm(nick: nick,));
+            Get.to(GameForm(
+              nick: nick,
+            ));
           }
         }
       },
