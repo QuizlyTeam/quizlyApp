@@ -6,7 +6,7 @@ import 'package:quizly_app/pages/category_page.dart';
 import 'package:quizly_app/pages/tag_page.dart';
 import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 import 'package:quizly_app/pages/create_question_page.dart';
-
+import 'package:toast/toast.dart';
 import '../classes/own_question.dart';
 
 class CreateQuizForm extends StatefulWidget {
@@ -15,7 +15,6 @@ class CreateQuizForm extends StatefulWidget {
   @override
   State<CreateQuizForm> createState() => _CreateQuizFormState();
 }
-
 
 class _CreateQuizFormState extends State<CreateQuizForm> {
   var argumentData = Get.arguments;
@@ -228,7 +227,7 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
                         fontSize: 20 * y, color: Colors.black, height: 0.75)),
                 TextFormField(
                   validator: (value) =>
-                      RegExp(r'^[a-zA-Z0-9_]+$').hasMatch(value!)
+                      RegExp(r'(.|\s)*\S(.|\s)*').hasMatch(value!)
                           ? null
                           : "Enter a valid title",
                   initialValue: _title,
@@ -408,9 +407,29 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
             ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    if(text =="Create!") {
-                      createQuiz(_title, _category, arr[_selectedDifficulty],
-                          _tags, _questions);
+                    if (text == "Create!") {
+                      if (_questions.isEmpty) {
+                        Toast.show("Add questions",
+                            gravity: Toast.top, duration: Toast.lengthLong);
+                      } else if (_category.contains("Category")) {
+                        Toast.show("Choose a category",
+                            gravity: Toast.top, duration: Toast.lengthLong);
+                      } else {
+                        createQuiz(_title, _category, arr[_selectedDifficulty],
+                            _tags, _questions);
+                        Toast.show("Quiz created!",
+                            gravity: Toast.top, duration: Toast.lengthLong);
+                        Get.back(
+                            result: OwnQuiz(
+                                title: _title,
+                                category: _category,
+                                difficulty: arr[_selectedDifficulty],
+                                tags: _tags,
+                                questions: _questions));
+                      }
+                    } else if (text == "Update!") {
+                      Toast.show("Quiz updated!",
+                          gravity: Toast.top, duration: Toast.lengthLong);
                       Get.back(
                           result: OwnQuiz(
                               title: _title,
@@ -419,21 +438,6 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
                               tags: _tags,
                               questions: _questions));
                     }
-                    else if(text == "Update!"){
-                      Get.back(
-                          result: OwnQuiz(
-                              title: _title,
-                              category: _category,
-                              difficulty: arr[_selectedDifficulty],
-                              tags: _tags,
-                              questions: _questions));
-                    }
-                  //   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                  //   behavior: SnackBarBehavior.floating,
-                  //   elevation: 3,
-                  //   content: Text("Quiz has been created!"),
-                  // ));
-
                   }
                 },
                 style: ElevatedButton.styleFrom(
@@ -485,7 +489,7 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
   Widget build(BuildContext context) {
     double x = MediaQuery.of(context).size.width / 411.42857142857144;
     double y = MediaQuery.of(context).size.height / 866.2857142857143;
-
+    ToastContext().init(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: SafeArea(

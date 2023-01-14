@@ -72,7 +72,9 @@ class _GameFormState extends State<GameForm> {
       quizData.questions,
       "Update!"
     ]);
-    editQuiz(id, quiz);
+    setState(() {
+      editQuiz(id, quiz);
+    });
   }
 
   Column customQuiz(double x, double y) {
@@ -516,11 +518,11 @@ class _GameFormState extends State<GameForm> {
                       backgroundColor: Colors.grey.shade300, elevation: 0),
                   onPressed: () {
                     Get.to(() => BetweenPage(
-                      nick: widget.nick,
-                      uID: widget.uID,
-                      quizID: id,
-                      maxPlayers: _currentSliderValue.toInt(),)
-                    );
+                          nick: widget.nick,
+                          uID: widget.uID,
+                          quizID: id,
+                          maxPlayers: _currentSliderValue.toInt(),
+                        ));
                   },
                   child: Container(
                       width: 370 * x,
@@ -566,7 +568,7 @@ class _GameFormState extends State<GameForm> {
                           IconButton(
                               onPressed: () => {
                                     setState(() {
-                                      _editQuiz(quiz,id);
+                                      _editQuiz(quiz, id);
                                     })
                                   },
                               icon: const Icon(Icons.edit_outlined),
@@ -654,7 +656,8 @@ class _GameFormState extends State<GameForm> {
                               Container(
                                 height: 7 * y,
                               ),
-                              Text('Max players: ${_currentSliderValue.toInt()}',
+                              Text(
+                                  'Max players: ${_currentSliderValue.toInt()}',
                                   style: TextStyle(
                                       fontSize: 20 * y, color: Colors.black)),
                               SliderTheme(
@@ -681,7 +684,6 @@ class _GameFormState extends State<GameForm> {
                   ],
                 ),
               ),
-
             ],
           );
         });

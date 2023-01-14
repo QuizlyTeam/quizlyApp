@@ -288,7 +288,7 @@ deleteQuizByID(String quizID) async {
   }
 }
 
-editQuiz(String quizID,OwnQuiz quiz) async {
+editQuiz(String quizID, OwnQuiz quiz) async {
   String token = "";
   await FirebaseAuth.instance.currentUser!
       .getIdToken(true)
@@ -298,13 +298,13 @@ editQuiz(String quizID,OwnQuiz quiz) async {
   // ignore: non_constant_identifier_names
   String OwnQuizToJson(OwnQuiz data) => json.encode(data.toJson());
 
-  final response = await http.patch(
-      Uri.parse('http://10.0.2.2:8000/v1/quizzes/$quizID'),
-      headers: {
-        "Authorization": 'Bearer $token',
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: OwnQuizToJson(quiz));
+  final response =
+      await http.patch(Uri.parse('http://10.0.2.2:8000/v1/quizzes/$quizID'),
+          headers: {
+            "Authorization": 'Bearer $token',
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: OwnQuizToJson(quiz));
   if (response.statusCode == 200) {
     return OwnQuiz.fromJson(jsonDecode(response.body));
   } else {

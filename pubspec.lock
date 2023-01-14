@@ -791,6 +791,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  toast:
+    dependency: "direct main"
+    description:
+      name: toast
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.9"
   typed_data:
     dependency: transitive
     description:
