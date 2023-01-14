@@ -657,10 +657,22 @@ class _GameFormState extends State<GameForm> {
                         fontSize: 20 * y,
                         fontWeight: FontWeight.bold,
                       ),
-                      tabs:  [
-                        Tab(child: Text("Custom",style: TextStyle(fontSize: 20*y,color: Colors.black)),),
-                        Tab(child: Text("Enter Code",style: TextStyle(fontSize: 20*y,color: Colors.black)),),
-                        Tab(child: Text("My quizzes",style: TextStyle(fontSize: 20*y,color: Colors.black)),),
+                      tabs: [
+                        Tab(
+                          child: Text("Custom",
+                              style: TextStyle(
+                                  fontSize: 20 * y, color: Colors.black)),
+                        ),
+                        Tab(
+                          child: Text("Enter Code",
+                              style: TextStyle(
+                                  fontSize: 20 * y, color: Colors.black)),
+                        ),
+                        Tab(
+                          child: Text("My quizzes",
+                              style: TextStyle(
+                                  fontSize: 20 * y, color: Colors.black)),
+                        ),
                       ],
                     ),
                     Expanded(

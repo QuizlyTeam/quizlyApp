@@ -231,9 +231,8 @@ Future<OwnQuiz> getQuizById(String quizID) async {
   if (response.statusCode == 200) {
     var json = jsonDecode(response.body);
 
-
     List<String> tags2 = [];
-    if(json['tags'] != null){
+    if (json['tags'] != null) {
       List<dynamic> tagsjson = json['tags'];
 
       for (int i = 0; i < tagsjson.length; i++) {
@@ -241,9 +240,8 @@ Future<OwnQuiz> getQuizById(String quizID) async {
       }
     }
 
-
     List<OwnQuestion> questions = [];
-    if(json['questions'] != null){
+    if (json['questions'] != null) {
       List<dynamic> questionsjson = json['questions'];
       for (int i = 0; i < questionsjson.length; i++) {
         List incorrectjson = questionsjson[i]['incorrect_answers'];
@@ -257,7 +255,6 @@ Future<OwnQuiz> getQuizById(String quizID) async {
             inCorrectanswers: incorrect));
       }
     }
-
 
     return OwnQuiz(
         title: json['title'],
