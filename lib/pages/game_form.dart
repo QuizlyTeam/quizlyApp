@@ -587,7 +587,6 @@ class _GameFormState extends State<GameForm> {
   }
 
   createdQuizzes(double x, double y) {
-    _futureQuizzesID = getQuizzesID();
     return FutureBuilder<List<String>>(
         future: _futureQuizzesID,
         builder: (context, snapshot) {

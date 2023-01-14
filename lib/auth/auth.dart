@@ -287,3 +287,33 @@ deleteQuizByID(String quizID) async {
     return false;
   }
 }
+
+editQuiz(String quizID,String title, String category, String difficulty, List<String> tags,
+    List<OwnQuestion> questions) async {
+  String token = "";
+  await FirebaseAuth.instance.currentUser!
+      .getIdToken(true)
+      .then((String result) {
+    token = result;
+  });
+  // ignore: non_constant_identifier_names
+  String OwnQuizToJson(OwnQuiz data) => json.encode(data.toJson());
+
+  final response = await http.patch(
+      Uri.parse('http://10.0.2.2:8000/v1/quizzes/$quizID'),
+      headers: {
+        "Authorization": 'Bearer $token',
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: OwnQuizToJson(OwnQuiz(
+          title: title,
+          category: category,
+          difficulty: difficulty,
+          tags: tags,
+          questions: questions)));
+  if (response.statusCode == 200) {
+    return OwnQuiz.fromJson(jsonDecode(response.body));
+  } else {
+    return null;
+  }
+}
