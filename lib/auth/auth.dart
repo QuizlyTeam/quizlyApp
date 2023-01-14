@@ -202,7 +202,6 @@ Future<List<String>> getQuizzesID() async {
     },
   );
   if (response.statusCode == 200) {
-    //  print(response.body);
     var json = jsonDecode(response.body);
     Map myMap = json;
     List<String> quizzesID = [];
@@ -232,27 +231,33 @@ Future<OwnQuiz> getQuizById(String quizID) async {
   if (response.statusCode == 200) {
     var json = jsonDecode(response.body);
 
-    List tagsjson = json['tags'];
+
     List<String> tags2 = [];
+    if(json['tags'] != null){
+      List<dynamic> tagsjson = json['tags'];
 
-    List questionsjson = json['questions'];
-    List<OwnQuestion> questions = [];
-
-    for (int i = 0; i < tagsjson.length; i++) {
-      tags2.add(tagsjson[i]);
-    }
-
-    for (int i = 0; i < questionsjson.length; i++) {
-      List incorrectjson = questionsjson[i]['incorrect_answers'];
-      List<String> incorrect = [];
-      for (int j = 0; j < incorrectjson.length; j++) {
-        incorrect.add(incorrectjson[i]);
+      for (int i = 0; i < tagsjson.length; i++) {
+        tags2.add(tagsjson[i]);
       }
-      questions.add(OwnQuestion(
-          question: questionsjson[i]['question'],
-          correct_answer: questionsjson[i]['correct_answer'],
-          inCorrectanswers: incorrect));
     }
+
+
+    List<OwnQuestion> questions = [];
+    if(json['questions'] != null){
+      List<dynamic> questionsjson = json['questions'];
+      for (int i = 0; i < questionsjson.length; i++) {
+        List incorrectjson = questionsjson[i]['incorrect_answers'];
+        List<String> incorrect = [];
+        for (int j = 0; j < incorrectjson.length; j++) {
+          incorrect.add(incorrectjson[i]);
+        }
+        questions.add(OwnQuestion(
+            question: questionsjson[i]['question'],
+            correct_answer: questionsjson[i]['correct_answer'],
+            inCorrectanswers: incorrect));
+      }
+    }
+
 
     return OwnQuiz(
         title: json['title'],

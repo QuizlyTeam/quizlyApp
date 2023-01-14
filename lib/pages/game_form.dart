@@ -495,7 +495,7 @@ class _GameFormState extends State<GameForm> {
     Future<OwnQuiz> futureQuiz = getQuizById(id);
     OwnQuiz quiz = OwnQuiz(
       title: '',
-      category: '',
+      category: 'Category',
       difficulty: '',
       tags: [],
       questions: [],
@@ -506,7 +506,6 @@ class _GameFormState extends State<GameForm> {
         if (snapshot.hasData) {
           quiz = snapshot.data!;
         }
-
         return SizedBox(
             width: 395 * x,
             height: 100 * y,
