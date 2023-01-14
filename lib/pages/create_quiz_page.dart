@@ -6,7 +6,7 @@ import 'package:quizly_app/pages/category_page.dart';
 import 'package:quizly_app/pages/tag_page.dart';
 import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 import 'package:quizly_app/pages/create_question_page.dart';
-
+import 'package:toast/toast.dart';
 import '../classes/own_question.dart';
 
 class CreateQuizForm extends StatefulWidget {
@@ -24,6 +24,8 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
   List<OwnQuestion> _questions = [];
   String _category = "Category";
   List<String> _tags = [];
+  final _formKey = GlobalKey<FormState>();
+  String text = "Update";
 
   @override
   void initState() {
@@ -32,6 +34,7 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
     _questions = argumentData[4];
     _category = argumentData[1];
     _tags = argumentData[3];
+    text = argumentData[5];
     super.initState();
   }
 
@@ -144,281 +147,311 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
     );
   }
 
-  Column customQuiz(double x, double y) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        /*
+  Form customQuiz(double x, double y) {
+    return Form(
+        key: _formKey,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            /*
         Game options
          */
-        SizedBox(
-            width: 390 * x,
-            height: 80 * y,
-            child: Stack(children: <Widget>[
-              Positioned(
-                  left: 32 * x,
-                  child: Container(
-                      width: 324 * x,
-                      height: 80 * y,
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(35),
-                          topRight: Radius.circular(35),
-                          bottomLeft: Radius.circular(35),
-                          bottomRight: Radius.circular(35),
-                        ),
-                        color: Colors.white,
-                      ))),
-              Positioned(
-                top: 8 * y,
-                left: 32 * y,
-                width: 324 * x,
+            SizedBox(
+                width: 390 * x,
                 height: 80 * y,
-                child: SingleChildScrollView(
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text(
-                          'Create your',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontFamily: 'Poppins',
-                              fontSize: 36 * y,
-                              fontWeight: FontWeight.normal,
-                              height: 1),
-                        ),
-                        Text(
-                          'quiz:',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontFamily: 'Poppins',
-                              fontSize: 36 * y,
-                              fontWeight: FontWeight.normal,
-                              height: 1),
-                        )
-                      ]),
+                child: Stack(children: <Widget>[
+                  Positioned(
+                      left: 32 * x,
+                      child: Container(
+                          width: 324 * x,
+                          height: 80 * y,
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(35),
+                              topRight: Radius.circular(35),
+                              bottomLeft: Radius.circular(35),
+                              bottomRight: Radius.circular(35),
+                            ),
+                            color: Colors.white,
+                          ))),
+                  Positioned(
+                    top: 8 * y,
+                    left: 32 * y,
+                    width: 324 * x,
+                    height: 80 * y,
+                    child: SingleChildScrollView(
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text(
+                              'Create your',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontFamily: 'Poppins',
+                                  fontSize: 36 * y,
+                                  fontWeight: FontWeight.normal,
+                                  height: 1),
+                            ),
+                            Text(
+                              'quiz:',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontFamily: 'Poppins',
+                                  fontSize: 36 * y,
+                                  fontWeight: FontWeight.normal,
+                                  height: 1),
+                            )
+                          ]),
+                    ),
+                  )
+                ])),
+            Container(
+              width: 324 * x,
+              height: 100 * y,
+              decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(15),
+                    topRight: Radius.circular(15),
+                    bottomLeft: Radius.circular(15),
+                    bottomRight: Radius.circular(15),
+                  ),
+                  color: Colors.white),
+              child: Column(children: [
+                Container(
+                  height: 7 * y,
                 ),
-              )
-            ])),
-        SizedBox(
-            width: 324 * x,
-            height: 100 * y,
-            child: Stack(children: [
-              Positioned(
-                  child: Container(
-                width: 324 * x,
-                height: 100 * y,
-                decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(15),
-                      topRight: Radius.circular(15),
-                      bottomLeft: Radius.circular(15),
-                      bottomRight: Radius.circular(15),
-                    ),
-                    color: Colors.white),
-                child: Column(children: [
-                  Container(
-                    height: 7 * y,
+                Text('Title:',
+                    style: TextStyle(
+                        fontSize: 20 * y, color: Colors.black, height: 0.75)),
+                TextFormField(
+                  validator: (value) =>
+                      RegExp(r'(.|\s)*\S(.|\s)*').hasMatch(value!)
+                          ? null
+                          : "Enter a valid title",
+                  initialValue: _title,
+                  onChanged: (value) {
+                    _title = value;
+                  },
+                  style: const TextStyle(
+                    color: Colors.black,
                   ),
-                  Text('Title:',
-                      style: TextStyle(fontSize: 20 * y, color: Colors.black)),
-                  TextField(
-                    onChanged: (value) {
-                      _title = value;
-                    },
-                    style: const TextStyle(
-                      color: Colors.black,
-                    ),
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(36.84 * y),
-                          borderSide: BorderSide.none),
-                      hintText: "Title",
-                    ),
+                  decoration: InputDecoration(
+                    errorStyle: TextStyle(height: 0.05 * y),
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(36.84 * y),
+                        borderSide: BorderSide.none),
+                    hintText: "Title",
                   ),
-                ]),
-              )),
-            ])),
-        /*
+                ),
+              ]),
+            ),
+
+            /*
         Category
          */
-        SizedBox(
-            width: 390 * x,
-            height: 48 * y,
-            child: Stack(children: <Widget>[
-              Positioned(
-                  left: 32 * x,
-                  child: Container(
-                    width: 324 * x,
-                    height: 48 * y,
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(15),
-                          topRight: Radius.circular(15),
-                          bottomLeft: Radius.circular(15),
-                          bottomRight: Radius.circular(15),
+            SizedBox(
+                width: 390 * x,
+                height: 48 * y,
+                child: Stack(children: <Widget>[
+                  Positioned(
+                      left: 32 * x,
+                      child: Container(
+                        width: 324 * x,
+                        height: 48 * y,
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(15),
+                              topRight: Radius.circular(15),
+                              bottomLeft: Radius.circular(15),
+                              bottomRight: Radius.circular(15),
+                            ),
+                            color: Colors.white),
+                      )),
+                  Positioned(
+                      left: 258 * x,
+                      top: -3 * y,
+                      child: ElevatedButton(
+                        onPressed: _newCategory,
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.cyan,
+                            fixedSize: Size(100 * x, 50 * y),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0 * x),
+                            )),
+                        child: Text(
+                          'Pick',
+                          style:
+                              TextStyle(fontSize: 30 * x, color: Colors.black),
                         ),
-                        color: Colors.white),
-                  )),
-              Positioned(
-                  left: 258 * x,
-                  top: -3 * y,
-                  child: ElevatedButton(
-                    onPressed: _newCategory,
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.cyan,
-                        fixedSize: Size(100 * x, 50 * y),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0 * x),
-                        )),
-                    child: Text(
-                      'Pick',
-                      style: TextStyle(fontSize: 30 * x, color: Colors.black),
-                    ),
-                  )),
-              Positioned(
-                  left: 48 * x,
-                  top: 8 * y,
-                  child: Text(
-                    _category,
-                    style: TextStyle(fontSize: 25 * y, color: Colors.black),
-                  )),
-            ])),
-        /*
+                      )),
+                  Positioned(
+                      left: 48 * x,
+                      top: 8 * y,
+                      child: Text(
+                        _category,
+                        style: TextStyle(fontSize: 25 * y, color: Colors.black),
+                      )),
+                ])),
+            /*
         Tags
          */
-        SizedBox(
-            width: 390 * x,
-            height: 48 * y,
-            child: Stack(children: <Widget>[
-              Positioned(
-                  left: 32 * x,
-                  child: Container(
-                    width: 324 * x,
-                    height: 48 * y,
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(15),
-                          topRight: Radius.circular(15),
-                          bottomLeft: Radius.circular(15),
-                          bottomRight: Radius.circular(15),
+            SizedBox(
+                width: 390 * x,
+                height: 48 * y,
+                child: Stack(children: <Widget>[
+                  Positioned(
+                      left: 32 * x,
+                      child: Container(
+                        width: 324 * x,
+                        height: 48 * y,
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(15),
+                              topRight: Radius.circular(15),
+                              bottomLeft: Radius.circular(15),
+                              bottomRight: Radius.circular(15),
+                            ),
+                            color: Colors.white),
+                      )),
+                  Positioned(
+                      left: 258 * x,
+                      top: -3 * y,
+                      child: ElevatedButton(
+                        onPressed: _newTags,
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.cyan,
+                            fixedSize: Size(100 * x, 50 * y),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0 * x),
+                            )),
+                        child: Text(
+                          'Pick',
+                          style:
+                              TextStyle(fontSize: 30 * x, color: Colors.black),
                         ),
-                        color: Colors.white),
-                  )),
-              Positioned(
-                  left: 258 * x,
-                  top: -3 * y,
-                  child: ElevatedButton(
-                    onPressed: _newTags,
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.cyan,
-                        fixedSize: Size(100 * x, 50 * y),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0 * x),
-                        )),
-                    child: Text(
-                      'Pick',
-                      style: TextStyle(fontSize: 30 * x, color: Colors.black),
-                    ),
-                  )),
-              Positioned(
-                  left: 48 * x,
-                  top: 8 * y,
-                  child: Text(
-                    (_tags.isEmpty
-                        ? '0 tags selected'
-                        : '${_tags.length} tags selected'),
-                    style: TextStyle(fontSize: 25 * y, color: Colors.black),
-                  )),
-            ])),
-        /*
+                      )),
+                  Positioned(
+                      left: 48 * x,
+                      top: 8 * y,
+                      child: Text(
+                        (_tags.isEmpty
+                            ? '0 tags selected'
+                            : '${_tags.length} tags selected'),
+                        style: TextStyle(fontSize: 25 * y, color: Colors.black),
+                      )),
+                ])),
+            /*
         Difficulty
          */
-        SizedBox(
-            width: 390 * x,
-            height: 72 * y,
-            child: Stack(
-              children: <Widget>[
-                Positioned(
-                    left: 32 * x,
-                    child: Container(
-                      width: 324 * x,
-                      height: 72 * y,
-                      decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(15),
-                            topRight: Radius.circular(15),
-                            bottomLeft: Radius.circular(15),
-                            bottomRight: Radius.circular(15),
-                          ),
-                          color: Colors.white),
-                      child: Column(children: [
-                        Container(
-                          height: 7 * y,
-                        ),
-                        Text('Difficulty level:',
-                            style: TextStyle(
-                                fontSize: 20 * y, color: Colors.black)),
-                        FlutterToggleTab(
-                          width: 72 * x,
-                          height: 32 * y,
-                          borderRadius: 5,
-                          selectedBackgroundColors: const [Colors.cyan],
-                          unSelectedBackgroundColors: const [Colors.white],
-                          selectedIndex: _selectedDifficulty,
-                          selectedTextStyle: TextStyle(
-                              color: Colors.black,
-                              fontSize: 24 * y,
-                              fontWeight: FontWeight.w600),
-                          unSelectedTextStyle: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 24 * y,
-                              fontWeight: FontWeight.normal),
-                          labels: const ["Easy", "Medium", "Hard"],
-                          selectedLabelIndex: (index) {
-                            setState(() {
-                              _selectedDifficulty = index;
-                            });
-                          },
-                        ),
-                        Container(
-                          height: 7 * y,
-                        ),
-                      ]),
-                    )),
-              ],
-            )),
-        /*
+            SizedBox(
+                width: 390 * x,
+                height: 72 * y,
+                child: Stack(
+                  children: <Widget>[
+                    Positioned(
+                        left: 32 * x,
+                        child: Container(
+                          width: 324 * x,
+                          height: 72 * y,
+                          decoration: const BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(15),
+                                topRight: Radius.circular(15),
+                                bottomLeft: Radius.circular(15),
+                                bottomRight: Radius.circular(15),
+                              ),
+                              color: Colors.white),
+                          child: Column(children: [
+                            Container(
+                              height: 7 * y,
+                            ),
+                            Text('Difficulty level:',
+                                style: TextStyle(
+                                    fontSize: 20 * y, color: Colors.black)),
+                            FlutterToggleTab(
+                              width: 72 * x,
+                              height: 32 * y,
+                              borderRadius: 5,
+                              selectedBackgroundColors: const [Colors.cyan],
+                              unSelectedBackgroundColors: const [Colors.white],
+                              selectedIndex: _selectedDifficulty,
+                              selectedTextStyle: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 24 * y,
+                                  fontWeight: FontWeight.w600),
+                              unSelectedTextStyle: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 24 * y,
+                                  fontWeight: FontWeight.normal),
+                              labels: const ["Easy", "Medium", "Hard"],
+                              selectedLabelIndex: (index) {
+                                setState(() {
+                                  _selectedDifficulty = index;
+                                });
+                              },
+                            ),
+                            Container(
+                              height: 7 * y,
+                            ),
+                          ]),
+                        )),
+                  ],
+                )),
+            /*
         Play button
          */
-        ElevatedButton(
-            onPressed: () {
-              createQuiz(_title, _category, arr[_selectedDifficulty], _tags,
-                  _questions);
-              Get.back(
-                  result: OwnQuiz(
-                      title: _title,
-                      category: _category,
-                      difficulty: arr[_selectedDifficulty],
-                      tags: _tags,
-                      questions: _questions));
-            },
-            style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.cyan,
-                fixedSize: Size(280 * x, 80 * y),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(32.0 * y),
-                )),
-            child: Text(
-              'Create!',
-              style: TextStyle(fontSize: 30 * y, color: Colors.white),
-            ))
-      ],
-    );
+            ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    if (text == "Create!") {
+                      if (_questions.isEmpty) {
+                        Toast.show("Add questions",
+                            gravity: Toast.top, duration: Toast.lengthLong);
+                      } else if (_category.contains("Category")) {
+                        Toast.show("Choose a category",
+                            gravity: Toast.top, duration: Toast.lengthLong);
+                      } else {
+                        createQuiz(_title, _category, arr[_selectedDifficulty],
+                            _tags, _questions);
+                        Toast.show("Quiz created!",
+                            gravity: Toast.top, duration: Toast.lengthLong);
+                        Get.back(
+                            result: OwnQuiz(
+                                title: _title,
+                                category: _category,
+                                difficulty: arr[_selectedDifficulty],
+                                tags: _tags,
+                                questions: _questions));
+                      }
+                    } else if (text == "Update!") {
+                      Toast.show("Quiz updated!",
+                          gravity: Toast.top, duration: Toast.lengthLong);
+                      Get.back(
+                          result: OwnQuiz(
+                              title: _title,
+                              category: _category,
+                              difficulty: arr[_selectedDifficulty],
+                              tags: _tags,
+                              questions: _questions));
+                    }
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.cyan,
+                    fixedSize: Size(280 * x, 80 * y),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(32.0 * y),
+                    )),
+                child: Text(
+                  text,
+                  style: TextStyle(fontSize: 30 * y, color: Colors.white),
+                ))
+          ],
+        ));
   }
 
   createdQuestions(double x, double y) {
@@ -456,7 +489,7 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
   Widget build(BuildContext context) {
     double x = MediaQuery.of(context).size.width / 411.42857142857144;
     double y = MediaQuery.of(context).size.height / 866.2857142857143;
-
+    ToastContext().init(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: SafeArea(
@@ -481,9 +514,17 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
                         fontSize: 24 * y,
                         fontWeight: FontWeight.bold,
                       ),
-                      tabs: const [
-                        Tab(text: 'Quiz'),
-                        Tab(text: 'Questions'),
+                      tabs: [
+                        Tab(
+                          child: Text("Quiz",
+                              style: TextStyle(
+                                  fontSize: 20 * y, color: Colors.black)),
+                        ),
+                        Tab(
+                          child: Text("Questions",
+                              style: TextStyle(
+                                  fontSize: 20 * y, color: Colors.black)),
+                        ),
                       ],
                     ),
                     Expanded(

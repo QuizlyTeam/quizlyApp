@@ -10,6 +10,7 @@ import 'dart:math';
 
 import '../classes/own_question.dart';
 import 'create_quiz_page.dart';
+//import 'create_quiz_page.dart';
 
 // ignore: must_be_immutable
 class GameForm extends StatefulWidget {
@@ -57,22 +58,23 @@ class _GameFormState extends State<GameForm> {
     });
   }
 
-  void _newQuiz() async {
+  /*void _newQuiz() async {
     await Get.to(() => const CreateQuizForm(),
         arguments: ["", "Category", "easy", <String>[], <OwnQuestion>[]]);
-    setState(() {
-      _futureQuizzesID = getQuizzesID();
-    });
-  }
+  }*/
 
-  void _editQuiz(OwnQuiz quizData) async {
-    /*OwnQuiz quiz = await Get.to(() => const CreateQuizForm(), arguments: [
+  void _editQuiz(OwnQuiz quizData, String id) async {
+    OwnQuiz quiz = await Get.to(() => const CreateQuizForm(), arguments: [
       quizData.title,
       quizData.category,
       quizData.difficulty,
       quizData.tags,
-      quizData.questions
-    ]);*/
+      quizData.questions,
+      "Update!"
+    ]);
+    setState(() {
+      editQuiz(id, quiz);
+    });
   }
 
   Column customQuiz(double x, double y) {
@@ -495,7 +497,7 @@ class _GameFormState extends State<GameForm> {
     Future<OwnQuiz> futureQuiz = getQuizById(id);
     OwnQuiz quiz = OwnQuiz(
       title: '',
-      category: '',
+      category: 'Category',
       difficulty: '',
       tags: [],
       questions: [],
@@ -508,93 +510,83 @@ class _GameFormState extends State<GameForm> {
         }
 
         return SizedBox(
-          width: 390 * x,
-          height: 100 * y,
-          child: Center(
-              child: Container(
-                  width: 370 * x,
-                  height: 80 * y,
-                  decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(15),
-                        topRight: Radius.circular(15),
-                        bottomLeft: Radius.circular(15),
-                        bottomRight: Radius.circular(15),
-                      ),
-                      color: Colors.cyan),
-                  child: Row(
-                    children: [
-                      SizedBox(width: 5 * x),
-                      Container(
-                        width: 220 * x,
-                        height: 60 * y,
-                        decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(15),
-                              topRight: Radius.circular(15),
-                              bottomLeft: Radius.circular(15),
-                              bottomRight: Radius.circular(15),
-                            ),
-                            color: Colors.white),
-                        child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Row(children: [
-                              SizedBox(
-                                width: 5 * x,
-                              ),
-                              Text(
-                                quiz.title.length < 20
-                                    ? quiz.title
-                                    : "${quiz.title.substring(0, 17)}...",
-                                style: TextStyle(
-                                    fontSize: 20 * y, color: Colors.black),
-                              ),
-                            ])),
-                      ),
-                      /// Button responsible for playing selected quiz.
-                      ElevatedButton(
-                          onPressed: (){
-                            Get.to(() => BetweenPage(
-                                nick: widget.nick,
-                                uID: widget.uID,
-                                quizID: id,
-                                maxPlayers: _currentSliderValue.toInt(),)
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.cyan,
-                              fixedSize: Size(54 * x, 72 * y),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(32.0 * y),
-                              )),
-                          child: Text(
-                            'Play',
-                            style: TextStyle(fontSize: 30 * y, color: Colors.white),
-                          )
-                      ),
-                      SizedBox(width: 5 * x),
-                      IconButton(
-                          onPressed: () => {
-                                setState(() {
-                                  _editQuiz(quiz);
-                                })
-                              },
-                          icon: const Icon(Icons.edit_outlined),
-                          iconSize: 45 * y,
-                          color: Colors.white),
-                      IconButton(
-                          onPressed: () => {
-                                setState(() {
-                                  _quizzesID.remove(id);
-                                  deleteQuizByID(id);
-                                })
-                              },
-                          icon: const Icon(Icons.delete_forever_outlined),
-                          iconSize: 45 * y,
-                          color: Colors.white)
-                    ],
-                  ))),
-        );
+            width: 395 * x,
+            height: 100 * y,
+            child: Center(
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.grey.shade300, elevation: 0),
+                  onPressed: () {
+                    Get.to(() => BetweenPage(
+                          nick: widget.nick,
+                          uID: widget.uID,
+                          quizID: id,
+                          maxPlayers: _currentSliderValue.toInt(),
+                        ));
+                  },
+                  child: Container(
+                      width: 370 * x,
+                      height: 80 * y,
+                      decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(15),
+                            topRight: Radius.circular(15),
+                            bottomLeft: Radius.circular(15),
+                            bottomRight: Radius.circular(15),
+                          ),
+                          color: Colors.cyan),
+                      child: Row(
+                        children: [
+                          SizedBox(width: 10 * x),
+                          Container(
+                            width: 220 * x,
+                            height: 60 * y,
+                            decoration: const BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(15),
+                                  topRight: Radius.circular(15),
+                                  bottomLeft: Radius.circular(15),
+                                  bottomRight: Radius.circular(15),
+                                ),
+                                color: Colors.white),
+                            child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Row(children: [
+                                  SizedBox(
+                                    width: 10 * x,
+                                  ),
+                                  Text(
+                                    quiz.title.length < 20
+                                        ? quiz.title
+                                        : "${quiz.title.substring(0, 17)}...",
+                                    style: TextStyle(
+                                        fontSize: 20 * y, color: Colors.black),
+                                  ),
+                                ])),
+                          ),
+                          SizedBox(width: 10 * x),
+                          IconButton(
+                              onPressed: () => {
+                                    setState(() {
+                                      _editQuiz(quiz, id);
+                                    })
+                                  },
+                              icon: const Icon(Icons.edit_outlined),
+                              iconSize: 45 * y,
+                              color: Colors.white),
+                          IconButton(
+                              onPressed: () => {
+                                    setState(() {
+                                      _quizzesID.remove(id);
+                                      deleteQuizByID(id);
+                                    })
+                                  },
+                              icon: const Icon(Icons.delete_forever_outlined),
+                              iconSize: 45 * y,
+                              color: Colors.white)
+                        ],
+                      ))),
+            ));
       },
     );
   }
@@ -604,7 +596,6 @@ class _GameFormState extends State<GameForm> {
         future: _futureQuizzesID,
         builder: (context, snapshot) {
           var childrenQuestions = <Widget>[];
-
           void setup() {
             childrenQuestions = [];
             if (snapshot.hasData) {
@@ -624,7 +615,7 @@ class _GameFormState extends State<GameForm> {
                   height: 550 * y,
                   child: SingleChildScrollView(
                       child: Column(children: childrenQuestions))),
-              ElevatedButton(
+              /*ElevatedButton(
                   onPressed: () {
                     setState(() {
                       _newQuiz();
@@ -641,7 +632,58 @@ class _GameFormState extends State<GameForm> {
                   child: Text(
                     'Add a quiz',
                     style: TextStyle(fontSize: 30 * y, color: Colors.white),
-                  ))
+                  ))*/
+              SizedBox(
+                width: 390 * x,
+                height: 84 * y,
+                child: Stack(
+                  children: <Widget>[
+                    Positioned(
+                        left: 32 * x,
+                        child: Container(
+                          width: 324 * x,
+                          height: 84 * y,
+                          decoration: const BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(15),
+                                topRight: Radius.circular(15),
+                                bottomLeft: Radius.circular(15),
+                                bottomRight: Radius.circular(15),
+                              ),
+                              color: Colors.white),
+                          child: SingleChildScrollView(
+                            child: Column(children: [
+                              Container(
+                                height: 7 * y,
+                              ),
+                              Text(
+                                  'Max players: ${_currentSliderValue.toInt()}',
+                                  style: TextStyle(
+                                      fontSize: 20 * y, color: Colors.black)),
+                              SliderTheme(
+                                  data: SliderThemeData(
+                                      trackHeight: 24 * y,
+                                      activeTrackColor: Colors.cyan,
+                                      thumbShape: RoundSliderThumbShape(
+                                          enabledThumbRadius: 18 * y),
+                                      thumbColor: Colors.cyan),
+                                  child: Slider(
+                                    value: _currentSliderValue,
+                                    min: 1,
+                                    max: 10,
+                                    divisions: 9,
+                                    onChanged: (double value) {
+                                      setState(() {
+                                        _currentSliderValue = value;
+                                      });
+                                    },
+                                  )),
+                            ]),
+                          ),
+                        )),
+                  ],
+                ),
+              ),
             ],
           );
         });
@@ -675,20 +717,32 @@ class _GameFormState extends State<GameForm> {
                         fontSize: 20 * y,
                         fontWeight: FontWeight.bold,
                       ),
-                      tabs: const [
-                        Tab(text: 'Custom'),
-                        Tab(text: 'Enter code'),
-                        Tab(text: 'My quizzes'),
+                      tabs: [
+                        Tab(
+                          child: Text("Custom",
+                              style: TextStyle(
+                                  fontSize: 20 * y, color: Colors.black)),
+                        ),
+                        Tab(
+                          child: Text("Enter Code",
+                              style: TextStyle(
+                                  fontSize: 20 * y, color: Colors.black)),
+                        ),
+                        Tab(
+                          child: Text("My quizzes",
+                              style: TextStyle(
+                                  fontSize: 20 * y, color: Colors.black)),
+                        ),
                       ],
                     ),
                     Expanded(
                         child: TabBarView(
-                        children: [
-                          customQuiz(x, y),
-                          enterCode(x, y),
-                          createdQuizzes(x, y),
-                        ],
-                        )),
+                      children: [
+                        customQuiz(x, y),
+                        enterCode(x, y),
+                        createdQuizzes(x, y),
+                      ],
+                    )),
                   ],
                 ),
               ))),

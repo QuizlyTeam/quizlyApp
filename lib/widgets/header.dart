@@ -38,7 +38,9 @@ class Header extends StatelessWidget {
               if (leftIcon == 'assets/images/profile.png') {
                 var data = await getUser();
                 if (data != null) {
-                  Get.to(UserAccount(values: data,));
+                  Get.to(UserAccount(
+                    values: data,
+                  ));
                 } else {
                   showDialog<String>(
                     context: context,
