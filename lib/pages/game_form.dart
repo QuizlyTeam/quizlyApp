@@ -9,7 +9,7 @@ import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 import 'dart:math';
 
 import '../classes/own_question.dart';
-import 'create_quiz_page.dart';
+//import 'create_quiz_page.dart';
 
 // ignore: must_be_immutable
 class GameForm extends StatefulWidget {
@@ -57,12 +57,10 @@ class _GameFormState extends State<GameForm> {
     });
   }
 
-  void _newQuiz() async {
+  /*void _newQuiz() async {
     await Get.to(() => const CreateQuizForm(),
         arguments: ["", "Category", "easy", <String>[], <OwnQuestion>[]]);
-
-
-  }
+  }*/
 
   void _editQuiz(OwnQuiz quizData) async {
     /*OwnQuiz quiz = await Get.to(() => const CreateQuizForm(), arguments: [
@@ -613,7 +611,7 @@ class _GameFormState extends State<GameForm> {
                   height: 550 * y,
                   child: SingleChildScrollView(
                       child: Column(children: childrenQuestions))),
-              ElevatedButton(
+              /*ElevatedButton(
                   onPressed: () {
                     setState(() {
                       _newQuiz();
@@ -630,7 +628,58 @@ class _GameFormState extends State<GameForm> {
                   child: Text(
                     'Add a quiz',
                     style: TextStyle(fontSize: 30 * y, color: Colors.white),
-                  ))
+                  ))*/
+              SizedBox(
+                width: 390 * x,
+                height: 84 * y,
+                child: Stack(
+                  children: <Widget>[
+                    Positioned(
+                        left: 32 * x,
+                        child: Container(
+                          width: 324 * x,
+                          height: 84 * y,
+                          decoration: const BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(15),
+                                topRight: Radius.circular(15),
+                                bottomLeft: Radius.circular(15),
+                                bottomRight: Radius.circular(15),
+                              ),
+                              color: Colors.white),
+                          child: SingleChildScrollView(
+                            child: Column(children: [
+                              Container(
+                                height: 7 * y,
+                              ),
+                              Text('Max players: ${_currentSliderValue.toInt()}',
+                                  style: TextStyle(
+                                      fontSize: 20 * y, color: Colors.black)),
+                              SliderTheme(
+                                  data: SliderThemeData(
+                                      trackHeight: 24 * y,
+                                      activeTrackColor: Colors.cyan,
+                                      thumbShape: RoundSliderThumbShape(
+                                          enabledThumbRadius: 18 * y),
+                                      thumbColor: Colors.cyan),
+                                  child: Slider(
+                                    value: _currentSliderValue,
+                                    min: 1,
+                                    max: 10,
+                                    divisions: 9,
+                                    onChanged: (double value) {
+                                      setState(() {
+                                        _currentSliderValue = value;
+                                      });
+                                    },
+                                  )),
+                            ]),
+                          ),
+                        )),
+                  ],
+                ),
+              ),
+
             ],
           );
         });
