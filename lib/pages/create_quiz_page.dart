@@ -35,6 +35,7 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
     _questions = argumentData[4];
     _category = argumentData[1];
     _tags = argumentData[3];
+    text = argumentData[5];
     super.initState();
   }
 
@@ -407,7 +408,7 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
             ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    if(text =="Create") {
+                    if(text =="Create!") {
                       createQuiz(_title, _category, arr[_selectedDifficulty],
                           _tags, _questions);
                       Get.back(
@@ -418,7 +419,7 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
                               tags: _tags,
                               questions: _questions));
                     }
-                    else if(text == "Update"){
+                    else if(text == "Update!"){
                       Get.back(
                           result: OwnQuiz(
                               title: _title,

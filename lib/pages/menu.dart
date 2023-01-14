@@ -28,7 +28,8 @@ class MenuPage extends StatelessWidget {
               "Category",
               "easy",
               <String>[],
-              <OwnQuestion>[]
+              <OwnQuestion>[],
+              "Create!"
             ]);
           }
         } else {

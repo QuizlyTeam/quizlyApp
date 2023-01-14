@@ -70,6 +70,7 @@ class _GameFormState extends State<GameForm> {
       quizData.difficulty,
       quizData.tags,
       quizData.questions,
+      "Update!"
     ]);
     editQuiz(id, quiz);
   }
