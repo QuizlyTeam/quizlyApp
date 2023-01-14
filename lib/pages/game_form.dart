@@ -60,9 +60,8 @@ class _GameFormState extends State<GameForm> {
   void _newQuiz() async {
     await Get.to(() => const CreateQuizForm(),
         arguments: ["", "Category", "easy", <String>[], <OwnQuestion>[]]);
-    setState(() {
-      _futureQuizzesID = getQuizzesID();
-    });
+
+
   }
 
   void _editQuiz(OwnQuiz quizData) async {
@@ -590,6 +589,7 @@ class _GameFormState extends State<GameForm> {
   }
 
   createdQuizzes(double x, double y) {
+    _futureQuizzesID = getQuizzesID();
     return FutureBuilder<List<String>>(
         future: _futureQuizzesID,
         builder: (context, snapshot) {
