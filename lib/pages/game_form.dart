@@ -524,7 +524,7 @@ class _GameFormState extends State<GameForm> {
                       color: Colors.cyan),
                   child: Row(
                     children: [
-                      SizedBox(width: 10 * x),
+                      SizedBox(width: 5 * x),
                       Container(
                         width: 220 * x,
                         height: 60 * y,
@@ -540,7 +540,7 @@ class _GameFormState extends State<GameForm> {
                             alignment: Alignment.centerLeft,
                             child: Row(children: [
                               SizedBox(
-                                width: 10 * x,
+                                width: 5 * x,
                               ),
                               Text(
                                 quiz.title.length < 20
@@ -551,7 +551,27 @@ class _GameFormState extends State<GameForm> {
                               ),
                             ])),
                       ),
-                      SizedBox(width: 10 * x),
+                      ElevatedButton(
+                          onPressed: (){
+                            Get.to(() => BetweenPage(
+                                nick: widget.nick,
+                                uID: widget.uID,
+                                quizID: id,
+                                maxPlayers: _currentSliderValue.toInt(),)
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.cyan,
+                              fixedSize: Size(54 * x, 72 * y),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(32.0 * y),
+                              )),
+                          child: Text(
+                            'Play',
+                            style: TextStyle(fontSize: 30 * y, color: Colors.white),
+                          )
+                      ),
+                      SizedBox(width: 5 * x),
                       IconButton(
                           onPressed: () => {
                                 setState(() {
@@ -662,12 +682,12 @@ class _GameFormState extends State<GameForm> {
                     ),
                     Expanded(
                         child: TabBarView(
-                      children: [
-                        customQuiz(x, y),
-                        enterCode(x, y),
-                        createdQuizzes(x, y),
-                      ],
-                    )),
+                        children: [
+                          customQuiz(x, y),
+                          enterCode(x, y),
+                          createdQuizzes(x, y),
+                        ],
+                        )),
                   ],
                 ),
               ))),
