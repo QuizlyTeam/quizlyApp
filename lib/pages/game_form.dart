@@ -506,6 +506,7 @@ class _GameFormState extends State<GameForm> {
         if (snapshot.hasData) {
           quiz = snapshot.data!;
         }
+
         return SizedBox(
             width: 395 * x,
             height: 100 * y,
