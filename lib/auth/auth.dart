@@ -288,8 +288,7 @@ deleteQuizByID(String quizID) async {
   }
 }
 
-editQuiz(String quizID,String title, String category, String difficulty, List<String> tags,
-    List<OwnQuestion> questions) async {
+editQuiz(String quizID,OwnQuiz quiz) async {
   String token = "";
   await FirebaseAuth.instance.currentUser!
       .getIdToken(true)
@@ -305,12 +304,7 @@ editQuiz(String quizID,String title, String category, String difficulty, List<St
         "Authorization": 'Bearer $token',
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: OwnQuizToJson(OwnQuiz(
-          title: title,
-          category: category,
-          difficulty: difficulty,
-          tags: tags,
-          questions: questions)));
+      body: OwnQuizToJson(quiz));
   if (response.statusCode == 200) {
     return OwnQuiz.fromJson(jsonDecode(response.body));
   } else {

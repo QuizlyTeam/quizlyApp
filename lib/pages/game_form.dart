@@ -9,6 +9,7 @@ import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 import 'dart:math';
 
 import '../classes/own_question.dart';
+import 'create_quiz_page.dart';
 //import 'create_quiz_page.dart';
 
 // ignore: must_be_immutable
@@ -62,14 +63,15 @@ class _GameFormState extends State<GameForm> {
         arguments: ["", "Category", "easy", <String>[], <OwnQuestion>[]]);
   }*/
 
-  void _editQuiz(OwnQuiz quizData) async {
-    /*OwnQuiz quiz = await Get.to(() => const CreateQuizForm(), arguments: [
+  void _editQuiz(OwnQuiz quizData, String id) async {
+    OwnQuiz quiz = await Get.to(() => const CreateQuizForm(), arguments: [
       quizData.title,
       quizData.category,
       quizData.difficulty,
       quizData.tags,
-      quizData.questions
-    ]);*/
+      quizData.questions,
+    ]);
+    editQuiz(id, quiz);
   }
 
   Column customQuiz(double x, double y) {
@@ -563,7 +565,7 @@ class _GameFormState extends State<GameForm> {
                           IconButton(
                               onPressed: () => {
                                     setState(() {
-                                      _editQuiz(quiz);
+                                      _editQuiz(quiz,id);
                                     })
                                   },
                               icon: const Icon(Icons.edit_outlined),

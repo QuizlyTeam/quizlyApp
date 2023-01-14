@@ -26,6 +26,7 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
   String _category = "Category";
   List<String> _tags = [];
   final _formKey = GlobalKey<FormState>();
+  String text = "Update";
 
   @override
   void initState() {
@@ -406,20 +407,32 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
             ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    createQuiz(_title, _category, arr[_selectedDifficulty],
-                        _tags, _questions);
-                    /*ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    behavior: SnackBarBehavior.floating,
-                    elevation: 3,
-                    content: Text("Quiz has been created!"),
-                  ));*/
-                    Get.back(
-                        result: OwnQuiz(
-                            title: _title,
-                            category: _category,
-                            difficulty: arr[_selectedDifficulty],
-                            tags: _tags,
-                            questions: _questions));
+                    if(text =="Create") {
+                      createQuiz(_title, _category, arr[_selectedDifficulty],
+                          _tags, _questions);
+                      Get.back(
+                          result: OwnQuiz(
+                              title: _title,
+                              category: _category,
+                              difficulty: arr[_selectedDifficulty],
+                              tags: _tags,
+                              questions: _questions));
+                    }
+                    else if(text == "Update"){
+                      Get.back(
+                          result: OwnQuiz(
+                              title: _title,
+                              category: _category,
+                              difficulty: arr[_selectedDifficulty],
+                              tags: _tags,
+                              questions: _questions));
+                    }
+                  //   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  //   behavior: SnackBarBehavior.floating,
+                  //   elevation: 3,
+                  //   content: Text("Quiz has been created!"),
+                  // ));
+
                   }
                 },
                 style: ElevatedButton.styleFrom(
@@ -429,7 +442,7 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
                       borderRadius: BorderRadius.circular(32.0 * y),
                     )),
                 child: Text(
-                  'Create!',
+                  text,
                   style: TextStyle(fontSize: 30 * y, color: Colors.white),
                 ))
           ],
