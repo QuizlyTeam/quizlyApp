@@ -551,6 +551,7 @@ class _GameFormState extends State<GameForm> {
                               ),
                             ])),
                       ),
+                      /// Button responsible for playing selected quiz.
                       ElevatedButton(
                           onPressed: (){
                             Get.to(() => BetweenPage(
