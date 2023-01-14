@@ -513,7 +513,14 @@ class _GameFormState extends State<GameForm> {
               child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.grey.shade300, elevation: 0),
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.to(() => BetweenPage(
+                      nick: widget.nick,
+                      uID: widget.uID,
+                      quizID: id,
+                      maxPlayers: _currentSliderValue.toInt(),)
+                    );
+                  },
                   child: Container(
                       width: 370 * x,
                       height: 80 * y,
@@ -586,7 +593,6 @@ class _GameFormState extends State<GameForm> {
         future: _futureQuizzesID,
         builder: (context, snapshot) {
           var childrenQuestions = <Widget>[];
-
           void setup() {
             childrenQuestions = [];
             if (snapshot.hasData) {
