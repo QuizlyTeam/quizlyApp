@@ -3,11 +3,18 @@ import 'package:get/get.dart';
 import 'package:quizly_app/widgets/header.dart';
 import 'package:quizly_app/pages/menu.dart';
 
+/// Shows ranking of players after game.
+///
+/// Player can see how good he was compared to other players, and return to main
+/// menu.
 class Score extends StatelessWidget {
+  /// Contains information which player scores how many points.
   final Map score;
+  /// User's nickname
   final String player;
   const Score({super.key, required this.score, required this.player});
 
+  /// Shows table of users after the game.
   List<Widget> generateTable(double y, double x) {
     List<Widget> ans = [];
 
