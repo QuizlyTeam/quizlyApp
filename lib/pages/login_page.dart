@@ -28,6 +28,7 @@ class _LoginPageState extends State<LoginPage> {
     var auth_ = AuthService();
     // ignore: prefer_typing_uninitialized_variables
     var result;
+    // small buttons for login with image of specified logo
     return SizedBox(
         width: 120 * x,
         child: ElevatedButton(
@@ -110,6 +111,7 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(
                     height: 20 * y,
                   ),
+                  //logo
                   Center(
                     child: Image(
                       image: const AssetImage('assets/images/Group 5.png'),
@@ -140,6 +142,7 @@ class _LoginPageState extends State<LoginPage> {
                           fontWeight: FontWeight.bold),
                     ),
                   ),
+                  //first field to input emial
                   Padding(
                     padding: EdgeInsets.all(15 * y),
                     child: Center(
@@ -163,6 +166,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
+                  //second field to input password
                   Padding(
                     padding: const EdgeInsets.all(15) * y,
                     child: TextFormField(
@@ -225,6 +229,7 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(
                     height: 5 * y,
                   ),
+                  //register button
                   ElevatedButton(
                     onPressed: () {
                       Get.to(const Register());
@@ -255,6 +260,7 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(
                     height: 20 * y,
                   ),
+                  //play as guest button
                   ElevatedButton(
                     onPressed: () async {
                       var result = auth_.signInAnon();

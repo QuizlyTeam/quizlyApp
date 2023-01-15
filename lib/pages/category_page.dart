@@ -80,7 +80,7 @@ class _CategoryPageState extends State<CategoryPage> {
       });
     }
   }
-
+  //button of 1 category
   Widget categoryButton(
       String categoryName, String categoryImage, double x, double y) {
     return ElevatedButton(
@@ -128,7 +128,7 @@ class _CategoryPageState extends State<CategoryPage> {
       ),
     );
   }
-
+  //bar for searching categories
   Widget searchBar() {
     return Padding(
       padding: const EdgeInsets.all(15),
@@ -170,6 +170,7 @@ class _CategoryPageState extends State<CategoryPage> {
             y: y,
           ),
         ),
+        //builder for categories
         body: FutureBuilder<List<String>>(
             future: futureCategories,
             builder: (context, snapshot) {
@@ -186,6 +187,7 @@ class _CategoryPageState extends State<CategoryPage> {
                     SizedBox(
                       child: searchBar(),
                     ),
+                    //displaying categories widgets in a loop
                     for (var i = 0; i <= search.length - 3; i += 3)
                       Column(
                         children: [
@@ -217,6 +219,7 @@ class _CategoryPageState extends State<CategoryPage> {
                           )
                         ],
                       ),
+                    //to display last one category on the left
                     if (search.length % 3 == 1)
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -235,6 +238,7 @@ class _CategoryPageState extends State<CategoryPage> {
                           )
                         ],
                       ),
+                    // to display last 2 categories on the 2 left positions
                     if (search.length % 3 == 2)
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
