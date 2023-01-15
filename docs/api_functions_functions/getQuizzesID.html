@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the fetchCategories function from the category_page library, for the Dart programming language.">
-  <title>fetchCategories function - category_page library - Dart API</title>
+  <meta name="description" content="API docs for the getQuizzesID function from the functions library, for the Dart programming language.">
+  <title>getQuizzesID function - functions library - Dart API</title>
 
 
   
@@ -29,10 +29,10 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../index.html">quizly_app</a></li>
-    <li><a href="../pages_category_page/pages_category_page-library.html">category_page</a></li>
-    <li class="self-crumb">fetchCategories function</li>
+    <li><a href="../api_functions_functions/api_functions_functions-library.html">functions</a></li>
+    <li class="self-crumb">getQuizzesID function</li>
   </ol>
-  <div class="self-name">fetchCategories</div>
+  <div class="self-name">getQuizzesID</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -49,7 +49,7 @@
 
   <div id="dartdoc-main-content" class="main-content">
       <div>
-<h1><span class="kind-function">fetchCategories</span> function 
+<h1><span class="kind-function">getQuizzesID</span> function 
     <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
  
 </h1></div>
@@ -58,32 +58,46 @@
         
 
 <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span>&gt;</span></span>
-<span class="name ">fetchCategories</span>(<wbr>)
+<span class="name ">getQuizzesID</span>(<wbr>)
 
         
 
     </section>
     
 <section class="desc markdown">
-  <p>functions which gets categories from API</p>
+  <p>return List of quizzes` ids</p>
 </section>
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Future&lt;List&lt;String&gt;&gt; fetchCategories() async {
-  final response =
-      await http.get(Uri.parse(&#39;http:&#47;&#47;10.0.2.2:8000&#47;v1&#47;quizzes&#47;categories&#39;));
+  <pre class="language-dart"><code class="language-dart">Future&lt;List&lt;String&gt;&gt; getQuizzesID() async {
+  String token = &quot;&quot;;
+  if (FirebaseAuth.instance.currentUser != null) {
+    await FirebaseAuth.instance.currentUser!
+        .getIdToken(true)
+        .then((String result) {
+      token = result;
+    });
+  }
+  final response = await http.get(
+    Uri.parse(&#39;http:&#47;&#47;10.0.2.2:8000&#47;v1&#47;quizzes&#47;&#39;),
+    headers: {
+      &quot;Authorization&quot;: &#39;Bearer $token&#39;,
+      &#39;Content-Type&#39;: &#39;application&#47;json; charset=UTF-8&#39;,
+    },
+  );
   if (response.statusCode == 200) {
     var json = jsonDecode(response.body);
-    List&lt;String&gt; categoriesFromAPI = [];
-    for (var x in json[&#39;categories&#39;]) {
-      categoriesFromAPI.add(x);
+    Map myMap = json;
+    List&lt;String&gt; quizzesID = [];
+    for (int i = 0; i &lt; myMap.keys.length; i++) {
+      quizzesID.add(myMap.keys.elementAt(i).toString());
     }
-    return categoriesFromAPI;
+    return quizzesID;
   } else {
-    throw Exception(&#39;Failed to load categories&#39;);
+    throw Exception(&quot;Failed to fetch quizid&#39;s&quot;);
   }
 }</code></pre>
 </section>
@@ -100,22 +114,26 @@
 
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
   <li><a href="../index.html">quizly_app</a></li>
-  <li><a href="../pages_category_page/pages_category_page-library.html">category_page</a></li>
-  <li class="self-crumb">fetchCategories function</li>
+  <li><a href="../api_functions_functions/api_functions_functions-library.html">functions</a></li>
+  <li class="self-crumb">getQuizzesID function</li>
 </ol>
 
 
-    <h5>category_page library</h5>
+    <h5>functions library</h5>
     <ol>
-      <li class="section-title"><a href="../pages_category_page/pages_category_page-library.html#classes">Classes</a></li>
-        <li><a href="../pages_category_page/CategoryPage-class.html">CategoryPage</a></li>
 
 
 
 
 
-      <li class="section-title"><a href="../pages_category_page/pages_category_page-library.html#functions">Functions</a></li>
-        <li><a href="../pages_category_page/fetchCategories.html">fetchCategories</a></li>
+      <li class="section-title"><a href="../api_functions_functions/api_functions_functions-library.html#functions">Functions</a></li>
+        <li><a href="../api_functions_functions/createQuiz.html">createQuiz</a></li>
+        <li><a href="../api_functions_functions/createUser.html">createUser</a></li>
+        <li><a href="../api_functions_functions/deleteQuizByID.html">deleteQuizByID</a></li>
+        <li><a href="../api_functions_functions/editQuiz.html">editQuiz</a></li>
+        <li><a href="../api_functions_functions/getQuizById.html">getQuizById</a></li>
+        <li><a href="../api_functions_functions/getQuizzesID.html">getQuizzesID</a></li>
+        <li><a href="../api_functions_functions/getUser.html">getUser</a></li>
 
 
 

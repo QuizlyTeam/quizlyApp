@@ -79,9 +79,11 @@
 
   Map sortedScore;
 
+  &#47;&#47;sort users
   sortedScore = Map.fromEntries(score.entries.toList()
     ..sort((e1, e2) =&gt; -e1.value.compareTo(e2.value)));
 
+  &#47;&#47;created pseudo table
   sortedScore.forEach((key, value) {
     Text record = Text(
       &#39;$key : $value&#39;,
@@ -92,6 +94,7 @@
     ans.add(record);
   });
 
+  &#47;&#47;Exiting button
   ElevatedButton returnToMenu = ElevatedButton(
       onPressed: () {
         Get.to(MenuPage(

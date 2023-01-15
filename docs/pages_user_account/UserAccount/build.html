@@ -112,8 +112,10 @@ and</li>
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">@override
 Widget build(BuildContext context) {
+  &#47;&#47;scaling factors
   x = MediaQuery.of(context).size.width &#47; 411.42857142857144;
   y = MediaQuery.of(context).size.height &#47; 866.2857142857143;
+
   return SafeArea(
     child: Scaffold(
       appBar: PreferredSize(

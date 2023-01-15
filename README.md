@@ -27,6 +27,18 @@ flutter test
 # Works with packages
 flutter pub 
 ```
+### Install instruction
+```bash
+#clone repository
+git clone https://github.com/QuizlyTeam/quizly_app.git
+
+#get packages
+flutter pub get
+#run application
+flutter run
+
+#Make sure you have installed emulator before launching app!
+````
 
 To find out more check [online documentation](https://docs.flutter.dev/).
 
