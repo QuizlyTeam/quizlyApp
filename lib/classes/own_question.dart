@@ -10,7 +10,7 @@ class OwnQuestion {
     return OwnQuestion(
       question: json['question'],
       correct_answer: json['correct_answer'],
-      inCorrectanswers: json['incorrect_answers'],
+      inCorrectanswers: List<String>.from(json['incorrect_answers']),
     );
   }
   Map<String, dynamic> toJson() => {
@@ -34,33 +34,13 @@ class OwnQuiz {
       required this.tags,
       required this.questions});
   factory OwnQuiz.fromJson(Map<String, dynamic> json) {
-    List tagsjson = json['tags'];
-    List<String> tags = [];
-    for (int i = 0; i < tagsjson.length; i++) {
-      tags.add(tagsjson[i]);
-    }
-
-    List questionsjson = json['questions'];
-    List<OwnQuestion> questions = [];
-
-    for (int i = 0; i < questionsjson.length; i++) {
-      List incorrectjson = questionsjson[i]['incorrect_answers'];
-      List<String> incorrect = [];
-      for (int j = 0; j < incorrectjson.length; j++) {
-        incorrect.add(incorrectjson[i]);
-      }
-      questions.add(OwnQuestion(
-          question: questionsjson[i]['question'],
-          correct_answer: questionsjson[i]['correct_answer'],
-          inCorrectanswers: incorrect));
-    }
-
     return OwnQuiz(
       title: json['title'],
       category: json['category'],
       difficulty: json['difficulty'],
-      tags: tags,
-      questions: questions,
+      tags: json.keys.contains('tags') ? List<String>.from(json['tags']) : [],
+      questions: List<OwnQuestion>.from(
+          json['questions'].map((x) => OwnQuestion.fromJson(x))),
     );
   }
   Map<String, dynamic> toJson() => {

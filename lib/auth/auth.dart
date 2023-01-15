@@ -185,7 +185,7 @@ createQuiz(String title, String category, String difficulty, List<String> tags,
   }
 }
 
-Future<List<String>> getQuizzesID() async {
+getQuizzes() async {
   String token = "";
   if (FirebaseAuth.instance.currentUser != null) {
     await FirebaseAuth.instance.currentUser!
@@ -203,12 +203,8 @@ Future<List<String>> getQuizzesID() async {
   );
   if (response.statusCode == 200) {
     var json = jsonDecode(response.body);
-    Map myMap = json;
-    List<String> quizzesID = [];
-    for (int i = 0; i < myMap.keys.length; i++) {
-      quizzesID.add(myMap.keys.elementAt(i).toString());
-    }
-    return quizzesID;
+    ;
+    return json;
   } else {
     throw Exception("Failed to fetch quizid's");
   }
