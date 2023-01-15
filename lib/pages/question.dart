@@ -39,40 +39,43 @@ class Question extends StatefulWidget {
 }
 
 class _QuestionState extends State<Question> {
-  String question = "";
-  String tempQuestion = "";
+  String question = ""; //current question
+  String tempQuestion = ""; //real question, in case of api being to fast
+  //current answers
   String ans1 = "";
   String ans2 = "";
   String ans3 = "";
   String ans4 = "";
+  //answers to be
   String tempAns1 = "";
   String tempAns2 = "";
   String tempAns3 = "";
   String tempAns4 = "";
-  String correctAnswer = "";
-  String tempCorrectAnswer = "";
-  bool first = true;
+  String correctAnswer = ""; //as names goes
+  String tempCorrectAnswer = ""; //just in case
+  bool first = true; //flag if it's first question
 
-  Map totalScore = {};
+  Map totalScore = {}; //score of all players
 
-  double value = 1;
-  int questionNumber = 1;
-  bool clickedAnything = false;
+  double value = 1; //timer value
+  int questionNumber = 1; //number of questions
+  bool clickedAnything = false; //tells if answer was submited
 
-  var normalColor = Colors.cyan;
+  var normalColor = Colors.cyan; //app color
 
   //to time measurement
   final stopwatch = Stopwatch();
 
-  bool ready = false;
+  bool ready = false; //time ready to restard
   bool emittedProperAnswer = false;
 
   List<bool> wasClicked = [false, false, false, false];
   @override
   void initState() {
     super.initState();
-    value = 1;
+    value = 1; //preparing timer
 
+    //getting question
     widget.socket.on('question', (data) {
       ready = true;
       stopwatch.reset();
@@ -99,11 +102,13 @@ class _QuestionState extends State<Question> {
       }
     });
 
+    //getting proper answer
     widget.socket.on("answer", (data) {
       correctAnswer = data;
       emittedProperAnswer = true;
     });
 
+    //getting results
     widget.socket.on("results", (data) {
       totalScore = data;
       widget.socket.disconnect();
@@ -113,10 +118,12 @@ class _QuestionState extends State<Question> {
       ));
     });
 
+    //starting timer
     stopwatch.start();
     determinateIndicator();
   }
 
+  //shows properly all buttons
   Widget answerButton(String answer, int index, double x, double y) {
     if (answer == correctAnswer && clickedAnything) {
       setState(() {
@@ -140,10 +147,12 @@ class _QuestionState extends State<Question> {
       onPressed: clickedAnything
           ? () {}
           : () {
+        //get answer and time taken for thinking
               double time = stopwatch.elapsedMilliseconds / 1000;
               time = time > 12 ? 12 : time;
               widget.socket.emit("answer", {"answer": answer, "time": time});
 
+              //blocking resending answer
               if (answer == correctAnswer) {
                 setState(() {
                   clickedAnything = true;
@@ -168,11 +177,13 @@ class _QuestionState extends State<Question> {
     );
   }
 
+  //describes timer behaviour
   void determinateIndicator() {
     Timer.periodic(const Duration(milliseconds: 1), (Timer timer) {
       if (value <= 0) {
           setState(() {
             if (ready) {
+              //reset page with proper question
               value = 1;
 
               clickedAnything = false;
@@ -189,6 +200,7 @@ class _QuestionState extends State<Question> {
             }
           });
       } else {
+        //take time
         setState(() {
           if (ready) {
             var elapsed = stopwatch.elapsedMilliseconds;
@@ -206,6 +218,9 @@ class _QuestionState extends State<Question> {
     return Column(
       children: [
         SizedBox(height: 30 * y),
+        /*
+        Title
+         */
         Text(
           "Question $questionNumber:",
           style: TextStyle(
@@ -215,6 +230,9 @@ class _QuestionState extends State<Question> {
               fontStyle: FontStyle.italic),
         ),
         SizedBox(height: 25 * y),
+        /*
+        Question
+         */
         SizedBox(
           height: 110 * y,
           child: AutoSizeText(
@@ -225,6 +243,9 @@ class _QuestionState extends State<Question> {
           ),
         ),
         SizedBox(height: 30 * y),
+        /*
+        Timer
+         */
         SizedBox(
             width: 350 * x,
             child: ClipRRect(
@@ -241,6 +262,9 @@ class _QuestionState extends State<Question> {
         SizedBox(
           height: 50 * y,
         ),
+        /*
+        Buttons
+         */
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [answerButton(ans1, 0, x, y), answerButton(ans2, 1, x, y)],
@@ -259,14 +283,16 @@ class _QuestionState extends State<Question> {
   @override
   void dispose() {
     super.dispose();
-
+  //destructs widget
     widget.socket.close();
   }
 
   @override
   Widget build(BuildContext context) {
+    //scaling factors
     double x = MediaQuery.of(context).size.width / 411.42857142857144;
     double y = MediaQuery.of(context).size.height / 866.2857142857143;
+    //blocked returning
     return WillPopScope(
         onWillPop: () async {
           return false;

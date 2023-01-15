@@ -180,8 +180,10 @@ class UserAccount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //scaling factors
     x = MediaQuery.of(context).size.width / 411.42857142857144;
     y = MediaQuery.of(context).size.height / 866.2857142857143;
+
     return SafeArea(
       child: Scaffold(
         appBar: PreferredSize(
