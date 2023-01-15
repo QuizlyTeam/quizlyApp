@@ -75,6 +75,7 @@
   <pre class="language-dart"><code class="language-dart">Widget answerButton(String text, double x, double y) {
   return ElevatedButton(
     onPressed: () async {
+      &#47;&#47;get user info
       var data = await getUser();
       if (data != null) {
         if (text == &#39;Play!&#39;) {
@@ -94,6 +95,7 @@
         }
       } else {
         if (text == &#39;Play!&#39;) {
+          &#47;&#47;if user is guest don&#39;t send user id
           Get.to(GameForm(
             nick: nick,
           ));
