@@ -130,7 +130,7 @@ class MenuPage extends StatelessWidget {
               )
             ])),
         answerButton('Play!', x, y),
-        answerButton('My Quizzes!', x, y)
+        answerButton('Create a quiz!', x, y)
       ],
     );
   }
