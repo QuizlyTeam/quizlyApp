@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quizly_app/auth/auth.dart';
 import 'package:quizly_app/pages/create_quiz_page.dart';
 import 'package:quizly_app/pages/game_form.dart';
+import 'package:quizly_app/pages/my_quizzes_page.dart';
 import 'package:quizly_app/widgets/header.dart';
 import 'package:get/get.dart';
 
@@ -23,14 +24,10 @@ class MenuPage extends StatelessWidget {
               uID: data['uid'],
             ));
           } else {
-            Get.to(const CreateQuizForm(), arguments: [
-              "",
-              "Category",
-              "easy",
-              <String>[],
-              <OwnQuestion>[],
-              "Create!"
-            ]);
+            Get.to(MyQuizPage(
+              nick: nick,
+              uID: data['uid'],
+            ));
           }
         } else {
           if (text == 'Play!') {
@@ -129,7 +126,7 @@ class MenuPage extends StatelessWidget {
               )
             ])),
         answerButton('Play!', x, y),
-        answerButton('Create a quiz!', x, y)
+        answerButton('My quizzes!', x, y)
       ],
     );
   }

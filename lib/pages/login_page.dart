@@ -251,8 +251,9 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: () async {
                       var result = auth_.signInAnon();
                       if (result != null) {
-                        int end = (DateTime.now().millisecondsSinceEpoch / 1000)
-                            .round();
+                        int end =
+                            (DateTime.now().millisecondsSinceEpoch / 100000)
+                                .round();
                         String nickname = "guest$end";
                         Get.to(MenuPage(
                           nick: nickname,
