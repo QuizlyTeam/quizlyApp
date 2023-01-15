@@ -81,12 +81,12 @@ class Score extends StatelessWidget {
                     y: y,
                   ),
                 ),
-              body: Center(
-                child: Column(
-                 mainAxisAlignment: MainAxisAlignment.center,
-                  children: generateTable(y, x),
+                body: Center(
+                  child: Column(
+                   mainAxisAlignment: MainAxisAlignment.center,
+                    children: generateTable(y, x),
+                  ),
                 ),
-              ),
             )
           ),
         )
