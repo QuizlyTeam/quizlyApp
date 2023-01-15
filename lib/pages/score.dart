@@ -20,9 +20,11 @@ class Score extends StatelessWidget {
 
     Map sortedScore;
 
+    //sort users
     sortedScore = Map.fromEntries(score.entries.toList()
       ..sort((e1, e2) => -e1.value.compareTo(e2.value)));
 
+    //created pseudo table
     sortedScore.forEach((key, value) {
       Text record = Text(
         '$key : $value',
@@ -33,6 +35,7 @@ class Score extends StatelessWidget {
       ans.add(record);
     });
 
+    //Exiting button
     ElevatedButton returnToMenu = ElevatedButton(
         onPressed: () {
           Get.to(MenuPage(
@@ -57,6 +60,7 @@ class Score extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //scaling factor
     double y = MediaQuery.of(context).size.height / 866.2857142857143;
     double x = MediaQuery.of(context).size.width / 411.42857142857144;
 
@@ -68,22 +72,24 @@ class Score extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           home: SafeArea(
               child: Scaffold(
-            backgroundColor: Colors.grey[300],
-            appBar: PreferredSize(
-              preferredSize: const Size.fromHeight(70),
-              child: Header(
-                leftIcon: 'assets/images/profile.png',
-                rightIcon: 'assets/images/settings.png',
-                y: y,
+                backgroundColor: Colors.grey[300],
+                appBar: PreferredSize(
+                  preferredSize: const Size.fromHeight(70),
+                  child: Header(
+                    leftIcon: 'assets/images/profile.png',
+                    rightIcon: 'assets/images/settings.png',
+                    y: y,
+                  ),
+                ),
+              body: Center(
+                child: Column(
+                 mainAxisAlignment: MainAxisAlignment.center,
+                  children: generateTable(y, x),
+                ),
               ),
-            ),
-            body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: generateTable(y, x),
-              ),
-            ),
-          )),
-        ));
+            )
+          ),
+        )
+    );
   }
 }
