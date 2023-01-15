@@ -1,3 +1,7 @@
+///class used to create questions  and modify its data to json format
+///[question] - question
+///[correct_answer] - correct answer
+///[inCorrectanswers] - list of incorrect answers
 class OwnQuestion {
   String? question;
   // ignore: non_constant_identifier_names
@@ -19,7 +23,12 @@ class OwnQuestion {
         "incorrect_answers": inCorrectanswers
       };
 }
-
+///class used to create quiz in page and modify its data to json format
+///[title] - title of quiz
+///[category] - category of quiz
+///[difficulty] difficulty of quiz
+///[tags] - list of quiz`s tags
+///[questions] - list of questions (OwnQuestion instances)
 class OwnQuiz {
   final String title;
   final String category;

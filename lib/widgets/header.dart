@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quizly_app/pages/settings.dart';
 import 'package:quizly_app/pages/user_account.dart';
-import 'package:quizly_app/auth/auth.dart';
+import 'package:quizly_app/api_functions/functions.dart';
 
-//leftIcon - path ( String ) do lewej ikonki, pamietac zeby byla
-//tez zadeklarowana w pubspec.yaml
-//rightIcon to samo tylko po prawej
+/// Stateless WIdget used as Appbar
 class Header extends StatelessWidget {
+  /// left icon of appbar
   final String leftIcon;
+  ///right icon of appbar
   final String rightIcon;
+  ///variable used for changing height of Appbar on different devices
   final double y;
   const Header({
     super.key,

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:quizly_app/auth/auth.dart';
 import 'package:quizly_app/pages/create_quiz_page.dart';
 import 'package:quizly_app/pages/game_form.dart';
 import 'package:quizly_app/widgets/header.dart';
 import 'package:get/get.dart';
-
+import 'package:quizly_app/api_functions/functions.dart';
 import '../classes/own_question.dart';
 
 class MenuPage extends StatelessWidget {
@@ -129,7 +128,7 @@ class MenuPage extends StatelessWidget {
               )
             ])),
         answerButton('Play!', x, y),
-        answerButton('Create a quiz!', x, y)
+        answerButton('My Quizzes!', x, y)
       ],
     );
   }
