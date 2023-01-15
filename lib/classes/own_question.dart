@@ -42,6 +42,7 @@ class OwnQuiz {
       required this.difficulty,
       required this.tags,
       required this.questions});
+  //odcyzt z JSONa
   factory OwnQuiz.fromJson(Map<String, dynamic> json) {
     List tagsjson = json['tags'];
     List<String> tags = [];
@@ -72,6 +73,7 @@ class OwnQuiz {
       questions: questions,
     );
   }
+  // do JSONa
   Map<String, dynamic> toJson() => {
         "title": title,
         "category": category,

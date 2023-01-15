@@ -18,7 +18,7 @@ class Header extends StatelessWidget {
     required this.rightIcon,
     required this.y,
   });
-
+  //appbar widget used in many pages
   Widget header(context) {
     return Material(
       color: Colors.cyan,
