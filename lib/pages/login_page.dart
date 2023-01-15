@@ -259,6 +259,7 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: () async {
                       var result = auth_.signInAnon();
                       if (result != null) {
+                        //if user is guest choose him random nickname
                         int end = (DateTime.now().millisecondsSinceEpoch / 1000)
                             .round();
                         String nickname = "guest$end";

@@ -31,16 +31,16 @@ class GameForm extends StatefulWidget {
 }
 
 class _GameFormState extends State<GameForm> {
-  double _currentSliderValue = 4;
+  double _currentSliderValue = 4; //max number of players
   double _numberOfQuestions = 10;
-  int _selectedDifficulty = 0;
-  String room = "";
+  int _selectedDifficulty = 0; //0-easy 1-medium 2-hard
+  String room = ""; //room id
 
-  var arr = ["easy", "medium", "hard"];
+  var arr = ["easy", "medium", "hard"]; //array with difficulties
 
-  String _category = "Category";
+  String _category = "Category"; // chosen category
   List<String> _tags = [];
-  late Future<List<String>> _futureQuizzesID;
+  late Future<List<String>> _futureQuizzesID; //idk
   List<String> _quizzesID = [];
 
   @override
@@ -49,6 +49,7 @@ class _GameFormState extends State<GameForm> {
     super.initState();
   }
 
+  //gets quiz category
   void _newCategory() async {
     _category = await Get.to(() => const CategoryPage());
     setState(() {
@@ -56,6 +57,7 @@ class _GameFormState extends State<GameForm> {
     });
   }
 
+  //get quiz tags
   void _newTags() async {
     _tags = await Get.to(() => const TagPage());
     setState(() {
@@ -77,6 +79,7 @@ class _GameFormState extends State<GameForm> {
     });
   }
 
+  //body of custom game form
   Column customQuiz(double x, double y) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -415,12 +418,16 @@ class _GameFormState extends State<GameForm> {
     );
   }
 
+  //body of entering code
   Column enterCode(double x, double y) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Stack(
           children: <Widget>[
+            /*
+            Background
+             */
             Positioned(
               left: 12 * x,
               child: Container(
@@ -442,6 +449,9 @@ class _GameFormState extends State<GameForm> {
                 Container(
                   height: 20 * y,
                 ),
+                /*
+                Nice information about destiny of text field below
+                 */
                 Text(
                   'Enter room ID:',
                   style: TextStyle(
@@ -453,6 +463,9 @@ class _GameFormState extends State<GameForm> {
                 ),
                 SizedBox(
                   width: 390 * y,
+                  /*
+                  Place to enter room id
+                   */
                   child: TextField(
                     onChanged: (value) {
                       room = value;
@@ -472,6 +485,9 @@ class _GameFormState extends State<GameForm> {
             ),
           ],
         ),
+        /*
+        PLay button, goes to question page
+         */
         ElevatedButton(
             onPressed: () => Get.to(BetweenPage(
                   nick: widget.nick,
@@ -691,6 +707,7 @@ class _GameFormState extends State<GameForm> {
 
   @override
   Widget build(BuildContext context) {
+    //scaling factors
     double x = MediaQuery.of(context).size.width / 411.42857142857144;
     double y = MediaQuery.of(context).size.height / 866.2857142857143;
 
@@ -711,6 +728,9 @@ class _GameFormState extends State<GameForm> {
                 length: 3,
                 child: Column(
                   children: [
+                    /*
+                    Various game form forms
+                     */
                     TabBar(
                       indicatorColor: Colors.cyan,
                       labelStyle: TextStyle(
@@ -736,16 +756,21 @@ class _GameFormState extends State<GameForm> {
                       ],
                     ),
                     Expanded(
+                      /*
+                      Tabs implementation
+                       */
                         child: TabBarView(
-                      children: [
-                        customQuiz(x, y),
-                        enterCode(x, y),
-                        createdQuizzes(x, y),
-                      ],
+                        children: [
+                          customQuiz(x, y),
+                          enterCode(x, y),
+                          createdQuizzes(x, y),
+                        ],
                     )),
                   ],
                 ),
-              ))),
+              )
+          )
+      ),
     );
   }
 }
