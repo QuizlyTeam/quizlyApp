@@ -6,18 +6,24 @@ import 'package:quizly_app/widgets/header.dart';
 import 'package:quizly_app/pages/category_page.dart';
 import 'package:quizly_app/pages/tag_page.dart';
 import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
-import 'dart:math';
 
 import '../classes/own_question.dart';
 import 'create_quiz_page.dart';
-//import 'create_quiz_page.dart';
 
-// ignore: must_be_immutable
+/// Game form of the game. Gives three ways to start the game.
+///
+/// Contains three tabs of possible ways to start the game.
+/// First - user can choose max number of players, quiz category, tags, number
+/// of questions and questions' difficulty.
+/// Second - user can input room ID and join already created game.
+/// Third - if user is logged in, he will be able to chose one of his quiz and
+/// play it.
 class GameForm extends StatefulWidget {
-  GameForm({super.key, required this.nick, this.uID = ""});
+  const GameForm({super.key, required this.nick, this.uID = ""});
 
-  var rng = Random();
+  /// Player's nickname.
   final String nick;
+  /// Player's database id.
   final String uID;
 
   @override
@@ -28,7 +34,6 @@ class _GameFormState extends State<GameForm> {
   double _currentSliderValue = 4;
   double _numberOfQuestions = 10;
   int _selectedDifficulty = 0;
-  String name = 'Private';
   String room = "";
 
   var arr = ["easy", "medium", "hard"];
@@ -57,11 +62,6 @@ class _GameFormState extends State<GameForm> {
       _tags = _tags;
     });
   }
-
-  /*void _newQuiz() async {
-    await Get.to(() => const CreateQuizForm(),
-        arguments: ["", "Category", "easy", <String>[], <OwnQuestion>[]]);
-  }*/
 
   void _editQuiz(OwnQuiz quizData, String id) async {
     OwnQuiz quiz = await Get.to(() => const CreateQuizForm(), arguments: [
