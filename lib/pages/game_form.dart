@@ -513,79 +513,61 @@ class _GameFormState extends State<GameForm> {
             width: 395 * x,
             height: 100 * y,
             child: Center(
-              child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey.shade300, elevation: 0),
-                  onPressed: () {
-                    Get.to(() => BetweenPage(
-                          nick: widget.nick,
-                          uID: widget.uID,
-                          quizID: id,
-                          maxPlayers: _currentSliderValue.toInt(),
-                        ));
-                  },
-                  child: Container(
-                      width: 370 * x,
-                      height: 80 * y,
-                      decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(15),
-                            topRight: Radius.circular(15),
-                            bottomLeft: Radius.circular(15),
-                            bottomRight: Radius.circular(15),
-                          ),
-                          color: Colors.cyan),
-                      child: Row(
-                        children: [
-                          SizedBox(width: 10 * x),
-                          Container(
-                            width: 220 * x,
-                            height: 60 * y,
-                            decoration: const BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(15),
-                                  topRight: Radius.circular(15),
-                                  bottomLeft: Radius.circular(15),
-                                  bottomRight: Radius.circular(15),
-                                ),
-                                color: Colors.white),
-                            child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Row(children: [
-                                  SizedBox(
-                                    width: 10 * x,
-                                  ),
-                                  Text(
-                                    quiz.title.length < 20
-                                        ? quiz.title
-                                        : "${quiz.title.substring(0, 17)}...",
-                                    style: TextStyle(
-                                        fontSize: 20 * y, color: Colors.black),
-                                  ),
-                                ])),
-                          ),
-                          SizedBox(width: 10 * x),
-                          IconButton(
-                              onPressed: () => {
-                                    setState(() {
-                                      _editQuiz(quiz, id);
-                                    })
-                                  },
-                              icon: const Icon(Icons.edit_outlined),
-                              iconSize: 45 * y,
-                              color: Colors.white),
-                          IconButton(
-                              onPressed: () => {
-                                    setState(() {
-                                      _quizzesID.remove(id);
-                                      deleteQuizByID(id);
-                                    })
-                                  },
-                              icon: const Icon(Icons.delete_forever_outlined),
-                              iconSize: 45 * y,
-                              color: Colors.white)
-                        ],
-                      ))),
+              child: Container(
+                  width: 370 * x,
+                  height: 80 * y,
+                  decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(15),
+                        topRight: Radius.circular(15),
+                        bottomLeft: Radius.circular(15),
+                        bottomRight: Radius.circular(15),
+                      ),
+                      color: Colors.cyan),
+                  child: Row(
+                    children: [
+                      SizedBox(width: 10 * x),
+                      Container(
+                        width: 220 * x,
+                        height: 60 * y,
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(15),
+                              topRight: Radius.circular(15),
+                              bottomLeft: Radius.circular(15),
+                              bottomRight: Radius.circular(15),
+                            ),
+                            color: Colors.white),
+                        child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Row(children: [
+                              SizedBox(
+                                width: 10 * x,
+                              ),
+                              Text(
+                                quiz.title.length < 20
+                                    ? quiz.title
+                                    : "${quiz.title.substring(0, 17)}...",
+                                style: TextStyle(
+                                    fontSize: 20 * y, color: Colors.black),
+                              ),
+                            ])),
+                      ),
+                      SizedBox(width: 35 * x),
+                      IconButton(
+                          onPressed: () => {
+                                Get.to(() => BetweenPage(
+                                      nick: widget.nick,
+                                      uID: widget.uID,
+                                      quizID: id,
+                                      maxPlayers: _currentSliderValue.toInt(),
+                                    ))
+                              },
+                          icon: const Icon(Icons.play_arrow_rounded),
+                          iconSize: 45 * y,
+                          color: Colors.white)
+                    ],
+                  )),
             ));
       },
     );
@@ -610,29 +592,8 @@ class _GameFormState extends State<GameForm> {
           setup();
 
           return Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              SizedBox(
-                  height: 550 * y,
-                  child: SingleChildScrollView(
-                      child: Column(children: childrenQuestions))),
-              /*ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      _newQuiz();
-                      //_futureQuizzesID = getQuizzesID();
-                      setup();
-                    });
-                  },
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.cyan,
-                      fixedSize: Size(280 * x, 96 * y),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(32.0 * y),
-                      )),
-                  child: Text(
-                    'Add a quiz',
-                    style: TextStyle(fontSize: 30 * y, color: Colors.white),
-                  ))*/
               SizedBox(
                 width: 390 * x,
                 height: 84 * y,
@@ -684,6 +645,28 @@ class _GameFormState extends State<GameForm> {
                   ],
                 ),
               ),
+              SizedBox(
+                  height: 550 * y,
+                  child: SingleChildScrollView(
+                      child: Column(children: childrenQuestions))),
+              /*ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      _newQuiz();
+                      //_futureQuizzesID = getQuizzesID();
+                      setup();
+                    });
+                  },
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.cyan,
+                      fixedSize: Size(280 * x, 96 * y),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(32.0 * y),
+                      )),
+                  child: Text(
+                    'Add a quiz',
+                    style: TextStyle(fontSize: 30 * y, color: Colors.white),
+                  ))*/
             ],
           );
         });
