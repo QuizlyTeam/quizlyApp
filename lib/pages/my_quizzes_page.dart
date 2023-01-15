@@ -2,7 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../auth/auth.dart';
+import '../api_functions/functions.dart';
+import '../auth/auth.dart' as auth;
 import '../classes/own_question.dart';
 import '../widgets/header.dart';
 import 'create_quiz_page.dart';
@@ -22,7 +23,7 @@ class _MyQuizPageState extends State<MyQuizPage> {
   @override
   void initState() {
     super.initState();
-    _futureQuizzes = getQuizzes();
+    _futureQuizzes = auth.getQuizzes();
   }
 
   void _editQuiz(OwnQuiz quizData, String id) async {
@@ -42,7 +43,7 @@ class _MyQuizPageState extends State<MyQuizPage> {
   Future<void> _deleteQuiz(String id) async {
     await deleteQuizByID(id);
     setState(() {
-      _futureQuizzes = getQuizzes();
+      _futureQuizzes = auth.getQuizzes();
     });
   }
 
@@ -172,7 +173,7 @@ class _MyQuizPageState extends State<MyQuizPage> {
                                         "Create!"
                                       ]);
                                   setState(() {
-                                    _futureQuizzes = getQuizzes();
+                                    _futureQuizzes = auth.getQuizzes();
                                   });
                                 },
                                 style: ElevatedButton.styleFrom(

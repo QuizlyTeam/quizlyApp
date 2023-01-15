@@ -1,9 +1,15 @@
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:quizly_app/pages/login_page.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:http/http.dart' as http;
+
+import '../classes/own_question.dart';
+import '../classes/user.dart';
 
 ///class used to improve and fasten writing code to authenticate user
 class AuthService {
@@ -200,7 +206,6 @@ getQuizzes() async {
   );
   if (response.statusCode == 200) {
     var json = jsonDecode(response.body);
-    ;
     return json;
   } else {
     throw Exception("Failed to fetch quizid's");

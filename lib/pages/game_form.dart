@@ -5,10 +5,9 @@ import 'package:quizly_app/widgets/header.dart';
 import 'package:quizly_app/pages/category_page.dart';
 import 'package:quizly_app/pages/tag_page.dart';
 import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
-import 'package:quizly_app/api_functions/functions.dart';
 
+import '../auth/auth.dart';
 import '../classes/own_question.dart';
-import 'create_quiz_page.dart';
 
 /// Game form of the game. Gives three ways to start the game.
 ///
@@ -64,20 +63,6 @@ class _GameFormState extends State<GameForm> {
     _tags = await Get.to(() => const TagPage());
     setState(() {
       _tags = _tags;
-    });
-  }
-
-  void _editQuiz(OwnQuiz quizData, String id) async {
-    OwnQuiz quiz = await Get.to(() => const CreateQuizForm(), arguments: [
-      quizData.title,
-      quizData.category,
-      quizData.difficulty,
-      quizData.tags,
-      quizData.questions,
-      "Update!"
-    ]);
-    setState(() {
-      editQuiz(id, quiz);
     });
   }
 

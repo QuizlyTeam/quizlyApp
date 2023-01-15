@@ -4,7 +4,6 @@ import 'package:quizly_app/auth/register.dart';
 import 'package:quizly_app/pages/choose_nick_page.dart';
 import 'package:quizly_app/pages/menu.dart';
 import 'package:quizly_app/auth/auth.dart';
-import 'package:quizly_app/api_functions/functions.dart';
 
 ///Page in which a user can regster or sign in using different methods[Faceebok, Google, AppleID, Email & Password ]
 class LoginPage extends StatefulWidget {
