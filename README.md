@@ -73,7 +73,7 @@ flutter pub
 │    ├── widgets               # Custom widgets
 │    ├── pages                 # App pages
 │    ├── services              # Contains files responsible for working to external APIs, database, etc. 
-│    ├── firebase_options.dart #firebase file
+│    ├── firebase_options.dart # Firebase file
 │    └── main.dart             # Main file of the app containing routes for pages - ADD ONLY ROUTES !!!
 ├── test                       # Unit tests for the project
 │    ├── widgets               # Contains files responsible for testing custom widgets  
