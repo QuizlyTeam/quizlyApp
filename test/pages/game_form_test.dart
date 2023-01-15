@@ -25,7 +25,7 @@ void main() async {
           '{"YYYYYYYYYYYYYYYYYYYY": {"category": "History","difficulty": "easy","questions": [{"correct_answer": "in London in 1912","incorrect_answers": ["in Manchester in 1901","in Oxford in 1924","in Cambridge in 1935"],"question": "Where and when was Alan Turing born?"},{"correct_answer": "a Turing Machine","incorrect_answers": ["the Bombe","Church\'s Computer","the Manchester Mach I"],"question": "Turing, while solving the Decision Problem, proposed a hypothetical computing machine, which we now call ___"}],"tags": "1910\'s","title": "The father of the computer","uid": "XXXXXXXXXXXXXXXXXXXXXXXXXXXX"}}',
         );
 
-    await tester.pumpWidget(MaterialApp(
+    await tester.pumpWidget(const MaterialApp(
         home: GameForm(
       uID: 'xxix',
       nick: 'user',
@@ -42,7 +42,7 @@ void main() async {
           200,
           '{"YYYYYYYYYYYYYYYYYYYY": {"category": "History","difficulty": "easy","questions": [{"correct_answer": "in London in 1912","incorrect_answers": ["in Manchester in 1901","in Oxford in 1924","in Cambridge in 1935"],"question": "Where and when was Alan Turing born?"},{"correct_answer": "a Turing Machine","incorrect_answers": ["the Bombe","Church\'s Computer","the Manchester Mach I"],"question": "Turing, while solving the Decision Problem, proposed a hypothetical computing machine, which we now call ___"}],"tags": "1910\'s","title": "The father of the computer","uid": "XXXXXXXXXXXXXXXXXXXXXXXXXXXX"}}',
         );
-    await tester.pumpWidget(MaterialApp(
+    await tester.pumpWidget(const MaterialApp(
         home: GameForm(
       uID: 'xxix',
       nick: 'user',
@@ -58,7 +58,7 @@ void main() async {
           200,
           '{"YYYYYYYYYYYYYYYYYYYY": {"category": "History","difficulty": "easy","questions": [{"correct_answer": "in London in 1912","incorrect_answers": ["in Manchester in 1901","in Oxford in 1924","in Cambridge in 1935"],"question": "Where and when was Alan Turing born?"},{"correct_answer": "a Turing Machine","incorrect_answers": ["the Bombe","Church\'s Computer","the Manchester Mach I"],"question": "Turing, while solving the Decision Problem, proposed a hypothetical computing machine, which we now call ___"}],"tags": "1910\'s","title": "The father of the computer","uid": "XXXXXXXXXXXXXXXXXXXXXXXXXXXX"}}',
         );
-    await tester.pumpWidget(MaterialApp(
+    await tester.pumpWidget(const MaterialApp(
         home: GameForm(
       uID: 'xxix',
       nick: 'user',

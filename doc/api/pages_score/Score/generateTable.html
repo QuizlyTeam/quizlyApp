@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the generateTable method from the Score class, for the Dart programming language.">
+  <title>generateTable method - Score class - score library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="../../" data-using-base-href="false" class="light-theme">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">quizly_app</a></li>
+    <li><a href="../../pages_score/pages_score-library.html">score</a></li>
+    <li><a href="../../pages_score/Score-class.html">Score</a></li>
+    <li class="self-crumb">generateTable method</li>
+  </ol>
+  <div class="self-name">generateTable</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <div class="toggle" id="theme-button">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span class="material-symbols-outlined">
+        brightness_4
+      </span>
+    </label>
+  </div>
+</header>
+<main>
+
+  <div id="dartdoc-main-content" class="main-content">
+      <div>
+<h1><span class="kind-method">generateTable</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
+</h1></div>
+
+    <section class="multi-line-signature">
+      
+
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/widgets/Widget-class.html">Widget</a></span>&gt;</span></span>
+<span class="name ">generateTable</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="generateTable-param-y"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">y</span>, </span></li>
+<li><span class="parameter" id="generateTable-param-x"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">x</span></span></li>
+</ol>)
+
+      
+
+    </section>
+    
+<section class="desc markdown">
+  <p>Shows table of users after the game.</p>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">List&lt;Widget&gt; generateTable(double y, double x) {
+  List&lt;Widget&gt; ans = [];
+
+  Map sortedScore;
+
+  sortedScore = Map.fromEntries(score.entries.toList()
+    ..sort((e1, e2) =&gt; -e1.value.compareTo(e2.value)));
+
+  sortedScore.forEach((key, value) {
+    Text record = Text(
+      &#39;$key : $value&#39;,
+      style: TextStyle(
+          fontWeight: key == player ? FontWeight.bold : FontWeight.normal,
+          fontSize: 46 * y),
+    );
+    ans.add(record);
+  });
+
+  ElevatedButton returnToMenu = ElevatedButton(
+      onPressed: () {
+        Get.to(MenuPage(
+          nick: player,
+        ));
+      },
+      style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.cyan,
+          fixedSize: Size(280 * x, 96 * y),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(32.0),
+          )),
+      child: Text(
+        &#39;Return to menu&#39;,
+        style: TextStyle(fontSize: 30 * y, color: Colors.white),
+      ));
+
+  ans.add(returnToMenu);
+
+  return ans;
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li><a href="../../index.html">quizly_app</a></li>
+  <li><a href="../../pages_score/pages_score-library.html">score</a></li>
+  <li><a href="../../pages_score/Score-class.html">Score</a></li>
+  <li class="self-crumb">generateTable method</li>
+</ol>
+
+
+    <h5>Score class</h5>
+    <ol>
+
+        <li class="section-title"><a href="../../pages_score/Score-class.html#constructors">Constructors</a></li>
+          <li><a href="../../pages_score/Score/Score.html">Score</a></li>
+
+
+        <li class="section-title">
+          <a href="../../pages_score/Score-class.html#instance-properties">Properties</a>
+        </li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/hashCode.html">hashCode</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/key.html">key</a></li>
+          <li><a href="../../pages_score/Score/player.html">player</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
+          <li><a href="../../pages_score/Score/score.html">score</a></li>
+
+        <li class="section-title"><a href="../../pages_score/Score-class.html#instance-methods">Methods</a></li>
+          <li><a href="../../pages_score/Score/build.html">build</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/StatelessWidget/createElement.html">createElement</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/DiagnosticableTree/debugDescribeChildren.html">debugDescribeChildren</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/debugFillProperties.html">debugFillProperties</a></li>
+          <li><a href="../../pages_score/Score/generateTable.html">generateTable</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/DiagnosticableTree/toDiagnosticsNode.html">toDiagnosticsNode</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/Diagnosticable/toString.html">toString</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/DiagnosticableTree/toStringDeep.html">toStringDeep</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/DiagnosticableTree/toStringShallow.html">toStringShallow</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/toStringShort.html">toStringShort</a></li>
+
+        <li class="section-title inherited"><a href="../../pages_score/Score-class.html#operators">Operators</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/operator_equals.html">operator ==</a></li>
+
+
+
+
+</ol>
+
+  </div><!--/.sidebar-offcanvas-->
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    quizly_app
+      1.0.0+1
+  </span>
+
+  
+</footer>
+
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
+
+
+
+</body>
+
+</html>
+
