@@ -7,17 +7,32 @@ import 'package:quizly_app/widgets/header.dart';
 import 'package:get/get.dart';
 import 'package:quizly_app/services/socket_config.dart';
 
+/// A page shown between game form and actual game.
+///
+/// Gives information about number of players whose are in room, maximum number
+/// of players that can be in the room and room ID, which allows your friends
+/// join the game.
 class BetweenPage extends StatefulWidget {
+  /// Socket with which a player connects after choosing game options.
   final IO.Socket socket = IO.io(
       config["ip"], IO.OptionBuilder().setTransports(['websocket']).build());
+  /// Quiz's category chosen by user.
   final String category;
+  /// Quiz's tags chosen by user.
   final List<String> tags;
+  /// Maximal number of players in the game.
   final int maxPlayers;
+  /// Chosen by player length of quiz.
   final int numOfQuestions;
+  ///  Questions' difficulty chosen by user.
   final String difficulty;
+  /// ID of the room user wants to join.
   final String roomID;
+  /// Database's user ID.
   final String quizID;
+  /// Database's ID of quiz which user wants to play.
   final String uID;
+  /// User's nickname.
   final String nick;
 
   BetweenPage({
