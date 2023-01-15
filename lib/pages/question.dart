@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:quizly_app/pages/between_page.dart';
 // ignore: library_prefixes
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:flutter/material.dart';
@@ -10,12 +11,21 @@ import 'package:quizly_app/pages/score.dart';
 
 import '../services/socket_config.dart';
 
+/// Responsible for actual game page.
+///
+/// Takes questions from contentapi and shows it to user. Takes user's input and
+/// sends it back to API giving user information if his answer was either good
+/// or bad. After ended game goes to [Score].
 //ignore: must_be_immutable
 class Question extends StatefulWidget {
+  /// Socket with which a player connects after choosing game options. Same as
+  /// in [BetweenPage]
   IO.Socket socket = IO.io(
       config["ip"], IO.OptionBuilder().setTransports(['websocket']).build());
 
+  /// Chosen by player length of quiz.
   final int numOfQuestions;
+  /// User's nickname.
   final String player;
 
   Question(
@@ -161,9 +171,6 @@ class _QuestionState extends State<Question> {
   void determinateIndicator() {
     Timer.periodic(const Duration(milliseconds: 1), (Timer timer) {
       if (value <= 0) {
-        if (questionNumber == widget.numOfQuestions) {
-          timer.cancel();
-        } else {
           setState(() {
             if (ready) {
               value = 1;
@@ -181,7 +188,6 @@ class _QuestionState extends State<Question> {
               correctAnswer = tempCorrectAnswer;
             }
           });
-        }
       } else {
         setState(() {
           if (ready) {

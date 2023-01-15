@@ -55,6 +55,12 @@
 </h1></div>
 
     
+<section class="desc markdown">
+  <p>Responsible for actual game page.</p>
+<p>Takes questions from contentapi and shows it to user. Takes user's input and
+sends it back to API giving user information if his answer was either good
+or bad. After ended game goes to <a href="../pages_score/Score-class.html">Score</a>.</p>
+</section>
 
 
     <section>
@@ -134,7 +140,7 @@
 
 </dt>
 <dd>
-  
+  Chosen by player length of quiz.
   <div class="features"><span class="feature">final</span></div>
 
 </dd>
@@ -145,7 +151,7 @@
 
 </dt>
 <dd>
-  
+  User's nickname.
   <div class="features"><span class="feature">final</span></div>
 
 </dd>
@@ -167,7 +173,8 @@
 
 </dt>
 <dd>
-  
+  Socket with which a player connects after choosing game options. Same as
+in <a href="../pages_between_page/BetweenPage-class.html">BetweenPage</a>
   <div class="features"><span class="feature">read / write</span></div>
 
 </dd>
