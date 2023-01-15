@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:quizly_app/auth/auth.dart';
 import 'package:quizly_app/pages/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:quizly_app/pages/menu.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:quizly_app/api_functions/functions.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

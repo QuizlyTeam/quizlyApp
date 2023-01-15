@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:quizly_app/widgets/header.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
+///functions which gets categories from API
 Future<List<String>> fetchCategories() async {
   final response =
       await http.get(Uri.parse('http://10.0.2.2:8000/v1/quizzes/categories'));
@@ -18,7 +18,7 @@ Future<List<String>> fetchCategories() async {
     throw Exception('Failed to load categories');
   }
 }
-
+///Page in which a user can choose default category
 class CategoryPage extends StatefulWidget {
   const CategoryPage({Key? key}) : super(key: key);
 
@@ -27,11 +27,15 @@ class CategoryPage extends StatefulWidget {
 }
 
 class _CategoryPageState extends State<CategoryPage> {
+  ///list of initial categories
   late List<String> categories = [];
+  ///list of categories which show when a user searches for them
   late List<String> search = [];
   late List<String> pathToImages = ['assets/images/game.png'];
+  ///list of categories fetched from API
   late Future<List<String>> futureCategories;
   var helper = 0;
+  ///contains path to imagaes for each category
   Map<String, String> iconMap = {
     "Geography": 'assets/images/global.png',
     "Arts & Literature": 'assets/images/brush.png',
@@ -44,7 +48,7 @@ class _CategoryPageState extends State<CategoryPage> {
     "Society & Culture": 'assets/images/people.png',
     "Sport & Leisure": 'assets/images/dribbble.png'
   };
-
+  ///add quiz and its image
   void addQuiz(String categoryName, String pathToImage) {
     categories.add(categoryName);
     pathToImages.add(pathToImage);
@@ -55,7 +59,7 @@ class _CategoryPageState extends State<CategoryPage> {
     futureCategories = fetchCategories();
     super.initState();
   }
-
+  ///filter categories when user searches for specified one
   void filterSearchResults(String query) {
     if (query.isNotEmpty) {
       List<String> help = [];
@@ -76,7 +80,7 @@ class _CategoryPageState extends State<CategoryPage> {
       });
     }
   }
-
+  //button of 1 category
   Widget categoryButton(
       String categoryName, String categoryImage, double x, double y) {
     return ElevatedButton(
@@ -124,7 +128,7 @@ class _CategoryPageState extends State<CategoryPage> {
       ),
     );
   }
-
+  //bar for searching categories
   Widget searchBar() {
     return Padding(
       padding: const EdgeInsets.all(15),
@@ -166,6 +170,7 @@ class _CategoryPageState extends State<CategoryPage> {
             y: y,
           ),
         ),
+        //builder for categories
         body: FutureBuilder<List<String>>(
             future: futureCategories,
             builder: (context, snapshot) {
@@ -182,6 +187,7 @@ class _CategoryPageState extends State<CategoryPage> {
                     SizedBox(
                       child: searchBar(),
                     ),
+                    //displaying categories widgets in a loop
                     for (var i = 0; i <= search.length - 3; i += 3)
                       Column(
                         children: [
@@ -213,6 +219,7 @@ class _CategoryPageState extends State<CategoryPage> {
                           )
                         ],
                       ),
+                    //to display last one category on the left
                     if (search.length % 3 == 1)
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -231,6 +238,7 @@ class _CategoryPageState extends State<CategoryPage> {
                           )
                         ],
                       ),
+                    // to display last 2 categories on the 2 left positions
                     if (search.length % 3 == 2)
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

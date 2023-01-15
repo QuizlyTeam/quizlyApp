@@ -1,18 +1,15 @@
-import 'dart:convert';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:quizly_app/classes/own_question.dart';
 import 'package:quizly_app/pages/login_page.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:http/http.dart' as http;
-import '../classes/user.dart';
 
+///class used to improve and fasten writing code to authenticate user
 class AuthService {
+  ///Firebase instance
   final FirebaseAuth _auth = FirebaseAuth.instance;
-
+  ///sign in anonymously
   signInAnon() async {
     try {
       final userCredential = await FirebaseAuth.instance.signInAnonymously();
@@ -26,12 +23,12 @@ class AuthService {
     }
     return null;
   }
-
+  ///sign out user
   signOutUser() async {
     await _auth.signOut();
     Get.to(() => const LoginPage());
   }
-
+  /// sign in with Google account
   signInWithGoogle() async {
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
@@ -49,7 +46,7 @@ class AuthService {
       return null;
     }
   }
-
+  /// register user with given [email] and [password]
   registerUser(String email, String password) async {
     try {
       final credential =
@@ -64,7 +61,7 @@ class AuthService {
     }
     return null;
   }
-
+///login user with [email] and [password]
   loginUser(String email, String password) async {
     try {
       final credential = await FirebaseAuth.instance
@@ -76,7 +73,7 @@ class AuthService {
     }
     return null;
   }
-
+  /// sign in using Apple account
   signInWithApple() async {
     try {
       final appleProvider = AppleAuthProvider();
@@ -89,7 +86,7 @@ class AuthService {
       return null;
     }
   }
-
+  /// sign in using Facebook account
   signInWithFacebook() async {
     try {
       final LoginResult loginResult = await FacebookAuth.instance.login();
@@ -281,29 +278,5 @@ deleteQuizByID(String quizID) async {
     return true;
   } else {
     return false;
-  }
-}
-
-editQuiz(String quizID, OwnQuiz quiz) async {
-  String token = "";
-  await FirebaseAuth.instance.currentUser!
-      .getIdToken(true)
-      .then((String result) {
-    token = result;
-  });
-  // ignore: non_constant_identifier_names
-  String OwnQuizToJson(OwnQuiz data) => json.encode(data.toJson());
-
-  final response =
-      await http.patch(Uri.parse('http://10.0.2.2:8000/v1/quizzes/$quizID'),
-          headers: {
-            "Authorization": 'Bearer $token',
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: OwnQuizToJson(quiz));
-  if (response.statusCode == 200) {
-    return OwnQuiz.fromJson(jsonDecode(response.body));
-  } else {
-    return null;
   }
 }

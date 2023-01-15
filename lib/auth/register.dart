@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quizly_app/auth/auth.dart';
 import 'package:get/get.dart';
 import 'package:quizly_app/pages/choose_nick_page.dart';
-
+///Page which a user can register in
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
 
@@ -11,9 +11,13 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+  ///instance to create user`s account
   final AuthService _auth = AuthService();
+  ///key to check email`s validations and password`s strength
   final _formKey = GlobalKey<FormState>();
+  ///user`s email
   String email = "";
+  ///user`s password
   String password = "";
 
   @override

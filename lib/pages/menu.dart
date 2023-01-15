@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:quizly_app/auth/auth.dart';
+import 'package:quizly_app/pages/create_quiz_page.dart';
 import 'package:quizly_app/pages/game_form.dart';
 import 'package:quizly_app/pages/my_quizzes_page.dart';
 import 'package:quizly_app/widgets/header.dart';
 import 'package:get/get.dart';
-
+import 'package:quizly_app/api_functions/functions.dart';
+import '../classes/own_question.dart';
 
 class MenuPage extends StatelessWidget {
   final String nick;
@@ -14,6 +16,7 @@ class MenuPage extends StatelessWidget {
   Widget answerButton(String text, double x, double y) {
     return ElevatedButton(
       onPressed: () async {
+        //get user info
         var data = await getUser();
         if (data != null) {
           if (text == 'Play!') {
@@ -26,6 +29,7 @@ class MenuPage extends StatelessWidget {
           }
         } else {
           if (text == 'Play!') {
+            //if user is guest don't send user id
             Get.to(GameForm(
               nick: nick,
             ));

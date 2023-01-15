@@ -7,17 +7,32 @@ import 'package:quizly_app/widgets/header.dart';
 import 'package:get/get.dart';
 import 'package:quizly_app/services/socket_config.dart';
 
+/// A page shown between game form and actual game.
+///
+/// Gives information about number of players whose are in room, maximum number
+/// of players that can be in the room and room ID, which allows your friends
+/// join the game.
 class BetweenPage extends StatefulWidget {
+  /// Socket with which a player connects after choosing game options.
   final IO.Socket socket = IO.io(
       config["ip"], IO.OptionBuilder().setTransports(['websocket']).build());
+  /// Quiz's category chosen by user.
   final String category;
+  /// Quiz's tags chosen by user.
   final List<String> tags;
+  /// Maximal number of players in the game.
   final int maxPlayers;
+  /// Chosen by player length of quiz.
   final int numOfQuestions;
+  ///  Questions' difficulty chosen by user.
   final String difficulty;
+  /// ID of the room user wants to join.
   final String roomID;
+  /// Database's user ID.
   final String quizID;
+  /// Database's ID of quiz which user wants to play.
   final String uID;
+  /// User's nickname.
   final String nick;
 
   BetweenPage({
@@ -38,20 +53,23 @@ class BetweenPage extends StatefulWidget {
 }
 
 class _BetweenPageState extends State<BetweenPage> {
-  int ready = 1;
-  String room = "";
-  int maxPlayers = 0;
+  int ready = 1; //number of ready players
+  String room = ""; //room id
+  int maxPlayers = 0; // maximum number of players
 
   @override
   void initState() {
     super.initState();
 
+    //get maximum number of players from widget
     maxPlayers = widget.maxPlayers;
 
+    //fix category name
     String cat = widget.category.replaceFirst(r' & ', '_and_').toLowerCase();
 
     var quizOptions = {};
 
+    //assign proper parameters to quiz options
     quizOptions["nickname"] = widget.nick;
     cat.isEmpty ? 1 : quizOptions["categories"] = cat;
     widget.difficulty.isEmpty
@@ -66,16 +84,19 @@ class _BetweenPageState extends State<BetweenPage> {
     widget.uID.isEmpty ? 1 : quizOptions["uid"] = widget.uID;
     widget.quizID.isEmpty ? 1 : quizOptions["quiz_id"] = widget.quizID;
 
+    //connect to the game
     widget.socket.emit("join", quizOptions);
 
     if (widget.maxPlayers != 1) {
       widget.socket.on('join', (data) {
         setState(() {
+          //getting room parameters
           room = data["room"];
           ready = data["number_of_players"];
           maxPlayers = data["max_number_of_players"];
 
           if (maxPlayers == ready) {
+            //going to quiz page
             WidgetsBinding.instance.addPostFrameCallback((_) => Get.to(Question(
                   socket: widget.socket,
                   numOfQuestions: widget.numOfQuestions,
@@ -85,6 +106,7 @@ class _BetweenPageState extends State<BetweenPage> {
         });
       });
 
+      //going to quiz after waiting too long
       widget.socket.on(
           'timeout',
           (_) => Get.to(Question(
@@ -93,11 +115,13 @@ class _BetweenPageState extends State<BetweenPage> {
                 player: widget.nick,
               )));
 
+      //give websocket signal that player is ready
       WidgetsBinding.instance
           .addPostFrameCallback((_) => widget.socket.emit("ready"));
     }
 
     if (widget.maxPlayers == 1) {
+      //goes to quiz page
       WidgetsBinding.instance.addPostFrameCallback((_) => Get.to(Question(
             socket: widget.socket,
             numOfQuestions: widget.numOfQuestions,
@@ -109,12 +133,13 @@ class _BetweenPageState extends State<BetweenPage> {
   @override
   void dispose() {
     super.dispose();
-
+    //closes socket when element destroyed
     widget.socket.close();
   }
 
   @override
   Widget build(BuildContext context) {
+    //scaling factors
     double x = MediaQuery.of(context).size.width / 411.42857142857144;
     double y = MediaQuery.of(context).size.height / 866.2857142857143;
     return MaterialApp(
@@ -134,6 +159,7 @@ class _BetweenPageState extends State<BetweenPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Center(
+                      //information about room
                       child: Text(
                         "Ready players:\n"
                         "$ready/$maxPlayers\n"
@@ -146,6 +172,7 @@ class _BetweenPageState extends State<BetweenPage> {
                       ),
                     ),
                     Row(
+                      //Copy button
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         IconButton(
