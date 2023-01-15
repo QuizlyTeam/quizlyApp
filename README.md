@@ -78,6 +78,6 @@ flutter pub
 │    └── services              # Contains files responsible for testing services 
 ```
 ## License
-[![Licence](https://img.shields.io/github/license/QuizlyTeam/ContentApi?style=for-the-badge)](./LICENSE)
+[![Licence](https://img.shields.io/github/license/QuizlyTeam/quizly_app?style=for-the-badge)](./LICENSE)
 
 
