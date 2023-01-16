@@ -4,7 +4,8 @@ import 'package:quizly_app/auth/register.dart';
 import 'package:quizly_app/pages/choose_nick_page.dart';
 import 'package:quizly_app/pages/menu.dart';
 import 'package:quizly_app/auth/auth.dart';
-import 'package:quizly_app/api_functions/functions.dart';
+
+import '../api_functions/functions.dart';
 
 ///Page in which a user can regster or sign in using different methods[Faceebok, Google, AppleID, Email & Password ]
 class LoginPage extends StatefulWidget {
@@ -17,12 +18,16 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   ///instance for checking user`s authorization
   final AuthService auth_ = AuthService();
+
   ///key to validate user`s input
   final _formKey = GlobalKey<FormState>();
+
   ///user`s email
   String email = "";
+
   ///user`s password
   String password = "";
+
   ///widget for login using socials
   Widget socialLogo(String asset, double x, double y) {
     var auth_ = AuthService();
@@ -265,9 +270,9 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: () async {
                       var result = auth_.signInAnon();
                       if (result != null) {
-                        //if user is guest choose him random nickname
-                        int end = (DateTime.now().millisecondsSinceEpoch / 1000)
-                            .round();
+                        int end =
+                            (DateTime.now().millisecondsSinceEpoch / 100000)
+                                .round();
                         String nickname = "guest$end";
                         Get.to(MenuPage(
                           nick: nickname,

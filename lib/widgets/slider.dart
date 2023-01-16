@@ -7,6 +7,7 @@ class QuizlySlider extends StatefulWidget {
   State<QuizlySlider> createState() => _QuizlySlider();
 }
 
+///Widget that creates a slider used in settings
 class _QuizlySlider extends State<QuizlySlider> {
   double currentValue = 50;
 

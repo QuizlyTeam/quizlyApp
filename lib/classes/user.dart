@@ -1,4 +1,3 @@
-
 ///class with User`s datas and statistics
 class UserToApi {
   late String uid;

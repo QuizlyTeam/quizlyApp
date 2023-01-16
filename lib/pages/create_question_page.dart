@@ -10,11 +10,16 @@ class CreateQuestionForm extends StatefulWidget {
   State<CreateQuestionForm> createState() => _CreateQuestionForm();
 }
 
+///This class creates a form used to create a question
 class _CreateQuestionForm extends State<CreateQuestionForm> {
+  ///Data received from previous page
   var argumentData = Get.arguments;
+
+  ///Initial question data
   String question = "";
   String correctAnswer = "";
   List<String> incorrectAnswers = ['', '', ''];
+
   final _formKey = GlobalKey<FormState>();
 
   @override

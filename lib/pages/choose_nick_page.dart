@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:quizly_app/pages/menu.dart';
 
 import '../api_functions/functions.dart';
+
 ///A page which a user can choose his nickname in
 class NicknamePage extends StatefulWidget {
   const NicknamePage({Key? key}) : super(key: key);
@@ -14,6 +15,7 @@ class NicknamePage extends StatefulWidget {
 class _NicknamePageState extends State<NicknamePage> {
   ///nickname chosen by user
   String nickname = "";
+
   /// key used to check nickname`s validation
   final _formKey = GlobalKey<FormState>();
 

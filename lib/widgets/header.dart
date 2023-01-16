@@ -8,8 +8,10 @@ import 'package:quizly_app/api_functions/functions.dart';
 class Header extends StatelessWidget {
   /// left icon of appbar
   final String leftIcon;
+
   ///right icon of appbar
   final String rightIcon;
+
   ///variable used for changing height of Appbar on different devices
   final double y;
   const Header({
