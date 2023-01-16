@@ -13,7 +13,8 @@ Additional features:
 * multiple ways to log in to the app
 
 > ❗ **NOTICE** ❗ \
-> You need to add `.env` to the `lib` directory, to access functions that use Firebase
+> You need to add `.env` to the `lib` directory, to access functions that use Firebase.
+> Also don't forget to add `- lib/.env` in your assets in `pubspec.yaml`
 
 ## Getting Started
 
