@@ -3,6 +3,7 @@
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -14,6 +15,8 @@ import 'package:flutter/foundation.dart'
 ///   options: DefaultFirebaseOptions.currentPlatform,
 /// );
 /// ```
+
+
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
@@ -49,28 +52,24 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCTH2pFW2K6uObn_tLX8Bg0oiThRU6R3N4',
-    appId: '1:935478523711:android:c1a7b0261aebaa95ed058a',
-    messagingSenderId: '935478523711',
-    projectId: 'quizly-70118',
-    databaseURL:
-        'https://quizly-70118-default-rtdb.europe-west1.firebasedatabase.app',
-    storageBucket: 'quizly-70118.appspot.com',
+  static   FirebaseOptions android = FirebaseOptions(
+    apiKey: dotenv.env["ANDROID_API_KEY"]!,
+    appId: dotenv.env["ANDROID_APP_ID"]!,
+    messagingSenderId: dotenv.env["MESSAGING_SENDER_ID"]!,
+    projectId: dotenv.env["PROJECT_ID"]!,
+    databaseURL: dotenv.env["DATABASE_URL"]!,
+    storageBucket: dotenv.env["STORAGE_BUCKET"]!,
   );
 
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAwK7_Pxa8wA_zzOLKaMgbK_pWgBouCeJ8',
+  static  FirebaseOptions ios = FirebaseOptions(
+    apiKey: dotenv.env["IOS_API_KEY"]!,
     appId: '1:935478523711:ios:0a0929e10d7d0334ed058a',
-    messagingSenderId: '935478523711',
-    projectId: 'quizly-70118',
-    databaseURL:
-        'https://quizly-70118-default-rtdb.europe-west1.firebasedatabase.app',
-    storageBucket: 'quizly-70118.appspot.com',
-    androidClientId:
-        '935478523711-ojcms6sgv12e0h7ida8f733h9lbh38em.apps.googleusercontent.com',
-    iosClientId:
-        '935478523711-ra8t0gqkq49mtqhntr43atquqv2u3vtb.apps.googleusercontent.com',
-    iosBundleId: 'com.example.quizlyApp',
+    messagingSenderId: dotenv.env["MESSAGING_SENDER_ID"]!,
+    projectId: dotenv.env["PROJECT_ID"]!,
+    databaseURL: dotenv.env["DATABASE_URL"]!,
+    storageBucket: dotenv.env["STORAGE_BUCKET"]!,
+    androidClientId: dotenv.env["IOS_ANDROID_CLIENT_ID "]!,
+    iosClientId: dotenv.env["IOS_IOS_CLIENT_ID"]!,
+    iosBundleId: dotenv.env["IOS_BUNDLE_ID"]!,
   );
 }
