@@ -14,7 +14,7 @@ void main() {
         find.image(const AssetImage('assets/images/logo.png')), findsOneWidget);
     expect(find.image(const AssetImage('assets/images/settings.png')),
         findsOneWidget);
-    expect(find.text('Create a quiz!'), findsOneWidget);
+    expect(find.text('My quizzes!'), findsOneWidget);
     expect(find.text('user'), findsOneWidget);
     expect(find.text('Play!'), findsOneWidget);
   });

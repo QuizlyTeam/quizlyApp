@@ -11,7 +11,7 @@
   
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   
   <link rel="stylesheet" href="../static-assets/github.css?v1">
   <link rel="stylesheet" href="../static-assets/styles.css?v1">
@@ -21,12 +21,12 @@
 </head>
 
 
-<body data-base-href="../" data-using-base-href="false" class="light-theme">
+<body data-base-href="../" data-using-base-href="false">
 
 <div id="overlay-under-drawer"></div>
 
 <header id="title">
-  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../index.html">quizly_app</a></li>
     <li><a href="../firebase_options/firebase_options-library.html">firebase_options</a></li>
@@ -36,16 +36,10 @@
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
-  <div class="toggle" id="theme-button">
-    <label for="theme">
-      <input type="checkbox" id="theme" value="light-theme">
-      <span class="material-symbols-outlined">
-        brightness_4
-      </span>
-    </label>
-  </div>
 </header>
+
 <main>
+
 
   <div id="dartdoc-main-content" class="main-content">
       <div>
@@ -93,7 +87,7 @@ await Firebase.initializeApp(
 </dt>
 <dd class="inherited">
   The hash code for this object.
-  <div class="features"><span class="feature">read-only</span><span class="feature">inherited</span></div>
+  <div class="features">read-only, inherited</div>
 
 </dd>
 
@@ -104,7 +98,7 @@ await Firebase.initializeApp(
 </dt>
 <dd class="inherited">
   A representation of the runtime type of the object.
-  <div class="features"><span class="feature">read-only</span><span class="feature">inherited</span></div>
+  <div class="features">read-only, inherited</div>
 
 </dd>
 
@@ -126,7 +120,7 @@ await Firebase.initializeApp(
 </dt>
 <dd class="inherited">
   Invoked when a non-existent method or property is accessed.
-  <div class="features"><span class="feature">inherited</span></div>
+  <div class="features">inherited</div>
 
 </dd>
 
@@ -139,7 +133,7 @@ await Firebase.initializeApp(
 </dt>
 <dd class="inherited">
   A string representation of this object.
-  <div class="features"><span class="feature">inherited</span></div>
+  <div class="features">inherited</div>
 
 </dd>
 
@@ -160,7 +154,7 @@ await Firebase.initializeApp(
 </dt>
 <dd class="inherited">
   The equality operator.
-  <div class="features"><span class="feature">inherited</span></div>
+  <div class="features">inherited</div>
 
 </dd>
 
@@ -178,7 +172,7 @@ await Firebase.initializeApp(
 </dt>
 <dd>
   
-  <div class="features"><span class="feature">read-only</span></div>
+  <div class="features">read-only</div>
 
 </dd>
 
@@ -201,9 +195,9 @@ await Firebase.initializeApp(
   
   
 
-    <div>
-      <span class="signature"><code><a href="https://pub.dev/documentation/firebase_core_platform_interface/4.5.2/firebase_core_platform_interface/FirebaseOptions/FirebaseOptions.html">FirebaseOptions</a>(apiKey: &#39;AIzaSyCTH2pFW2K6uObn_tLX8Bg0oiThRU6R3N4&#39;, appId: &#39;1:935478523711:android:c1a7b0261aebaa95ed058a&#39;, messagingSenderId: &#39;935478523711&#39;, projectId: &#39;qu…</code></span>
-    </div>
+  <div>
+    <span class="signature"><code><a href="https://pub.dev/documentation/firebase_core_platform_interface/4.5.2/firebase_core_platform_interface/FirebaseOptions/FirebaseOptions.html">FirebaseOptions</a>(apiKey: &#39;AIzaSyCTH2pFW2K6uObn_tLX8Bg0oiThRU6R3N4&#39;, appId: &#39;1:935478523711:android:c1a7b0261aebaa95ed058a&#39;, messagingSenderId: &#39;935478523711&#39;, projectId: &#39;qu…</code></span>
+  </div>
 </dd>
 
         <dt id="ios" class="constant">
@@ -216,9 +210,9 @@ await Firebase.initializeApp(
   
   
 
-    <div>
-      <span class="signature"><code><a href="https://pub.dev/documentation/firebase_core_platform_interface/4.5.2/firebase_core_platform_interface/FirebaseOptions/FirebaseOptions.html">FirebaseOptions</a>(apiKey: &#39;AIzaSyAwK7_Pxa8wA_zzOLKaMgbK_pWgBouCeJ8&#39;, appId: &#39;1:935478523711:ios:0a0929e10d7d0334ed058a&#39;, messagingSenderId: &#39;935478523711&#39;, projectId: &#39;quizly…</code></span>
-    </div>
+  <div>
+    <span class="signature"><code><a href="https://pub.dev/documentation/firebase_core_platform_interface/4.5.2/firebase_core_platform_interface/FirebaseOptions/FirebaseOptions.html">FirebaseOptions</a>(apiKey: &#39;AIzaSyAwK7_Pxa8wA_zzOLKaMgbK_pWgBouCeJ8&#39;, appId: &#39;1:935478523711:ios:0a0929e10d7d0334ed058a&#39;, messagingSenderId: &#39;935478523711&#39;, projectId: &#39;quizly…</code></span>
+  </div>
 </dd>
 
     </dl>
@@ -242,8 +236,8 @@ await Firebase.initializeApp(
 
     <h5>firebase_options library</h5>
     <ol>
-      <li class="section-title"><a href="../firebase_options/firebase_options-library.html#classes">Classes</a></li>
-        <li><a href="../firebase_options/DefaultFirebaseOptions-class.html">DefaultFirebaseOptions</a></li>
+  <li class="section-title"><a href="../firebase_options/firebase_options-library.html#classes">Classes</a></li>
+  <li><a href="../firebase_options/DefaultFirebaseOptions-class.html">DefaultFirebaseOptions</a></li>
 
 
 
@@ -263,18 +257,18 @@ await Firebase.initializeApp(
           <li><a href="../firebase_options/DefaultFirebaseOptions/DefaultFirebaseOptions.html">DefaultFirebaseOptions</a></li>
 
 
-        <li class="section-title inherited">
-          <a href="../firebase_options/DefaultFirebaseOptions-class.html#instance-properties">Properties</a>
-        </li>
-          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
-          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
+    <li class="section-title inherited">
+      <a href="../firebase_options/DefaultFirebaseOptions-class.html#instance-properties">Properties</a>
+    </li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
 
-        <li class="section-title inherited"><a href="../firebase_options/DefaultFirebaseOptions-class.html#instance-methods">Methods</a></li>
-          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
-          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
+    <li class="section-title inherited"><a href="../firebase_options/DefaultFirebaseOptions-class.html#instance-methods">Methods</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
 
-        <li class="section-title inherited"><a href="../firebase_options/DefaultFirebaseOptions-class.html#operators">Operators</a></li>
-          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></li>
+    <li class="section-title inherited"><a href="../firebase_options/DefaultFirebaseOptions-class.html#operators">Operators</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></li>
 
 
         <li class="section-title"><a href="../firebase_options/DefaultFirebaseOptions-class.html#static-properties">Static properties</a></li>
