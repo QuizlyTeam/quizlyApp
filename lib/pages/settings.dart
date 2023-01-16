@@ -4,6 +4,7 @@ import '../auth/auth.dart';
 import '../widgets/slider.dart';
 import 'package:get/get.dart';
 
+///Stateless widget that blurs the background and displays a settings page
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
 

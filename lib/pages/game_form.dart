@@ -6,7 +6,7 @@ import 'package:quizly_app/pages/category_page.dart';
 import 'package:quizly_app/pages/tag_page.dart';
 import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 
-import '../auth/auth.dart';
+import '../api_functions/functions.dart';
 import '../classes/own_question.dart';
 
 /// Game form of the game. Gives three ways to start the game.

@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:quizly_app/auth/auth.dart';
 import 'package:quizly_app/pages/game_form.dart';
 import 'package:quizly_app/pages/my_quizzes_page.dart';
 import 'package:quizly_app/widgets/header.dart';
 import 'package:get/get.dart';
 
+import '../api_functions/functions.dart';
+
 class MenuPage extends StatelessWidget {
+  ///User's nickname
   final String nick;
 
   const MenuPage({super.key, required this.nick});
-
+  ///Widget that creates a button with given text
   Widget answerButton(String text, double x, double y) {
     return ElevatedButton(
       onPressed: () async {
@@ -45,8 +47,8 @@ class MenuPage extends StatelessWidget {
       ),
     );
   }
-
-  Widget bodyOfQuestion(String nickname, double x, double y) {
+  ///Displays a text that welcomes the user
+  Widget welcome(String nickname, double x, double y) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -144,7 +146,7 @@ class MenuPage extends StatelessWidget {
             y: y,
           ),
         ),
-        body: bodyOfQuestion(nick, x, y),
+        body: welcome(nick, x, y),
       )),
     );
   }

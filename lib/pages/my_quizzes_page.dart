@@ -3,11 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../api_functions/functions.dart';
-import '../auth/auth.dart' as auth;
 import '../classes/own_question.dart';
 import '../widgets/header.dart';
 import 'create_quiz_page.dart';
 
+///This class shows all custom quizzes created by the user
 class MyQuizPage extends StatefulWidget {
   const MyQuizPage({super.key});
 
@@ -16,17 +16,19 @@ class MyQuizPage extends StatefulWidget {
 }
 
 class _MyQuizPageState extends State<MyQuizPage> {
+  ///data fetched from api
   late Future<dynamic> _futureQuizzes;
+  ///list with converted data from api
   late List<String> _quizzesKeys = [];
   late List<dynamic> _quizzesValues = [];
 
   @override
   void initState() {
     super.initState();
-    _futureQuizzes = auth.getQuizzes();
+    _futureQuizzes = getQuizzes();
   }
-
-  void _editQuiz(OwnQuiz quizData, String id) async {
+  ///edits a given quiz
+  Future<void> _editQuiz(OwnQuiz quizData, String id) async {
     OwnQuiz quiz = await Get.to(() => const CreateQuizForm(), arguments: [
       quizData.title,
       quizData.category,
@@ -35,18 +37,20 @@ class _MyQuizPageState extends State<MyQuizPage> {
       quizData.questions,
       "Update!"
     ]);
+    await editQuiz(id, quiz);
     setState(() {
-      editQuiz(id, quiz);
+      _futureQuizzes = getQuizzes();
     });
   }
 
+  ///deletes the quiz with a given id
   Future<void> _deleteQuiz(String id) async {
     await deleteQuizByID(id);
     setState(() {
-      _futureQuizzes = auth.getQuizzes();
+      _futureQuizzes = getQuizzes();
     });
   }
-
+  ///widget that represents a quiz on the list of user's quizzes
   Widget quizListItemBar(
       {required double x,
       required double y,
@@ -98,11 +102,7 @@ class _MyQuizPageState extends State<MyQuizPage> {
                   ),
                   SizedBox(width: 10 * x),
                   IconButton(
-                      onPressed: () => {
-                            setState(() {
-                              _editQuiz(quiz, id);
-                            })
-                          },
+                      onPressed: () async => {await _editQuiz(quiz, id)},
                       icon: const Icon(Icons.edit_outlined),
                       iconSize: 45 * y,
                       color: Colors.white),
@@ -173,7 +173,7 @@ class _MyQuizPageState extends State<MyQuizPage> {
                                         "Create!"
                                       ]);
                                   setState(() {
-                                    _futureQuizzes = auth.getQuizzes();
+                                    _futureQuizzes = getQuizzes();
                                   });
                                 },
                                 style: ElevatedButton.styleFrom(

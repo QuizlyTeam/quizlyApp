@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:quizly_app/auth/auth.dart';
+import 'package:quizly_app/api_functions/functions.dart';
 import 'package:quizly_app/pages/my_quizzes_page.dart';
 import 'package:http/http.dart' as http;
 

@@ -9,6 +9,7 @@ import 'package:toast/toast.dart';
 import '../classes/own_question.dart';
 import 'package:quizly_app/api_functions/functions.dart';
 
+///Creates a form to setup a custom quiz
 class CreateQuizForm extends StatefulWidget {
   const CreateQuizForm({super.key});
 
@@ -17,16 +18,21 @@ class CreateQuizForm extends StatefulWidget {
 }
 
 class _CreateQuizFormState extends State<CreateQuizForm> {
+  ///Data received from the earlier page(not default only when editing a quiz)
   var argumentData = Get.arguments;
+
+  ///Initial quiz data
   late String _title = "";
   int _selectedDifficulty = 0;
   var arr = ["easy", "medium", "hard"];
   List<OwnQuestion> _questions = [];
   String _category = "Category";
   List<String> _tags = [];
-  final _formKey = GlobalKey<FormState>();
   String text = "Update";
 
+  final _formKey = GlobalKey<FormState>();
+
+  ///Setup initial data
   @override
   void initState() {
     _title = argumentData[0];
@@ -37,21 +43,21 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
     text = argumentData[5];
     super.initState();
   }
-
+  ///Choose category (sends to category page and receives chosen category)
   void _newCategory() async {
     _category = await Get.to(const CategoryPage());
     setState(() {
       _category = _category;
     });
   }
-
+  ///Choose tags (sends to tags page and receives chosen tags)
   void _newTags() async {
     _tags = await Get.to(const TagPage());
     setState(() {
       _tags = _tags;
     });
   }
-
+  ///Creates a question (sends to question form and receives the create question)
   void _newQuestion() async {
     OwnQuestion question =
         await Get.to(() => const CreateQuestionForm(), arguments: [
@@ -63,7 +69,7 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
       _questions.add(question);
     });
   }
-
+  ///Edits a given question (sends to question form and receives the edited question)
   void _editQuestion(OwnQuestion questionData) async {
     OwnQuestion question =
         await Get.to(() => const CreateQuestionForm(), arguments: [
@@ -76,7 +82,7 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
       _questions[indeks] = question;
     });
   }
-
+  ///Creates a widget that represents a question on the list of questions
   Widget questionListItemBar(
       {required double x, required double y, required OwnQuestion question}) {
     return SizedBox(
@@ -147,6 +153,7 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
     );
   }
 
+  ///Form used to create a custom quiz
   Form customQuiz(double x, double y) {
     return Form(
         key: _formKey,
@@ -454,6 +461,7 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
         ));
   }
 
+  ///List of questions
   createdQuestions(double x, double y) {
     var childrenQuestions = <Widget>[];
     for (int i = 0; i < _questions.length; i++) {

@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:quizly_app/widgets/header.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
+///List used to shade selected tags
 List<bool> shaded = [];
 List<String> selectedTags = [];
-
+///Function that fetches tags from api
 Future<List<String>> fetchTags() async {
   final response =
       await http.get(Uri.parse('http://10.0.2.2:8000/v1/quizzes/tags'));
@@ -28,6 +28,7 @@ Future<List<String>> fetchTags() async {
   }
 }
 
+///This class displays and allows to choose tags
 class TagPage extends StatefulWidget {
   const TagPage({Key? key}) : super(key: key);
 
@@ -36,22 +37,19 @@ class TagPage extends StatefulWidget {
 }
 
 class _TagPageState extends State<TagPage> {
+  ///list of tags
   late List<String> tags = [];
-
+  ///List of tags compatible with text typed in the searchbar
   late List<String> search = [];
+  ///Data with tags fetched from API
   late Future<List<String>> futureTags;
-  var helper = 0;
-
-  void addQuiz(String categoryName, String pathToImage) {
-    tags.add(categoryName);
-  }
 
   @override
   void initState() {
     futureTags = fetchTags();
     super.initState();
   }
-
+  ///Filter results according to the text typed in the searchbar
   void filterSearchResults(String query) {
     if (query.isNotEmpty) {
       List<String> help = [];
@@ -72,7 +70,7 @@ class _TagPageState extends State<TagPage> {
       });
     }
   }
-
+  ///Widget used to create a button representing a tag
   Widget tagButton(String tagName, double x, double y) {
     int indeks = tags.indexOf(tagName);
     return ElevatedButton(
@@ -106,7 +104,7 @@ class _TagPageState extends State<TagPage> {
       ),
     );
   }
-
+  ///Creates a searchbar
   Widget searchBar() {
     return Padding(
       padding: const EdgeInsets.all(15),
