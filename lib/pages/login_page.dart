@@ -38,6 +38,7 @@ class _LoginPageState extends State<LoginPage> {
         width: 120 * x,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
+            elevation: 0,
             backgroundColor: Colors.cyan,
           ),
           onPressed: () async {
