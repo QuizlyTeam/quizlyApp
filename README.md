@@ -12,6 +12,8 @@ Additional features:
 * saved progress for logged users,
 * multiple ways to log in to the app
 
+> ❗ **NOTICE** ❗ \
+> You need to add `.env` to the `lib` directory, to access functions that use Firebase
 
 ## Getting Started
 
