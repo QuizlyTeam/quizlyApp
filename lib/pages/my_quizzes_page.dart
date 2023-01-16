@@ -18,6 +18,7 @@ class MyQuizPage extends StatefulWidget {
 class _MyQuizPageState extends State<MyQuizPage> {
   ///data fetched from api
   late Future<dynamic> _futureQuizzes;
+
   ///list with converted data from api
   late List<String> _quizzesKeys = [];
   late List<dynamic> _quizzesValues = [];
@@ -27,6 +28,7 @@ class _MyQuizPageState extends State<MyQuizPage> {
     super.initState();
     _futureQuizzes = getQuizzes();
   }
+
   ///edits a given quiz
   Future<void> _editQuiz(OwnQuiz quizData, String id) async {
     OwnQuiz quiz = await Get.to(() => const CreateQuizForm(), arguments: [
@@ -50,6 +52,7 @@ class _MyQuizPageState extends State<MyQuizPage> {
       _futureQuizzes = getQuizzes();
     });
   }
+
   ///widget that represents a quiz on the list of user's quizzes
   Widget quizListItemBar(
       {required double x,

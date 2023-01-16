@@ -18,12 +18,16 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   ///instance for checking user`s authorization
   final AuthService auth_ = AuthService();
+
   ///key to validate user`s input
   final _formKey = GlobalKey<FormState>();
+
   ///user`s email
   String email = "";
+
   ///user`s password
   String password = "";
+
   ///widget for login using socials
   Widget socialLogo(String asset, double x, double y) {
     var auth_ = AuthService();

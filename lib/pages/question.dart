@@ -25,6 +25,7 @@ class Question extends StatefulWidget {
 
   /// Chosen by player length of quiz.
   final int numOfQuestions;
+
   /// User's nickname.
   final String player;
 
@@ -147,7 +148,7 @@ class _QuestionState extends State<Question> {
       onPressed: clickedAnything
           ? () {}
           : () {
-        //get answer and time taken for thinking
+              //get answer and time taken for thinking
               double time = stopwatch.elapsedMilliseconds / 1000;
               time = time > 12 ? 12 : time;
               widget.socket.emit("answer", {"answer": answer, "time": time});
@@ -181,24 +182,24 @@ class _QuestionState extends State<Question> {
   void determinateIndicator() {
     Timer.periodic(const Duration(milliseconds: 1), (Timer timer) {
       if (value <= 0) {
-          setState(() {
-            if (ready) {
-              //reset page with proper question
-              value = 1;
+        setState(() {
+          if (ready) {
+            //reset page with proper question
+            value = 1;
 
-              clickedAnything = false;
-              wasClicked = [false, false, false, false];
-              value = 1;
-              questionNumber++;
+            clickedAnything = false;
+            wasClicked = [false, false, false, false];
+            value = 1;
+            questionNumber++;
 
-              question = tempQuestion;
-              ans1 = tempAns1;
-              ans2 = tempAns2;
-              ans3 = tempAns3;
-              ans4 = tempAns4;
-              correctAnswer = tempCorrectAnswer;
-            }
-          });
+            question = tempQuestion;
+            ans1 = tempAns1;
+            ans2 = tempAns2;
+            ans3 = tempAns3;
+            ans4 = tempAns4;
+            correctAnswer = tempCorrectAnswer;
+          }
+        });
       } else {
         //take time
         setState(() {
@@ -283,7 +284,7 @@ class _QuestionState extends State<Question> {
   @override
   void dispose() {
     super.dispose();
-  //destructs widget
+    //destructs widget
     widget.socket.close();
   }
 

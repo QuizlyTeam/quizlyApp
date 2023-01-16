@@ -26,6 +26,7 @@ createUser(String nickname) async {
     return null;
   }
 }
+
 ///get User`s datas from database
 getUser() async {
   String token = "";
@@ -48,6 +49,7 @@ getUser() async {
     return null;
   }
 }
+
 ///create quiz in database which contains [title], [category], [difficulty], [tags] and [questions]
 // ignore: non_constant_identifier_names
 createQuiz(String title, String category, String difficulty, List<String> tags,
@@ -78,6 +80,7 @@ createQuiz(String title, String category, String difficulty, List<String> tags,
     return null;
   }
 }
+
 ///return map of quizzes
 getQuizzes() async {
   String token = "";
@@ -102,6 +105,7 @@ getQuizzes() async {
     throw Exception("Failed to fetch quiz's");
   }
 }
+
 ///get quiz datas using [quizID]
 Future<OwnQuiz> getQuizById(String quizID) async {
   String token = "";
@@ -155,6 +159,7 @@ Future<OwnQuiz> getQuizById(String quizID) async {
     throw Exception("Faild to fetch quiz from id");
   }
 }
+
 ///delete quiz using its [quizID]
 deleteQuizByID(String quizID) async {
   String token = "";
@@ -176,6 +181,7 @@ deleteQuizByID(String quizID) async {
     return false;
   }
 }
+
 ///edit current quiz using [quizID] and given new [quiz]
 editQuiz(String quizID, OwnQuiz quiz) async {
   String token = "";
@@ -188,12 +194,12 @@ editQuiz(String quizID, OwnQuiz quiz) async {
   String OwnQuizToJson(OwnQuiz data) => json.encode(data.toJson());
 
   final response =
-  await http.patch(Uri.parse('http://10.0.2.2:8000/v1/quizzes/$quizID'),
-      headers: {
-        "Authorization": 'Bearer $token',
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: OwnQuizToJson(quiz));
+      await http.patch(Uri.parse('http://10.0.2.2:8000/v1/quizzes/$quizID'),
+          headers: {
+            "Authorization": 'Bearer $token',
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: OwnQuizToJson(quiz));
   if (response.statusCode == 200) {
     return OwnQuiz.fromJson(jsonDecode(response.body));
   } else {

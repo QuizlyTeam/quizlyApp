@@ -10,6 +10,7 @@ import 'package:quizly_app/pages/menu.dart';
 class Score extends StatelessWidget {
   /// Contains information which player scores how many points.
   final Map score;
+
   /// User's nickname
   final String player;
   const Score({super.key, required this.score, required this.player});
@@ -72,24 +73,22 @@ class Score extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           home: SafeArea(
               child: Scaffold(
-                backgroundColor: Colors.grey[300],
-                appBar: PreferredSize(
-                  preferredSize: const Size.fromHeight(70),
-                  child: Header(
-                    leftIcon: 'assets/images/profile.png',
-                    rightIcon: 'assets/images/settings.png',
-                    y: y,
-                  ),
-                ),
-                body: Center(
-                  child: Column(
-                   mainAxisAlignment: MainAxisAlignment.center,
-                    children: generateTable(y, x),
-                  ),
-                ),
-            )
-          ),
-        )
-    );
+            backgroundColor: Colors.grey[300],
+            appBar: PreferredSize(
+              preferredSize: const Size.fromHeight(70),
+              child: Header(
+                leftIcon: 'assets/images/profile.png',
+                rightIcon: 'assets/images/settings.png',
+                y: y,
+              ),
+            ),
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: generateTable(y, x),
+              ),
+            ),
+          )),
+        ));
   }
 }

@@ -23,6 +23,7 @@ class OwnQuestion {
         "incorrect_answers": inCorrectanswers
       };
 }
+
 ///class used to create quiz in page and modify its data to json format
 ///[title] - title of quiz
 ///[category] - category of quiz

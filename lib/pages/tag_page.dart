@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:quizly_app/widgets/header.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
 ///List used to shade selected tags
 List<bool> shaded = [];
 List<String> selectedTags = [];
+
 ///Function that fetches tags from api
 Future<List<String>> fetchTags() async {
   final response =
@@ -39,8 +41,10 @@ class TagPage extends StatefulWidget {
 class _TagPageState extends State<TagPage> {
   ///list of tags
   late List<String> tags = [];
+
   ///List of tags compatible with text typed in the searchbar
   late List<String> search = [];
+
   ///Data with tags fetched from API
   late Future<List<String>> futureTags;
 
@@ -49,6 +53,7 @@ class _TagPageState extends State<TagPage> {
     futureTags = fetchTags();
     super.initState();
   }
+
   ///Filter results according to the text typed in the searchbar
   void filterSearchResults(String query) {
     if (query.isNotEmpty) {
@@ -70,6 +75,7 @@ class _TagPageState extends State<TagPage> {
       });
     }
   }
+
   ///Widget used to create a button representing a tag
   Widget tagButton(String tagName, double x, double y) {
     int indeks = tags.indexOf(tagName);
@@ -104,6 +110,7 @@ class _TagPageState extends State<TagPage> {
       ),
     );
   }
+
   ///Creates a searchbar
   Widget searchBar() {
     return Padding(

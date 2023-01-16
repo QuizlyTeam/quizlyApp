@@ -28,15 +28,19 @@ class UserAccount extends StatelessWidget {
 
   /// Application background color.
   final Color? _backgroundColor = Colors.grey[300];
+
   /// Application color of buttons.
   final Color _appColor = Colors.cyan;
+
   /// Scaling factor of horizontal axis of app.
   late double x;
+
   /// Scaling factor of vertical axis of app.
   late double y;
 
   /// Ratio wins:loses.
   late double _progress;
+
   ///Users avatar picture.
   late NetworkImage avatarPicture;
 
@@ -54,15 +58,20 @@ class UserAccount extends StatelessWidget {
 
   /// Title of stat 'ratio'.
   late Text ratio = Text('Ratio: ', style: title);
+
   /// Value of stat 'ratio'.
   late Text ratioStat =
       Text('${values["win"]}:${values["lose"]}', style: regular);
+
   /// Title of stat 'Favourite quiz'.
   late Text favQuiz = Text('Favourite quiz: ', style: title);
+
   /// Value of stat 'Favourite quiz'.
   late Text favQuizStat = Text(values["favourite_category"], style: regular);
+
   /// Title of stat 'Most points'.
   late Text mostPoints = Text('Most points: ', style: title);
+
   /// Value of stat 'Most points'.
   late Text mostPointsStat = Text('${values["max_points"]}', style: regular);
 

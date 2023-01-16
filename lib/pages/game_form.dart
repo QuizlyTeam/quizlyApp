@@ -22,6 +22,7 @@ class GameForm extends StatefulWidget {
 
   /// Player's nickname.
   final String nick;
+
   /// Player's database id.
   final String uID;
 
@@ -696,21 +697,19 @@ class _GameFormState extends State<GameForm> {
                       ],
                     ),
                     Expanded(
-                      /*
+                        /*
                       Tabs implementation
                        */
                         child: TabBarView(
-                        children: [
-                          customQuiz(x, y),
-                          enterCode(x, y),
-                          createdQuizzes(x, y),
-                        ],
+                      children: [
+                        customQuiz(x, y),
+                        enterCode(x, y),
+                        createdQuizzes(x, y),
+                      ],
                     )),
                   ],
                 ),
-              )
-          )
-      ),
+              ))),
     );
   }
 }

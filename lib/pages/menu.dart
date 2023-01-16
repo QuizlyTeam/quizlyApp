@@ -11,6 +11,7 @@ class MenuPage extends StatelessWidget {
   final String nick;
 
   const MenuPage({super.key, required this.nick});
+
   ///Widget that creates a button with given text
   Widget answerButton(String text, double x, double y) {
     return ElevatedButton(
@@ -47,6 +48,7 @@ class MenuPage extends StatelessWidget {
       ),
     );
   }
+
   ///Displays a text that welcomes the user
   Widget welcome(String nickname, double x, double y) {
     return Column(

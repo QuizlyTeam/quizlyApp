@@ -43,6 +43,7 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
     text = argumentData[5];
     super.initState();
   }
+
   ///Choose category (sends to category page and receives chosen category)
   void _newCategory() async {
     _category = await Get.to(const CategoryPage());
@@ -50,6 +51,7 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
       _category = _category;
     });
   }
+
   ///Choose tags (sends to tags page and receives chosen tags)
   void _newTags() async {
     _tags = await Get.to(const TagPage());
@@ -57,6 +59,7 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
       _tags = _tags;
     });
   }
+
   ///Creates a question (sends to question form and receives the create question)
   void _newQuestion() async {
     OwnQuestion question =
@@ -69,6 +72,7 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
       _questions.add(question);
     });
   }
+
   ///Edits a given question (sends to question form and receives the edited question)
   void _editQuestion(OwnQuestion questionData) async {
     OwnQuestion question =
@@ -82,6 +86,7 @@ class _CreateQuizFormState extends State<CreateQuizForm> {
       _questions[indeks] = question;
     });
   }
+
   ///Creates a widget that represents a question on the list of questions
   Widget questionListItemBar(
       {required double x, required double y, required OwnQuestion question}) {

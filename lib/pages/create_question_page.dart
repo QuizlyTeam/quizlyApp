@@ -14,6 +14,7 @@ class CreateQuestionForm extends StatefulWidget {
 class _CreateQuestionForm extends State<CreateQuestionForm> {
   ///Data received from previous page
   var argumentData = Get.arguments;
+
   ///Initial question data
   String question = "";
   String correctAnswer = "";
